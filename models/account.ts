@@ -1,11 +1,6 @@
 import { DB } from 'sqlite/mod.ts';
 import { head } from 'ramda/mod.ts';
-
-export type Account = {
-	id: number;
-	username: string;
-	password: string;
-};
+import { Account } from "../type.ts";
 
 function exec<T = void>(fn: (db: DB) => T) {
 	const db = new DB('./db/account.db');
@@ -38,6 +33,26 @@ export default class AccountModel {
       `,
 				['superadmin', 'password'],
 			);
+		});
+	}
+
+	static findById(id: number) {
+		return exec<Account | null>((db) => {
+			const result = head(
+				db.query(
+					`
+          SELECT id, username, password FROM "accounts" WHERE id=?
+        `,
+					[id],
+				),
+			);
+			if (!result) return null;
+			const [, username, password] = result;
+			return {
+				id,
+				username,
+				password,
+			};
 		});
 	}
 

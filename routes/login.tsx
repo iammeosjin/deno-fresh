@@ -1,15 +1,9 @@
 import { Handlers, PageProps } from '$fresh/server.ts';
 import AccountModel from '../models/account.ts';
+import { Context } from '../type.ts';
 
-interface Data {
-	user?: {
-		username: string;
-		password: string;
-	};
-	errors: string[];
-}
 
-export const handler: Handlers<Data> = {
+export const handler: Handlers<Context> = {
 	async POST(req, ctx) {
 		const form = await req.formData();
 		const username = form.get('username') as string;
@@ -36,7 +30,7 @@ export const handler: Handlers<Data> = {
 	},
 };
 
-export default function Login({ data }: PageProps<Data>) {
+export default function Login({ data }: PageProps<Context>) {
 	return (
 		<>
 			<div class='grid items-center justify-center h-screen'>

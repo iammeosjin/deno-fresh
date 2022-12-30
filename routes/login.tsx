@@ -13,7 +13,27 @@ export const handler: Handlers<Context & { fields: string[]; defaults?: { userna
 		if (account) {
 			user = AccountModel.findById(parseInt(account, 10));
 		}
+
 		const url = new URL(req.url);
+		const logout = url.searchParams.get('logout') === 'true';
+		if (logout) {
+			localStorage.removeItem('user');
+			const headers = new Headers();
+			headers.set('location', '/login');
+			return new Response(null, {
+				status: 303, // "See Other"
+				headers,
+			});
+		}
+
+		if (user) {
+			const headers = new Headers();
+			headers.set('location', '/');
+			return new Response(null, {
+				status: 303, // "See Other"
+				headers,
+			});
+		}
 
 		return ctx.render({ user, path: url.pathname, fields: [] });
 	},

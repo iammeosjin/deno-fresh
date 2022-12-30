@@ -3,7 +3,7 @@ import {
   prepareVirtualFile,
 } from "https://deno.land/x/mock_file@v1.0.1/mod.ts";
 import { DB } from 'sqlite/mod.ts';
-import { head } from 'ramda/mod.ts';
+import head from 'ramda/source/head.js';
 import { Account } from "../type.ts";
 
 await prepareLocalFile("./db/account.db");

@@ -7,5 +7,5 @@ export type Account = {
 export type Context = {
 	user?: Account | null;
   path: string;
-	errors?: string[];
+	error?: Error;
 }

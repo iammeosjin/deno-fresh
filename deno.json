@@ -5,7 +5,7 @@
 	"importMap": "./import_map.json",
 	"fmt": {
 		"files": {
-			"include": ["./**/.ts"],
+			"include": ["./**/.ts", "./**/.tsx"],
 			"exclude": ["static/"]
 		},
 		"options": {

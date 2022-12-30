@@ -3,6 +3,7 @@ import { Head } from "https://deno.land/x/fresh@1.1.2/runtime.ts";
 import NavBar from "../components/NavBar.tsx";
 import AccountModel from '../models/account.ts';
 import { Account, Context } from '../type.ts';
+import { getCookies } from "std/http/cookie.ts";
 
 
 export const handler: Handlers<Context & { 
@@ -11,16 +12,14 @@ export const handler: Handlers<Context & {
 	defaults?: { oldPassword?: string; newPassword?: string; confirmPassword?: string } 
 }> = {
 	GET(req, ctx) {
-		const id = localStorage.getItem('user');
+		const cookies = getCookies(req.headers);
 		let user: Account | undefined | null = undefined;
 		
-		if (id) {
-			user = AccountModel.findById(parseInt(id, 10));
+		if (cookies.user) {
+			user = AccountModel.findById(parseInt(cookies.user, 10));
 		}
 
 		const url = new URL(req.url);
-
-		console.log('user', user)
 		
 		if (!user) {
 			const headers = new Headers();
@@ -34,11 +33,11 @@ export const handler: Handlers<Context & {
 		return ctx.render({ user, path: url.pathname, fields: [] });
 	},
 	async POST(req, ctx) {
-		const id = localStorage.getItem('user');
+		const cookies = getCookies(req.headers);
 		let user: Account | undefined | null = undefined;
 		
-		if (id) {
-			user = AccountModel.findById(parseInt(id, 10));
+		if (cookies.headers) {
+			user = AccountModel.findById(parseInt(cookies.headers, 10));
 		}
 
 		const url = new URL(req.url);
@@ -73,7 +72,7 @@ export const handler: Handlers<Context & {
 
 		if (fields.length > 0) {
 			return ctx.render({ 
-				path: new URL(req.url).pathname, 
+				path: url.pathname, 
 				user,
 				fields,
 				defaults
@@ -82,7 +81,7 @@ export const handler: Handlers<Context & {
 
 		if (user.password !== oldPassword) {
 			return ctx.render({ 
-				path: new URL(req.url).pathname , 
+				path: url.pathname , 
 				error: new Error('Incorrect password'),
 				user,
 				fields: [],
@@ -91,7 +90,7 @@ export const handler: Handlers<Context & {
 
 		if (newPassword !== confirmPassword) {
 			return ctx.render({ 
-				path: new URL(req.url).pathname , 
+				path: url.pathname , 
 				error: new Error('Password does not match'),
 				user,
 				fields: [],
@@ -100,7 +99,7 @@ export const handler: Handlers<Context & {
 
 		if (oldPassword === newPassword) {
 			return ctx.render({ 
-				path: new URL(req.url).pathname , 
+				path: url.pathname , 
 				error: new Error('New password can\'t be old password'),
 				user,
 				fields: [],

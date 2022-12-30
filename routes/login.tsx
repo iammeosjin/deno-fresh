@@ -3,22 +3,23 @@ import { Head } from "https://deno.land/x/fresh@1.1.2/runtime.ts";
 import NavBar from "../components/NavBar.tsx";
 import AccountModel from '../models/account.ts';
 import { Account, Context } from '../type.ts';
+import { setCookie,getCookies, deleteCookie  } from "std/http/cookie.ts";
 
 
 export const handler: Handlers<Context & { fields: string[]; defaults?: { username?: string; password?: string } }> = {
 	GET(req, ctx) {
-		const account = localStorage.getItem('user');
+		const cookies = getCookies(req.headers);
 		let user: Account | undefined | null = undefined;
 		
-		if (account) {
-			user = AccountModel.findById(parseInt(account, 10));
+		if (cookies.user) {
+			user = AccountModel.findById(parseInt(cookies.user, 10));
 		}
 
 		const url = new URL(req.url);
 		const logout = url.searchParams.get('logout') === 'true';
 		if (logout) {
-			localStorage.removeItem('user');
-			const headers = new Headers();
+			const headers = new Headers(req.headers);
+			deleteCookie(headers, "user", { domain: url.hostname });
 			headers.set('location', '/login');
 			return new Response(null, {
 				status: 303, // "See Other"
@@ -42,6 +43,7 @@ export const handler: Handlers<Context & { fields: string[]; defaults?: { userna
 		const username = form.get('username') as string;
 		const password = form.get('password') as string;
 		const fields: string[] = [];
+		const url = new URL(req.url);
 		const defaults = { username, password };
 		if (!username) {
 			fields.push('username');
@@ -53,7 +55,7 @@ export const handler: Handlers<Context & { fields: string[]; defaults?: { userna
 
 		if (fields.length > 0) {
 			return ctx.render({ 
-				path: new URL(req.url).pathname, 
+				path: url.pathname, 
 				fields,
 				defaults
 			});
@@ -64,14 +66,22 @@ export const handler: Handlers<Context & { fields: string[]; defaults?: { userna
 		});
 
 		if (!account) {
+			
 			return ctx.render({ 
-				path: new URL(req.url).pathname , 
+				path: url.pathname , 
 				error: new Error('Invalid Credentials!'),
 				fields: [],
 			});
 		}
-		localStorage.setItem('user', account.id.toString());
 		const headers = new Headers();
+		setCookie(headers, {
+			name: "user",
+			value: account.id.toString(), // this should be a unique value for each session
+			maxAge: 120,
+			sameSite: "Lax", // this is important to prevent CSRF attacks
+			domain: url.hostname,
+			secure: true,
+		});
 		headers.set('location', '/');
 		return new Response(null, {
 			status: 303, // "See Other"

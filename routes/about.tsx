@@ -3,14 +3,15 @@ import { Head } from '$fresh/runtime.ts';
 import NavBar from '../components/NavBar.tsx';
 import { Account, Context } from "../type.ts";
 import AccountModel from "../models/account.ts";
+import { getCookies } from "std/http/cookie.ts";
 
 
 export const handler: Handlers<Context> = {
 	GET(req, ctx) {
-		const account = localStorage.getItem('user');
+		const cookies = getCookies(req.headers);
 		let user: Account | undefined | null = undefined;
-		if (account) {
-			user = AccountModel.findById(parseInt(account, 10));
+		if (cookies.user) {
+			user = AccountModel.findById(parseInt(cookies.user, 10));
 		}
 		const url = new URL(req.url);
 

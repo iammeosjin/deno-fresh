@@ -1,6 +1,13 @@
+import {
+  prepareLocalFile,
+  prepareVirtualFile,
+} from "https://deno.land/x/mock_file@v1.0.1/mod.ts";
 import { DB } from 'sqlite/mod.ts';
 import { head } from 'ramda/mod.ts';
 import { Account } from "../type.ts";
+
+await prepareLocalFile("./db/account.db");
+prepareVirtualFile("./db/account.db-journal");
 
 function exec<T = void>(fn: (db: DB) => T) {
 	const db = new DB('./db/account.db');

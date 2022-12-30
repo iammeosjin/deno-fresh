@@ -94,7 +94,7 @@ export default function Login({ data }: PageProps<Context & { fields: string[]; 
 					<div className="absolute inset-0 flex flex-col justify-center items-center w-full max-w-full mx-auto text-center">
 						<NavBar user={props.user} path={props.path}/>
 						
-						<div class="max-w-screen-xl grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-7 lg:grid-cols-4 sm:grid-cols-1 gap-8 mt-8 md:mt-16">
+						<div class="max-w-screen-xl grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-7 lg:grid-cols-4 sm:grid-cols-1 gap-8 mt-8 md:mt-8">
 							<form
 								class="lg:flex z-20"
 								method='post'

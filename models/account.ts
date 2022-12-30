@@ -56,6 +56,19 @@ export default class AccountModel {
 		});
 	}
 
+	static updatePassword(id: number, password: string) {
+		return exec((db) => {
+			db.query(
+				`
+				UPDATE "accounts"
+				SET password = :password
+				WHERE id = :id
+			`,
+				{ id, password },
+			);
+		});
+	}
+
 	static findByUsernameAndPassword(
 		params: Pick<Account, 'username' | 'password'>,
 	) {

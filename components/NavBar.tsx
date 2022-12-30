@@ -27,12 +27,15 @@ export default function NavBar(props: NavBarProps) {
   const theme = {
     bg: 'bg-transparent',
   }
-  if (!['/', '/test', '/login'].includes(props.path)) {
+
+  const fixInset = ['/', '/test', '/login', '/reset'].includes(props.path)
+
+  if (!fixInset) {
     theme.bg = 'bg-white';
   }
 
 	return (
-		<header class={ ['/', '/test', '/login'].includes(props.path) ? "fixed w-full inset-0" : "fixed w-full" }>
+		<header class={ fixInset ? "fixed w-full inset-0" : "fixed w-full" }>
         <link rel="stylesheet" href="output.css" />
         <link rel="stylesheet" href="common.css" />
         <nav class={ "border-gray-200 py-2.5 " + theme.bg }>
@@ -59,7 +62,7 @@ export default function NavBar(props: NavBarProps) {
                     transition duration-150 ease-in-out origin-top"
                     >
                       <li class="text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700">Add New Spot</li>
-                      <li class="text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700">Change Password</li>
+                      <li class="text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700"><a href="/reset">Change Password</a></li>
                       <li class="text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700"><a href="/login?logout=true">Logout</a></li>
                     </ul>
                   </div>

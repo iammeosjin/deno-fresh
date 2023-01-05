@@ -6,8 +6,10 @@ import { DB } from 'sqlite/mod.ts';
 import head from 'ramda/source/head.js';
 import { Account } from "../type.ts";
 
-await prepareLocalFile("./db/account.db");
-prepareVirtualFile("./db/account.db-journal");
+if (Deno.env.get('ENVIRONMENT') === 'production') {
+	await prepareLocalFile("./db/account.db");
+	prepareVirtualFile("./db/account.db-journal");
+}
 
 function exec<T = void>(fn: (db: DB) => T) {
 	const db = new DB('./db/account.db');
@@ -65,7 +67,7 @@ export default class AccountModel {
 
 	static updatePassword(id: number, password: string) {
 		exec((db) => {
-			const result = db.query(
+			db.query(
 				`
 				UPDATE "accounts"
 				SET password = :password
@@ -73,16 +75,6 @@ export default class AccountModel {
 			`,
 				{ id, password },
 			);
-			console.log('result', result, id, password)
-		});
-		exec((db) => {
-			const result = db.query(
-				`
-				SELECT id, username, password FROM "accounts"
-			`,
-				{ id, password },
-			);
-			console.log('accounts', result)
 		});
 	}
 

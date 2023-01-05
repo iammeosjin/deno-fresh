@@ -36,8 +36,8 @@ export const handler: Handlers<Context & {
 		const cookies = getCookies(req.headers);
 		let user: Account | undefined | null = undefined;
 		
-		if (cookies.headers) {
-			user = AccountModel.findById(parseInt(cookies.headers, 10));
+		if (cookies.user) {
+			user = AccountModel.findById(parseInt(cookies.user, 10));
 		}
 
 		const url = new URL(req.url);
@@ -106,7 +106,7 @@ export const handler: Handlers<Context & {
 			});
 		}
 
-		AccountModel.updatePassword(user.id, newPassword)
+		AccountModel.updatePassword(user.id, newPassword);
 
 		return ctx.render({ 
 			path: new URL(req.url).pathname , 
@@ -179,7 +179,7 @@ export default function Login({ data }: PageProps<Context & {
 												class={ `w-full text-sm px-4 py-3 bg-gray-200 focus:bg-gray-100 rounded-lg border focus:outline-none focus:border-blue-400 ${props.fields.includes('confirmPassword') ? "border-red-400" : "border-gray-200"}`} />
 										</div>
 										<div>
-											<input type="submit" class="w-full flex justify-center bg-red-800  hover:bg-red-600 text-gray-100 p-3 rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500" value="Login" />
+											<input type="submit" class="w-full flex justify-center bg-red-800  hover:bg-red-600 text-gray-100 p-3 rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500" value="Reset" />
 											{ message }
 											
 										</div>

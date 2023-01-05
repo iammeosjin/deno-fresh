@@ -64,8 +64,8 @@ export default class AccountModel {
 	}
 
 	static updatePassword(id: number, password: string) {
-		return exec((db) => {
-			db.query(
+		exec((db) => {
+			const result = db.query(
 				`
 				UPDATE "accounts"
 				SET password = :password
@@ -73,6 +73,16 @@ export default class AccountModel {
 			`,
 				{ id, password },
 			);
+			console.log('result', result, id, password)
+		});
+		exec((db) => {
+			const result = db.query(
+				`
+				SELECT id, username, password FROM "accounts"
+			`,
+				{ id, password },
+			);
+			console.log('accounts', result)
 		});
 	}
 

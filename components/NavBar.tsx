@@ -62,8 +62,8 @@ export default function NavBar(props: NavBarProps) {
                     transition duration-150 ease-in-out origin-top"
                     >
                       <li class="text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700">Add New Spot</li>
-                      <li class="text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700"><a href="/reset">Change Password</a></li>
-                      <li class="text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700"><a href="/login?logout=true">Logout</a></li>
+                      <a href="/reset"><li class="text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700">Change Password</li></a>
+                      <a href="/login?logout=true"><li class="text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700">Logout</li></a>
                     </ul>
                   </div>
                   : <a href="/login" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 focus:outline-none">Login</a> }

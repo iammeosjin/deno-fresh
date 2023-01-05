@@ -12,7 +12,7 @@ export default class AccountModel {
 					id SERIAL PRIMARY KEY,
 					username TEXT NOT NULL,
 					password TEXT NOT NULL,
-					UNIQUE (username, assword)
+					UNIQUE (username, password)
 				);
 			`;
 

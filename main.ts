@@ -12,4 +12,11 @@ import twindPlugin from '$fresh/plugins/twind.ts';
 import twindConfig from './twind.config.ts';
 
 AccountModel.initialize();
+
+if (!Deno.env.get('DATABASE_URL')) {
+	Deno.env.set(
+		'DATABASE_URL',
+		'postgresql://tacros:password@localhost:5432/tacros',
+	);
+}
 await start(manifest, { plugins: [twindPlugin(twindConfig)] });

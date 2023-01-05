@@ -1,24 +1,22 @@
 import { Handlers, PageProps } from '$fresh/server.ts';
 import { Head } from '$fresh/runtime.ts';
 import NavBar from '../components/NavBar.tsx';
-import { Account, Context } from "../type.ts";
-import AccountModel from "../models/account.ts";
-import { getCookies } from "std/http/cookie.ts";
-
+import { Account, Context } from '../type.ts';
+import AccountModel from '../models/account.ts';
+import { getCookies } from 'std/http/cookie.ts';
 
 export const handler: Handlers<Context> = {
-	GET(req, ctx) {
+	async GET(req, ctx) {
 		const cookies = getCookies(req.headers);
 		let user: Account | undefined | null = undefined;
 		if (cookies.user) {
-			user = AccountModel.findById(parseInt(cookies.user, 10));
+			user = await AccountModel.findById(parseInt(cookies.user, 10));
 		}
 		const url = new URL(req.url);
 
 		return ctx.render({ user, path: url.pathname });
 	},
 };
-
 
 export default function Home({ data }: PageProps<Context>) {
 	const props = data || {};
@@ -27,9 +25,9 @@ export default function Home({ data }: PageProps<Context>) {
 			<Head>
 				<title>TACROS</title>
 			</Head>
-			
+
 			<body>
-				<NavBar user={props.user} path={props.path}/>
+				<NavBar user={props.user} path={props.path} />
 			</body>
 		</>
 	);

@@ -1,102 +1,89 @@
-import {
-  prepareLocalFile,
-  prepareVirtualFile,
-} from "https://deno.land/x/mock_file@v1.0.1/mod.ts";
-import { DB } from 'sqlite/mod.ts';
 import head from 'ramda/source/head.js';
-import { Account } from "../type.ts";
-
-if (Deno.env.get('ENVIRONMENT') === 'production') {
-	await prepareLocalFile("./db/account.db");
-	prepareVirtualFile("./db/account.db-journal");
-}
-
-function exec<T = void>(fn: (db: DB) => T) {
-	const db = new DB('./db/account.db');
-	const result = fn(db);
-	db.close();
-	return result;
-}
+import { Account } from '../type.ts';
+import pool from '../lib/pool.ts';
 
 export default class AccountModel {
-	static initialize() {
-		exec((db) => {
-			db.execute(`
-        CREATE TABLE IF NOT EXISTS "accounts" (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          username TEXT NOT NULL,
-          password TEXT NOT NULL,
-          UNIQUE (username,password)
-        );
-      `);
-			const result = db.query(
+	static async initialize() {
+		const connection = await pool.connect();
+		try {
+			// Create the table
+			await connection.queryObject`
+				CREATE TABLE IF NOT EXISTS "accounts" (
+					id SERIAL PRIMARY KEY,
+					username TEXT NOT NULL,
+					password TEXT NOT NULL,
+					UNIQUE (username, assword)
+				);
+			`;
+
+			const { rowCount } = await connection.queryObject<Account>(
 				`
-        SELECT * FROM "accounts" WHERE username = :username
-      `,
-				{ username: 'superadmin' },
+				SELECT * FROM "accounts" WHERE username = 'superadmin'
+			`,
 			);
-			if (head(result)) return;
-			db.query(
-				`
-        INSERT INTO accounts (username, password) VALUES (?, ?)
-      `,
-				['superadmin', 'password'],
-			);
-		});
+
+			if (rowCount === 0) {
+				await connection.queryObject`
+					INSERT INTO accounts (username, password) VALUES ('superadmin', 'password');
+				`;
+			}
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
 	}
 
-	static findById(id: number) {
-		return exec<Account | null>((db) => {
-			const result = head(
-				db.query(
-					`
-          SELECT id, username, password FROM "accounts" WHERE id=?
-        `,
-					[id],
-				),
+	static async findById(id: number) {
+		const connection = await pool.connect();
+		let account: Account | null = null;
+		try {
+			const { rows } = await connection.queryObject<Account>(
+				`
+				SELECT * FROM "accounts" WHERE id = ${id}
+			`,
 			);
-			if (!result) return null;
-			const [, username, password] = result;
-			return {
-				id,
-				username,
-				password,
-			};
-		});
+			account = head(rows);
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
+
+		return account;
 	}
 
-	static updatePassword(id: number, password: string) {
-		exec((db) => {
-			db.query(
+	static async updatePassword(id: number, password: string) {
+		const connection = await pool.connect();
+		try {
+			await connection.queryObject<Account>(
 				`
 				UPDATE "accounts"
-				SET password = :password
-				WHERE id = :id
+				SET password = '${password}'
+				WHERE id = ${id}
 			`,
-				{ id, password },
 			);
-		});
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
 	}
 
-	static findByUsernameAndPassword(
+	static async findByUsernameAndPassword(
 		params: Pick<Account, 'username' | 'password'>,
 	) {
-		return exec<Account | null>((db) => {
-			const result = head(
-				db.query(
-					`
-          SELECT id, username, password FROM "accounts" WHERE username = :username AND password = :password
-        `,
-					params,
-				),
+		const connection = await pool.connect();
+		let account: Account | null = null;
+		try {
+			const { rows } = await connection.queryObject<Account>(
+				`
+				SELECT id, username, password FROM accounts WHERE username = '${params.username}' AND password = '${params.password}'
+			`,
 			);
-			if (!result) return null;
-			const [id, username, password] = result;
-			return {
-				id,
-				username,
-				password,
-			};
-		});
+			account = head(rows);
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
+
+		return account;
 	}
 }

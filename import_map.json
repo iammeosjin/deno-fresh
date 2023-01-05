@@ -9,7 +9,7 @@
 		"twind": "https://esm.sh/twind@0.16.17",
 		"twind/": "https://esm.sh/twind@0.16.17/",
 		"std/": "https://deno.land/std@0.160.0/",
-		"sqlite/": "https://deno.land/x/sqlite@v3.7.0/",
-		"ramda/": "https://deno.land/x/ramda@v0.27.2/"
+		"ramda/": "https://deno.land/x/ramda@v0.27.2/",
+		"postgres/": "https://deno.land/x/postgres@v0.14.2/"
 	}
 }

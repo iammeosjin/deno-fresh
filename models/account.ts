@@ -31,9 +31,9 @@ export default class AccountModel {
       `);
 			const result = db.query(
 				`
-        SELECT * FROM "accounts" WHERE username = :username AND password = :password
+        SELECT * FROM "accounts" WHERE username = :username
       `,
-				{ username: 'superadmin', password: 'password' },
+				{ username: 'superadmin' },
 			);
 			if (head(result)) return;
 			db.query(

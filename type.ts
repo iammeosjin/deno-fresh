@@ -4,8 +4,16 @@ export type Account = {
 	password: string;
 };
 
+export type Post = {
+	id: number;
+	title: string;
+	description: string;
+	message: string;
+	url: string;
+};
+
 export type Context = {
 	user?: Account | null;
-  path: string;
+	path: string;
 	error?: Error;
-}
+};

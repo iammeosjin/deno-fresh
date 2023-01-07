@@ -109,6 +109,8 @@ export default function Login(
 			</Head>
 
 			<body>
+				<link rel='stylesheet' href='css/output.css' />
+				<link rel='stylesheet' href='css/common.css' />
 				<div className='bg-gradient-to-tr from-red-400 to-yellow-50 relative h-screen w-screen'>
 					<img
 						className='absolute inset-0 w-full h-full object-cover mix-blend-multiply filter brightness-50'
@@ -184,6 +186,7 @@ export default function Login(
 						</div>
 					</div>
 				</div>
+				<script src='flowbite.js' />
 			</body>
 		</>
 	);

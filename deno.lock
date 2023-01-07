@@ -1,6 +1,9 @@
 {
   "version": "2",
   "remote": {
+    "https://cdn.skypack.dev/-/chance@v1.1.9-WOYOeNBazNQhGYcMTCeJ/dist=es2019,mode=imports/optimized/chance.js": "1e8a8416c0b6b877ab1d49fdf497b2c3f74ab915879dc821f8cdf768a78183e6",
+    "https://cdn.skypack.dev/-/chance@v1.1.9-WOYOeNBazNQhGYcMTCeJ/dist=es2019,mode=types/index.d.ts": "3f5ce073c59fd40de5ecd1548d14cad449dbe456f3ef9e8477b1fbf34fb32d80",
+    "https://cdn.skypack.dev/chance?dts": "8c3e4749f808d30625df45d07a54b4ce1e0a8470a2199adb92895de3213305c6",
     "https://deno.land/std@0.114.0/_util/assert.ts": "2f868145a042a11d5ad0a3c748dcf580add8a0dbc0e876eaa0026303a5488f58",
     "https://deno.land/std@0.114.0/async/deadline.ts": "1d6ac7aeaee22f75eb86e4e105d6161118aad7b41ae2dd14f4cfd3bf97472b93",
     "https://deno.land/std@0.114.0/async/debounce.ts": "b2f693e4baa16b62793fd618de6c003b63228db50ecfe3bd51fc5f6dc0bc264b",
@@ -169,6 +172,7 @@
     "https://deno.land/x/ramda@v0.27.2/source/internal/_isPlaceholder.js": "f0e59347c4077d5b524cf87afac7f12ff5bb6d05a0664046dcc21057f4451660",
     "https://deno.land/x/ramda@v0.27.2/source/internal/_isString.js": "defc6d87c06b2dea7f75bfab57ff7591804acda65594130cb8d3af7fe618e42d",
     "https://deno.land/x/ramda@v0.27.2/source/nth.js": "53d6932e224a92a49b4a7d20d310995168961286f466c6821d18962f46122978",
+    "https://deno.land/x/ramda@v0.27.2/source/times.js": "04698c26c3c5c5ae075001976dc4f9bc79b31f0d9e074c125d1033f79c4e9ed9",
     "https://deno.land/x/rutt@0.0.13/mod.ts": "af981cfb95131152bf50fc9140fc00cb3efb6563df2eded1d408361d8577df20",
     "https://deno.land/x/smallorm_sqlite@0.2.1/lib/SmallSQLite.ts": "8964ca47281d83b61b06425ebe303a7eda685157d4d5c8fc0e0c98adcc4fa282",
     "https://deno.land/x/smallorm_sqlite@0.2.1/mod.ts": "92b3137f0a9be383f6d3816b9571e62607fa046f8bddf8402ff43c77360c1d4a",

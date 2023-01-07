@@ -33,7 +33,10 @@ export default function Home({ data }: PageProps<Context>) {
 			</Head>
 
 			<body>
+				<link rel='stylesheet' href='css/output.css' />
+				<link rel='stylesheet' href='css/common.css' />
 				<NavBar user={props.user} path={props.path} />
+				<script src='flowbite.js' />
 			</body>
 		</>
 	);

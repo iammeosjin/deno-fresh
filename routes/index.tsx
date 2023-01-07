@@ -33,6 +33,8 @@ export default function Home({ data }: PageProps<Context>) {
 			</Head>
 
 			<body>
+				<link rel='stylesheet' href='css/output.css' />
+				<link rel='stylesheet' href='css/common.css' />
 				<div className='bg-gradient-to-tr from-red-400 to-yellow-50 relative h-screen w-screen'>
 					<video
 						className='absolute inset-0 w-full h-screen object-cover bg-video mix-blend-multiply filter brightness-50'
@@ -55,6 +57,7 @@ export default function Home({ data }: PageProps<Context>) {
 						</div>
 					</div>
 				</div>
+				<script src='flowbite.js' />
 			</body>
 		</>
 	);

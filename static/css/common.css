@@ -220,6 +220,65 @@ h1, h2, h3, h4, h5, h6, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a{
   color: rgba(249, 79, 79, var(--tw-text-opacity));
 }
 
+/* ========== contact ========= */
+
+.contact_image {
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 52px;
+  padding-left: 20px;
+  padding-right: 20px;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+@media (min-width: 960px){
+  .contact_image{
+    height: 100%;
+    margin-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    position: absolute;
+    width: 50%;
+  }
+}
+
+.contact_image img {
+  max-width: 100%;
+}
+
+@media (min-width: 960px){
+  .contact_image img{
+    max-width: 720px;
+    width: auto;
+  }
+}
+
+.contact_image img{
+  max-width: 770px;
+}
+
+.contact-btn {
+  --tw-bg-opacity: 1;
+  background-color: rgba(249, 79, 79, var(--tw-bg-opacity));
+}
+
+.contact-btn:hover{
+  --tw-bg-opacity: 0.8;
+}
+
+.contact-btn{
+  border-radius: 0.375rem;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 40px;
+  padding-right: 40px;
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
 /* ========== about ========== */
 
 

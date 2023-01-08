@@ -41,7 +41,7 @@ export default function Home({ data }: PageProps<Context>) {
 						muted={true}
 						loop={true}
 					>
-						<source src='/bg1.mp4' type='video/mp4' />
+						<source src='/res/bg.mp4' type='video/mp4' />
 					</video>
 					<div className='absolute inset-0 flex flex-col justify-center items-center w-full max-w-full mx-auto text-center'>
 						<NavBar user={props.user} path={props.path} />

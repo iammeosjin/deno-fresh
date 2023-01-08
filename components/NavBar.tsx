@@ -38,7 +38,7 @@ export default function NavBar(props: NavBarProps) {
 				<div class='flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto'>
 					<a href='#' class='flex items-center'>
 						<img
-							src='/favicon.png'
+							src='/res/favicon.png'
 							class='h-6 mr-3 sm:h-9'
 							alt='Landwind Logo'
 						/>

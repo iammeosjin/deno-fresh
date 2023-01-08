@@ -1,12 +1,12 @@
 export default function AboutUs() {
 	return (
-		<section class='w-full pt-0 lg:pt-32 lg:pb-16 relative bg-white'>
+		<section class='w-full pt-0 lg:pt-32 lg:pb-16 lg:mb-10 relative bg-white'>
 			<div class='about-image flex items-end justify-end'>
 				<div class='grid items-center justify-center h-full'>
 					<img
 						src='images/logo.png'
 						alt='about'
-						class='lg:w-3/4 mx-auto'
+						class='lg:max-h-full lg:w-10/12 mx-auto'
 					/>
 				</div>
 			</div>

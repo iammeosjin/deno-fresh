@@ -1,6 +1,6 @@
 export default function AboutServices() {
 	return (
-		<section class='block pt-5 lg:pt-16  w-full relative'>
+		<section class='block pt-5 lg:mb-5 lg:pt-16 w-full relative'>
 			<div class='container'>
 				<div class='row justify-center'>
 					<div class='w-full lg:w-1/2'>

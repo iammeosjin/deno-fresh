@@ -221,7 +221,6 @@ h1, h2, h3, h4, h5, h6, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a{
 }
 
 /* ========== contact ========= */
-
 .contact_image {
   height: auto;
   margin-left: auto;
@@ -254,10 +253,6 @@ h1, h2, h3, h4, h5, h6, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a{
     max-width: 720px;
     width: auto;
   }
-}
-
-.contact_image img{
-  max-width: 770px;
 }
 
 .contact-btn {

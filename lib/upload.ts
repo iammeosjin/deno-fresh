@@ -42,12 +42,17 @@ export default async function upload(req: Request, key: string) {
 	const files = (form.files(key) || []);
 	const file = files[0];
 
+	const name = crypto.randomUUID().replace(/-/g, '');
+
 	const uploader = env === 'production'
 		? IPFS.uploadFileToNFTStorage
 		: IPFS.uploadFileLocal;
 
 	return {
-		name: file.filename,
-		url: await uploader(file, ipfsToken),
+		name: name,
+		url: await uploader(
+			{ name, content: file.content as Uint8Array },
+			ipfsToken as string,
+		),
 	};
 }

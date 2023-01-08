@@ -1,11 +1,12 @@
-import { FormFile } from 'https://deno.land/std@0.127.0/mime/multipart.ts';
-
 export default class IPFS {
-	static async uploadFileLocal(file: FormFile) {
+	static async uploadFileLocal(params: {
+		content: Uint8Array;
+		name: string;
+	}) {
 		const form = new FormData();
 		form.append(
 			'file',
-			new File([file.content as Uint8Array], file.filename),
+			new File([params.content as Uint8Array], params.name),
 		);
 
 		// const headers = new Headers();
@@ -31,11 +32,14 @@ export default class IPFS {
 		return `http://localhost:8080/ipfs/${body.Hash}`;
 	}
 
-	static async uploadFileToNFTStorage(file: FormFile, token: string) {
+	static async uploadFileToNFTStorage(params: {
+		content: Uint8Array;
+		name: string;
+	}, token: string) {
 		const form = new FormData();
 		form.append(
 			'file',
-			new File([file.content as Uint8Array], file.filename),
+			new File([params.content as Uint8Array], params.name),
 		);
 
 		const headers = new Headers();
@@ -58,6 +62,6 @@ export default class IPFS {
 
 		const body = JSON.parse(result);
 
-		return `https://${body.value.cid}.ipfs.nftstorage.link/${file.filename}`;
+		return `https://${body.value.cid}.ipfs.nftstorage.link/${params.name}`;
 	}
 }

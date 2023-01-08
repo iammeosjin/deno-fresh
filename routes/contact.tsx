@@ -6,8 +6,9 @@ import { Account, Context } from '../type.ts';
 import AccountModel from '../models/account.ts';
 import { getCookies } from 'std/http/cookie.ts';
 import upload from '../lib/upload.ts';
+import ContactUs from '../islands/Contact-Us.tsx';
 
-export const handler: Handlers<Context & { file?: string }> = {
+export const handler: Handlers<Context> = {
 	async GET(req, ctx) {
 		const cookies = getCookies(req.headers);
 		let user: Account | undefined | null = undefined;
@@ -26,17 +27,12 @@ export const handler: Handlers<Context & { file?: string }> = {
 			user = await AccountModel.findById(parseInt(cookies.user, 10));
 		}
 		const url = new URL(req.url);
-		const file = await upload(req, 'file');
-		return ctx.render({ user, path: url.pathname, file: file.url });
+		return ctx.render({ user, path: url.pathname });
 	},
 };
 
-export default function Home({ data }: PageProps<Context & { file?: string }>) {
+export default function Home({ data }: PageProps<Context>) {
 	const props = data || {};
-	const [image, setImage] = useState('images/about.svg');
-	if (props.file) {
-		setImage(props.file);
-	}
 
 	return (
 		<>
@@ -48,20 +44,7 @@ export default function Home({ data }: PageProps<Context & { file?: string }>) {
 				<link rel='stylesheet' href='css/output.css' />
 				<link rel='stylesheet' href='css/common.css' />
 				<NavBar user={props.user} path={props.path} />
-				<form
-					method='POST'
-					action='/contact'
-					encType='multipart/form-data'
-				>
-					<input name='file' type='file' multiple={false}></input>
-					<button
-						type='submit'
-						class='main-btn contact-btn btn-primary'
-					>
-						submit
-					</button>
-					<img src={image} />
-				</form>
+				<ContactUs />
 				<script src='js/flowbite.js' />
 			</body>
 		</>

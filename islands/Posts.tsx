@@ -3,7 +3,7 @@ import { Post } from '../type.ts';
 export default function Posts(props: { posts: Post[] }) {
 	const { posts } = props;
 	return (
-		<section class='work_area bg-gray-100 pt-7 pb-4'>
+		<section class='bg-gray-100 pt-7 pb-4'>
 			<div class='row justify-center'>
 				<div class='w-full'>
 					<div class='section_title text-center pb-6'>

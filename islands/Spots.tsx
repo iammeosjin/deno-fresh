@@ -1,8 +1,6 @@
-import { Post } from '../type.ts';
-
 export default function Spots() {
 	return (
-		<section class='work_area bg-white pt-20 pb-20'>
+		<section class='bg-white pt-20 pb-20'>
 			<div class='container w-full mx-auto'>
 				<div class='row justify-center'>
 					<div class='w-full lg:w-1/2'>

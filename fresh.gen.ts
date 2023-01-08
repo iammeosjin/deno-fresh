@@ -12,10 +12,12 @@ import * as $5 from './routes/login.tsx';
 import * as $6 from './routes/reset.tsx';
 import * as $7 from './routes/services.tsx';
 import * as $8 from './routes/test.tsx';
-import * as $$0 from './islands/AboutUs.tsx';
-import * as $$1 from './islands/Counter.tsx';
-import * as $$2 from './islands/Posts.tsx';
-import * as $$3 from './islands/Spots.tsx';
+import * as $$0 from './islands/About-Services.tsx';
+import * as $$1 from './islands/About-Us.tsx';
+import * as $$2 from './islands/Counter.tsx';
+import * as $$3 from './islands/Posts.tsx';
+import * as $$4 from './islands/Spots.tsx';
+import * as $$5 from './islands/Team-Members.tsx';
 
 const manifest = {
 	routes: {
@@ -30,10 +32,12 @@ const manifest = {
 		'./routes/test.tsx': $8,
 	},
 	islands: {
-		'./islands/AboutUs.tsx': $$0,
-		'./islands/Counter.tsx': $$1,
-		'./islands/Posts.tsx': $$2,
-		'./islands/Spots.tsx': $$3,
+		'./islands/About-Services.tsx': $$0,
+		'./islands/About-Us.tsx': $$1,
+		'./islands/Counter.tsx': $$2,
+		'./islands/Posts.tsx': $$3,
+		'./islands/Spots.tsx': $$4,
+		'./islands/Team-Members.tsx': $$5,
 	},
 	baseUrl: import.meta.url,
 	config,

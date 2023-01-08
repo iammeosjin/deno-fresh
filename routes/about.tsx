@@ -4,6 +4,9 @@ import NavBar from '../components/NavBar.tsx';
 import { Account, Context } from '../type.ts';
 import AccountModel from '../models/account.ts';
 import { getCookies } from 'std/http/cookie.ts';
+import AboutUs from '../islands/About-Us.tsx';
+import Services from '../islands/About-Services.tsx';
+import TeamMembers from '../islands/Team-Members.tsx';
 
 export const handler: Handlers<Context> = {
 	async GET(req, ctx) {
@@ -34,7 +37,12 @@ export default function Home({ data }: PageProps<Context>) {
 			<body>
 				<link rel='stylesheet' href='css/output.css' />
 				<link rel='stylesheet' href='css/common.css' />
+				<link rel='stylesheet' href='css/line-icons.css' />
 				<NavBar user={props.user} path={props.path} />
+				<Services />
+				<AboutUs />
+				<TeamMembers />
+
 				<script src='js/flowbite.js' />
 			</body>
 		</>

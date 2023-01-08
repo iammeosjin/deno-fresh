@@ -38,7 +38,7 @@ export default function NavBar(props: NavBarProps) {
 				<div class='flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto'>
 					<a href='#' class='flex items-center'>
 						<img
-							src='/logo.svg'
+							src='/favicon.png'
 							class='h-6 mr-3 sm:h-9'
 							alt='Landwind Logo'
 						/>
@@ -85,7 +85,7 @@ export default function NavBar(props: NavBarProps) {
 							: (
 								<a
 									href='/login'
-									class='text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 focus:outline-none'
+									class='font-bold text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 focus:outline-none'
 								>
 									Login
 								</a>

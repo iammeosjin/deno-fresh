@@ -250,7 +250,7 @@ export default function Login({ data }: PageProps<
 						</div>
 					</div>
 				</div>
-				<script src='flowbite.js' />
+				<script src='js/flowbite.js' />
 			</body>
 		</>
 	);

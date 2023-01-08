@@ -186,7 +186,7 @@ export default function Login(
 						</div>
 					</div>
 				</div>
-				<script src='flowbite.js' />
+				<script src='js/flowbite.js' />
 			</body>
 		</>
 	);

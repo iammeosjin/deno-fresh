@@ -38,7 +38,7 @@ export default function Home({ data }: PageProps<Context & { posts: Post[] }>) {
 				<NavBar user={props.user} path={props.path} />
 				<Posts posts={props.posts} />
 				<Spots></Spots>
-				<script src='flowbite.js' />
+				<script src='js/flowbite.js' />
 				<script src='js/swiper-bundle.min.js' />
 				<script src='js/common.js' />
 			</body>

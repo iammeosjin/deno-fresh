@@ -29,7 +29,7 @@ export default function NavBar(props: NavBarProps) {
 	const fixInset = ['/', '/test', '/login', '/reset'].includes(props.path);
 
 	if (!fixInset) {
-		theme.bg = 'bg-blue-100';
+		theme.bg = 'bg-white';
 	}
 
 	return (

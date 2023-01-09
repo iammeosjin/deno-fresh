@@ -13,7 +13,7 @@ export default function PostList(
 		<>
 			<div class='cursor-pointer md:w-1/3 xl:w-1/4 p-6 flex flex-col'>
 				<a href='#'>
-					<div class='mx-auto relative overflow-hidden transition-all bg-gray-100 rounded-md max-w-300 max-h-300 w-300 h-300 hover:scale-110'>
+					<div class='relative overflow-hidden transition-all bg-gray-100 rounded-md max-w-300 max-h-300 w-300 h-300 hover:scale-110'>
 						<img
 							class='hover:shadow-lg w-full h-full object-cover'
 							src={props.image}

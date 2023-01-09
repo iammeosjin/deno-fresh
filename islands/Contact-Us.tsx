@@ -15,9 +15,7 @@ export default function ContactUs() {
 								<h5 class='sub_title'>Contact</h5>
 								<h4 class='main_title'>Get In Touch</h4>
 								<p>
-									Lorem ipsum dolor sitrg amet, consetetur
-									sadipscing elitr sed diam nonumy eirmod
-									tempor invidunt ut labore et dolore magna.
+									Send your feedbacks or recommendations
 								</p>
 							</div>
 

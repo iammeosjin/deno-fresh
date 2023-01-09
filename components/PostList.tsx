@@ -18,14 +18,16 @@ export default function PostList(
 						class='z-0 hover:shadow-lg w-full h-full object-cover'
 						src={props.image}
 					/>
-					<div class='group reserve-float z-10 absolute top-1 right-2 flex'>
-						<div class='reserve-float-content rounded-sm transform scale-0 transition duration-150 ease-in-out origin-right'>
-							Reserve
+					<a href='/reservation'>
+						<div class='group reserve-float z-10 absolute top-1 right-2 flex'>
+							<div class='reserve-float-content rounded-sm transform scale-0 transition duration-150 ease-in-out origin-right'>
+								Reserve
+							</div>
+							<div class='circular-icon bg-white text-white text-gray-700 min-w-min outline-none focus:outline-none border-none px-3 py-1 rounded-full flex'>
+								<IconCalendarTime class='w-7 h-7' />
+							</div>
 						</div>
-						<div class='circular-icon bg-white text-white text-gray-700 min-w-min outline-none focus:outline-none border-none px-3 py-1 rounded-full flex'>
-							<IconCalendarTime class='w-7 h-7' />
-						</div>
-					</div>
+					</a>
 				</div>
 
 				<CategoryLabel categories={props.categories} />

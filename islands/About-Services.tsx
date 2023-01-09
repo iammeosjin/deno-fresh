@@ -34,9 +34,9 @@ export default function AboutServices() {
 									Guidebook
 								</h3>
 								<p class='mt-4'>
-									Lorem ipsum dolor sit amet, consetetur sadi
-									aliquyam erat, sed diam voluptua. At vero
-									eos accusam et justo duo dolores
+									It contains interactive maps specified
+									location will be in Jasaan, guidelines on
+									how to use the website as a tourist
 								</p>
 							</div>
 						</div>

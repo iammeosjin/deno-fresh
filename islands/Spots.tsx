@@ -1,8 +1,6 @@
 import PostList from '../components/PostList.tsx';
 import generateCategoryColors from '../lib/generate-category-colors.ts';
 import { Category } from '../type.ts';
-import IconSearch from 'tablerIcons/search.tsx';
-import IconCalendarPlus from 'tablerIcons/calendar-plus.tsx';
 
 export default function Spots() {
 	const spots = [

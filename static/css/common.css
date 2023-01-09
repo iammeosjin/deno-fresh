@@ -9,6 +9,81 @@
   display: block;
 }
 
+.story-item {
+  height: auto;
+  width: 136px;
+}
+
+.reserve-float:hover .reserve-float-content {
+  transform: scale(1);
+  display: block;
+  
+}
+
+.reserve-float:hover .circular-icon {
+  background-color: #F56565;
+  color: white;
+  border-radius: 0px;
+  border:none;
+  border-color: #F56565;
+  border-left: 1px;
+  margin-left: 0px;
+  border-top-right-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+
+}
+
+.reserve-float-content {
+  height: 40px;
+  max-height: 40px;
+  line-height: 1.5rem;
+  margin-top: 4px;
+  padding: 10px;
+  padding-right: 5px;
+  padding-left: 15px;
+  background-color: #F56565;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px;
+  border-color: #F56565;
+  margin-right: 0px;
+  border-top-left-radius: 9999px;
+  border-bottom-left-radius: 9999px;
+  color: white;
+  font-weight: 700;
+  font-family: 'Nunito';
+  display: none;
+}
+
+/* .circular-icon:hover {
+  background-color: #F56565;
+  color: white;
+  border-radius: 0px;
+  border:none;
+  border-color: #F56565;
+  border-left: 1px;
+  margin-left: 0px;
+  border-top-right-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+} */
+
+.circular-icon {
+  --tw-bg-opacity: 1;
+  /* background-color: rgba(249, 79, 79, var(--tw-bg-opacity)); */
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-top: 4px;
+  --tw-text-opacity: 1;
+  /* color: rgba(255, 255, 255, var(--tw-text-opacity)); */
+  width: 40px;
+  max-height: 40px;
+}
+
 .link-underline {
   border-bottom-width: 0;
   background-image: linear-gradient(transparent, transparent),
@@ -45,7 +120,7 @@ video.bg-video {
 }
 
 html {
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
+  font-family: 'Nunito', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
   line-height: 1.5; /* 2 */
 }
 
@@ -59,6 +134,10 @@ body {
   line-height: inherit;
   --tw-text-opacity: 1;
   color: rgba(116, 126, 136, var(--tw-text-opacity));
+}
+
+.font-nunito {
+  font-family: 'Nunito'
 }
 
 li>ul                 { transform: translatex(100%) scale(0) }
@@ -118,6 +197,11 @@ li:hover > button svg { transform: rotate(-270deg) }
 h1, h2, h3, h4, h5, h6, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a{
   font-weight: 700;
   margin: 0px;
+  --tw-text-opacity: 1;
+  color: rgba(56, 66, 77, var(--tw-text-opacity));
+}
+
+.text-primary-gray {
   --tw-text-opacity: 1;
   color: rgba(56, 66, 77, var(--tw-text-opacity));
 }

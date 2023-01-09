@@ -1,10 +1,10 @@
 new Swiper('.mySwiper', {
   slidesPerView: 'auto',
-  spaceBetween: 30,
+  spaceBetween: 10,
   freeMode: true,
   autoHeight: true,
   autoplay: {
-    delay: 2500,
+    delay: 2000,
     disableOnInteraction: false,
   },
   pagination: {

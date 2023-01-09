@@ -19,7 +19,14 @@ export const handler: Handlers<Context & { posts: Post[] }> = {
 
 		const posts = await PostModel.find();
 
-		return ctx.render({ user, path: url.pathname, posts });
+		return ctx.render({
+			user,
+			path: url.pathname,
+			posts: [
+				...posts,
+				...posts,
+			],
+		});
 	},
 };
 
@@ -38,7 +45,7 @@ export default function Home({ data }: PageProps<Context & { posts: Post[] }>) {
 				<link rel='stylesheet' href='css/swiper-bundle.min.css' />
 				<NavBar user={props.user} path={props.path} />
 				<Posts posts={props.posts} />
-				<Spots></Spots>
+				<Spots />
 				<script src='js/flowbite.js' />
 				<script src='js/swiper-bundle.min.js' />
 				<script src='js/common.js' />

@@ -1,4 +1,23 @@
+import PostList from '../components/PostList.tsx';
+import generateCategoryColors from '../lib/generate-category-colors.ts';
+import { Category } from '../type.ts';
+
 export default function Spots() {
+	const spots = [
+		{
+			image: 'images/spots/2.jpg',
+			title: 'Agutayan Island',
+			categories: generateCategoryColors([
+				Category.BEACH,
+				Category.RESORT,
+			]),
+		},
+		{
+			image: 'images/spots/3.jpg',
+			title: 'Brew Haa Coffee and Smoothies',
+			categories: generateCategoryColors([Category.RESTAURANT]),
+		},
+	];
 	return (
 		<section class='bg-white pt-20 pb-20'>
 			<div class='container w-full mx-auto'>
@@ -13,7 +32,16 @@ export default function Spots() {
 					</div>
 				</div>
 			</div>
-			<div class='mx-auto container'>
+			<div class='container mx-auto flex items-center flex-wrap pt-4 pb-12'>
+				{spots.map((spot) => {
+					return (
+						<PostList
+							image={spot.image}
+							title={spot.title}
+							categories={spot.categories}
+						/>
+					);
+				})}
 			</div>
 		</section>
 	);

@@ -1,3 +1,15 @@
+export enum Category {
+	BEACH = 'BEACH',
+	RESORT = 'RESORT',
+	RESTAURANT = 'RESTAURANT',
+}
+
+export enum CategoryColor {
+	BEACH = 'text-blue-700',
+	RESORT = 'text-purple-700',
+	RESTAURANT = 'text-orange-700',
+}
+
 export type Account = {
 	id: number;
 	username: string;

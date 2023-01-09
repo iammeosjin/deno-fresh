@@ -3,10 +3,10 @@ new Swiper('.mySwiper', {
   spaceBetween: 30,
   freeMode: true,
   autoHeight: true,
-  autoplay: {
-    delay: 2500,
-    disableOnInteraction: false,
-  },
+  // autoplay: {
+  //   delay: 2500,
+  //   disableOnInteraction: false,
+  // },
   pagination: {
     el: '.swiper-pagination',
     clickable: true,

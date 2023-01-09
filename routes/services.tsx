@@ -34,6 +34,7 @@ export default function Home({ data }: PageProps<Context & { posts: Post[] }>) {
 			<body>
 				<link rel='stylesheet' href='css/output.css' />
 				<link rel='stylesheet' href='css/common.css' />
+				<link rel='stylesheet' href='css/line-icons.css' />
 				<link rel='stylesheet' href='css/swiper-bundle.min.css' />
 				<NavBar user={props.user} path={props.path} />
 				<Posts posts={props.posts} />

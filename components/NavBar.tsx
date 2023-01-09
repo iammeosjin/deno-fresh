@@ -29,11 +29,11 @@ export default function NavBar(props: NavBarProps) {
 	const fixInset = ['/', '/test', '/login', '/reset'].includes(props.path);
 
 	if (!fixInset) {
-		theme.bg = 'bg-white';
+		theme.bg = 'bg-blue-100';
 	}
 
 	return (
-		<header class={fixInset ? 'fixed w-full inset-0' : 'w-full'}>
+		<header class={fixInset ? 'fixed w-full inset-0' : 'w-full z-10'}>
 			<nav class={'border-gray-200 py-2.5 ' + theme.bg}>
 				<div class='flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto'>
 					<a href='#' class='flex items-center'>
@@ -65,10 +65,12 @@ export default function NavBar(props: NavBarProps) {
 										</span>
 									</button>
 									<ul class='bg-transparent rounded-sm transform scale-0 group-hover:scale-100 absolute
-                    transition duration-150 ease-in-out origin-top'>
-										<li class='text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700'>
-											Add New Spot
-										</li>
+                    transition duration-150 ease-in-out origin-top z-10'>
+										<a href='#'>
+											<li class='text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700'>
+												Add New Spot
+											</li>
+										</a>
 										<a href='/reset'>
 											<li class='text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700'>
 												Change Password

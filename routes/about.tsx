@@ -37,7 +37,6 @@ export default function Home({ data }: PageProps<Context>) {
 				<Services />
 				<AboutUs />
 				<TeamMembers />
-
 				<script src='js/flowbite.js' />
 			</body>
 		</>

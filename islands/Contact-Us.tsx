@@ -1,6 +1,6 @@
 export default function ContactUs() {
 	return (
-		<section id='contact' class='relative lg:pt-120 pb-120'>
+		<section class='relative lg:pt-120 pb-120'>
 			<div class='contact_image flex items-center justify-end'>
 				<div class='grid items-center justify-center h-full'>
 					<img src='images/contact.svg' alt='about' />

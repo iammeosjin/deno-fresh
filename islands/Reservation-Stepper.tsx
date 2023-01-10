@@ -3,7 +3,7 @@ import IconListDetails from 'tablerIcons/list-details.tsx';
 import IconUser from 'tablerIcons/user.tsx';
 import IconDatabase from 'tablerIcons/database.tsx';
 
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import Instructions from './Instruction.tsx';
 import Agreement from './Agreement.tsx';
 import ReservationForm from './Reservation-Form.tsx';
@@ -14,9 +14,13 @@ import { Reservation } from '../type.ts';
 export default function ReservationStepper(props: {
 	spot?: PostListProps;
 }) {
-	const [state, setState] = useState<
-		{ step: number; reservation?: Reservation | null }
-	>({ step: 1, reservation: null });
+	const [step, setStep] = useState<
+		number
+	>(1);
+
+	const [reservation, setReservation] = useState<
+		Reservation | null
+	>(null);
 
 	const inactiveStepperStyle = {
 		icon: 'border-gray-300 text-gray-500',
@@ -34,8 +38,6 @@ export default function ReservationStepper(props: {
 		line: 'border-red-400',
 	};
 
-	if (state.step <= 0) state.step = 1;
-
 	const checkStepperStyle = (index: number, step: number) => {
 		if (index === step) return activeStepperStyle;
 		if (index < step) return doneStepperStyle;
@@ -50,14 +52,14 @@ export default function ReservationStepper(props: {
 						<div class='flex items-center text-teal-600 relative'>
 							<div
 								class={`rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 ${
-									checkStepperStyle(1, state.step).icon
+									checkStepperStyle(1, step).icon
 								}`}
 							>
 								<IconListDetails class='mx-auto' />
 							</div>
 							<div
 								class={`absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase ${
-									checkStepperStyle(1, state.step).text
+									checkStepperStyle(1, step).text
 								}`}
 							>
 								Guide
@@ -65,21 +67,21 @@ export default function ReservationStepper(props: {
 						</div>
 						<div
 							class={`flex-auto border-t-2 transition duration-500 ease-in-out ${
-								checkStepperStyle(1, state.step).line
+								checkStepperStyle(1, step).line
 							}`}
 						>
 						</div>
 						<div class='flex items-center text-white relative'>
 							<div
 								class={`rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 ${
-									checkStepperStyle(2, state.step).icon
+									checkStepperStyle(2, step).icon
 								}`}
 							>
 								<IconListCheck class='mx-auto' />
 							</div>
 							<div
 								class={`absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase ${
-									checkStepperStyle(2, state.step).text
+									checkStepperStyle(2, step).text
 								}`}
 							>
 								Privacy Notice
@@ -87,21 +89,21 @@ export default function ReservationStepper(props: {
 						</div>
 						<div
 							class={`flex-auto border-t-2 transition duration-500 ease-in-out ${
-								checkStepperStyle(2, state.step).line
+								checkStepperStyle(2, step).line
 							}`}
 						>
 						</div>
 						<div class='flex items-center relative'>
 							<div
 								class={`rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 ${
-									checkStepperStyle(3, state.step).icon
+									checkStepperStyle(3, step).icon
 								}`}
 							>
 								<IconUser class='mx-auto' />
 							</div>
 							<div
 								class={`absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase ${
-									checkStepperStyle(3, state.step).text
+									checkStepperStyle(3, step).text
 								}`}
 							>
 								Info
@@ -109,21 +111,21 @@ export default function ReservationStepper(props: {
 						</div>
 						<div
 							class={`flex-auto border-t-2 transition duration-500 ease-in-out ${
-								checkStepperStyle(3, state.step).line
+								checkStepperStyle(3, step).line
 							}`}
 						>
 						</div>
 						<div class='flex items-center relative'>
 							<div
 								class={`rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 ${
-									checkStepperStyle(4, state.step).icon
+									checkStepperStyle(4, step).icon
 								}`}
 							>
 								<IconDatabase class='mx-auto' />
 							</div>
 							<div
 								class={`absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase ${
-									checkStepperStyle(4, state.step).text
+									checkStepperStyle(4, step).text
 								}`}
 							>
 								Confirm
@@ -135,32 +137,26 @@ export default function ReservationStepper(props: {
 			<div id='stepper' class='container'>
 				<Instructions
 					id={'instructions'}
-					show={state.step === 1}
-					onNext={() =>
-						setState({ step: state.step + 1, reservation: null })}
+					show={step === 1}
+					onNext={() => setStep(step + 1)}
 				/>
-				{
-					/* <Agreement
+				<Agreement
 					id={'agreement'}
-					show={state.step === 2}
-					onNext={() =>
-						setState({ step: state.step + 1, reservation: null })}
+					show={step === 2}
+					onNext={() => setStep(step + 1)}
 				/>
 				<ReservationForm
 					id={'reservationForm'}
-					show={state.step === 3}
+					show={step === 3}
 					spot={props.spot}
-					onNext={(reservation?: Reservation) =>
-						setState({ step: state.step + 1, reservation })}
+					onNext={() => setStep(step + 1)}
 				/>
 				<OTPForm
 					id={'otpForm'}
-					show={state.step === 4}
-					reservation={state.reservation!}
-					onPrev={() =>
-						setState({ step: state.step - 1, reservation: null })}
-				/> */
-				}
+					show={step === 4}
+					reservation={reservation!}
+					onPrev={() => setStep(step - 1)}
+				/>
 			</div>
 		</section>
 	);

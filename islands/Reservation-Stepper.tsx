@@ -9,6 +9,7 @@ import ReservationForm from './Reservation-Form.tsx';
 import OTPForm from './OTP-Form.tsx';
 import { PostListProps } from '../components/PostList.tsx';
 import { Reservation } from '../type.ts';
+import spots from '../models/spot.ts';
 
 const inactiveStepperStyle = {
 	icon: 'border-gray-300 text-gray-500',
@@ -39,9 +40,14 @@ export default function ReservationStepper(props: {
 		number
 	>(1);
 
-	const [error, setError] = useState<
-		boolean
-	>(false);
+	const [input, setInput] = useState<
+		{
+			error: boolean;
+			disabled: boolean;
+			spot?: PostListProps;
+			availableSpots?: PostListProps[];
+		}
+	>({ error: false, disabled: !!props.spot });
 
 	const [reservation, setReservation] = useState<
 		Reservation & { otp?: string } | null
@@ -71,7 +77,7 @@ export default function ReservationStepper(props: {
 		].join('');
 
 		if (otp != '1234') {
-			setError(true);
+			setInput({ error: true, disabled: false });
 			return;
 		}
 
@@ -81,6 +87,28 @@ export default function ReservationStepper(props: {
 			otp,
 		});
 	};
+
+	const onBarangayChange = (event: any) => {
+		setInput({
+			error: false,
+			disabled: false,
+			spot: undefined,
+			availableSpots: spots.filter((spot) =>
+				spot.barangay === event.target.value && spot.openForReservations
+			),
+		});
+	};
+
+	const onSpotChange = (event: any) => {
+		setInput({
+			error: false,
+			disabled: false,
+			spot: spots.find((spot) => spot.slug === event.target.value),
+			availableSpots: input.availableSpots,
+		});
+	};
+
+	const spot = props.spot || input.spot || undefined;
 
 	return (
 		<section class='relative container pb-120'>
@@ -186,15 +214,19 @@ export default function ReservationStepper(props: {
 				<ReservationForm
 					id={'reservationForm'}
 					show={step === 3}
-					spot={props.spot}
+					spot={spot}
 					onSubmit={submitReservation}
+					onBarangayChange={onBarangayChange}
+					onSpotChange={onSpotChange}
+					availableSpots={input.availableSpots}
+					disabled={input.disabled}
 				/>
 				<OTPForm
 					id={'otpForm'}
 					show={step === 4}
 					reservation={reservation!}
 					onPrev={() => setStep(3)}
-					error={error}
+					error={input.error}
 					onSubmit={submitOTP}
 				/>
 				<OTPForm

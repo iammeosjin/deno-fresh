@@ -1,16 +1,22 @@
 import values from 'ramda/source/values.js';
 import { PostListProps } from '../components/PostList.tsx';
-import { Barangay, Reservation } from '../type.ts';
+import { Barangay } from '../type.ts';
+import spots from '../models/spot.ts';
 
 export default function ReservationForm(
 	props: {
 		id?: string;
 		spot?: PostListProps;
+		availableSpots?: PostListProps[];
 		onSubmit: (e: any) => void;
+		onBarangayChange: (e: any) => void;
+		onSpotChange: (e: any) => void;
 		show: boolean;
+		disabled: boolean;
 	},
 ) {
 	const barangayList = values(Barangay);
+
 	const spot = props.spot;
 
 	return (
@@ -32,8 +38,9 @@ export default function ReservationForm(
 			</div>
 			<div class='mt-10 relative'>
 				<div class='image-preview flex items-center justify-end'>
-					<div class='grid items-center justify-center h-full rounded-md overflow-hidden hover:scale-105'>
+					<div class='grid items-center justify-center rounded-md overflow-hidden hover:scale-105 bg-gray-50 w-full'>
 						<img
+							class='object-cover '
 							src={spot?.image
 								? `/${spot.image}`
 								: '/images/logo.png'}
@@ -55,18 +62,22 @@ export default function ReservationForm(
 												<div class='mb-5'>
 													<select
 														name='barangay'
-														disabled={!!spot
-															?.barangay}
+														onChange={props.disabled
+															? undefined
+															: props
+																.onBarangayChange}
+														disabled={props
+															.disabled}
 														class='form-select w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
 													>
-														{spot?.barangay
+														{props.disabled
 															? (
 																<option
 																	value={spot
-																		.barangay}
+																		?.barangay}
 																>
 																	{spot
-																		.barangay}
+																		?.barangay}
 																</option>
 															)
 															: barangayList.map(
@@ -91,27 +102,52 @@ export default function ReservationForm(
 													<select
 														name='title'
 														required={true}
-														disabled={!!spot
-															?.title}
+														value={props.spot
+															? undefined
+															: 'default'}
+														onChange={props.disabled
+															? undefined
+															: props
+																.onSpotChange}
+														disabled={props
+															.disabled}
 														class='form-select w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
 													>
-														{spot?.title
+														{props.disabled
 															? (
 																<option
 																	value={spot
-																		.slug}
+																		?.slug}
 																>
 																	{spot
-																		.title}
+																		?.title}
 																</option>
 															)
-															: (
-																<option>
+															: [
+																<option value='default'>
 																	Select
 																	Resort or
 																	Beach
-																</option>
-															)}
+																</option>,
+																...(props
+																	.availableSpots ||
+																	[])
+																	.map(
+																		(
+																			spot,
+																		) => {
+																			return (
+																				<option
+																					value={spot
+																						.slug}
+																				>
+																					{spot
+																						.title}
+																				</option>
+																			);
+																		},
+																	),
+															]}
 													</select>
 												</div>
 											</div>

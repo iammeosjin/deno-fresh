@@ -31,10 +31,9 @@
 
 @media (min-width: 960px){
   .image-preview img{
-    max-width: 720px;
-    width: auto;
-    max-height: 720px;
-    height: auto;
+    height: 500px;
+    width: 700px;
+    object-fit:scale-down;
   }
 }
 

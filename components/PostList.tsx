@@ -3,22 +3,30 @@ import IconCalendarTime from 'tablerIcons/calendar-time.tsx';
 
 import CategoryLabel from './CategoryLabel.tsx';
 
+export type PostListProps = {
+	image: string;
+	title: string;
+	categories: { title: string; color: string }[];
+	openForReservations: boolean;
+	opens: string;
+};
+
 export default function PostList(
-	props: {
-		image: string;
-		title: string;
-		categories: { title: string; color: string }[];
-	},
+	props: { spot: PostListProps },
 ) {
+	const { spot } = props;
 	return (
 		<>
 			<div class='cursor-pointer md:w-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 p-6 flex flex-col'>
 				<div class='relative inline-block overflow-hidden transition-all bg-gray-100 rounded-md max-w-300 max-h-300 w-300 h-300 hover:scale-105'>
 					<img
 						class='z-0 hover:shadow-lg w-full h-full object-cover'
-						src={props.image}
+						src={spot.image}
 					/>
-					<a href='/reservation'>
+					<a
+						href='/reservation'
+						class={`${spot.openForReservations ? '' : 'hidden'}`}
+					>
 						<div class='group reserve-float z-10 absolute top-1 right-2 flex'>
 							<div class='reserve-float-content rounded-sm transform scale-0 transition duration-150 ease-in-out origin-right'>
 								Reserve
@@ -30,11 +38,11 @@ export default function PostList(
 					</a>
 				</div>
 
-				<CategoryLabel categories={props.categories} />
+				<CategoryLabel categories={spot.categories} />
 				<h2 class='text-lg font-semibold leading-snug tracking-tight mt-2'>
 					<a href='#'>
 						<span class='link-underline link-underline-red'>
-							{props.title}
+							{spot.title}
 						</span>
 					</a>
 				</h2>
@@ -43,7 +51,7 @@ export default function PostList(
 						<div className='relative flex-shrink-0'>
 							<IconClockHour class='w-5 h-5' />
 						</div>
-						<span className='text-sm'>Open Hours</span>
+						<span className='text-sm'>Opens</span>
 					</div>
 					<span className='text-xs text-gray-300 dark:text-gray-600'>
 						&bull;
@@ -52,7 +60,7 @@ export default function PostList(
 						className='text-sm'
 						dateTime={new Date().toISOString()}
 					>
-						8:00AM - 5:00PM
+						{spot.opens}
 					</time>
 				</div>
 			</div>

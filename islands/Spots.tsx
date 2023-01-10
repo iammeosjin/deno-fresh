@@ -1,3 +1,4 @@
+import { FloatingButton } from '../components/Floating-Button.tsx';
 import PostList from '../components/PostList.tsx';
 import generateCategoryColors from '../lib/generate-category-colors.ts';
 import { Category } from '../type.ts';
@@ -9,13 +10,16 @@ export default function Spots() {
 			title: 'Agutayan Island',
 			categories: generateCategoryColors([
 				Category.BEACH,
-				Category.RESORT,
 			]),
+			openForReservations: true,
+			opens: '8:00AM - 5:00PM',
 		},
 		{
 			image: 'images/spots/3.jpg',
 			title: 'Brew Haa Coffee and Smoothies',
 			categories: generateCategoryColors([Category.RESTAURANT]),
+			openForReservations: false,
+			opens: '10:00AM - 9:00PM',
 		},
 	];
 	return (
@@ -32,6 +36,8 @@ export default function Spots() {
 					</div>
 				</div>
 			</div>
+			<FloatingButton />
+
 			<div class='max-w-md w-full mx-auto mt-5'>
 				<div class='relative'>
 					<input
@@ -60,33 +66,8 @@ export default function Spots() {
 				</div>
 			</div>
 			<div class='container mx-auto flex items-center flex-wrap pt-4 pb-12'>
-				{
-					/* <nav id='store' class='w-full z-30 top-0 px-6 py-1  mb-10'>
-					<div class='w-full container bg-yellow-100 '>
-						<a
-							class='flex no-underline hover:text-black border border-gray-400 rounded-lg w-44'
-							href='#'
-						>
-							<div className='flex items-center gap-1 text-primary-gray p-3'>
-								<span className='text-base font-semibold font-nunito'>
-									Add Reservation
-								</span>
-								<div className='relative flex-shrink-0'>
-									<IconSearch />
-								</div>
-							</div>
-						</a>
-					</div>
-				</nav> */
-				}
 				{spots.map((spot) => {
-					return (
-						<PostList
-							image={spot.image}
-							title={spot.title}
-							categories={spot.categories}
-						/>
-					);
+					return <PostList spot={spot} />;
 				})}
 			</div>
 		</section>

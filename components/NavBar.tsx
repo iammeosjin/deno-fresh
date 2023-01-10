@@ -14,7 +14,7 @@ export default function NavBar(props: NavBarProps) {
 		},
 		{
 			title: 'Services',
-			path: '/services#places',
+			path: '/services',
 		},
 		{
 			title: 'Contact',

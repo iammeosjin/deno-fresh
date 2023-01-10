@@ -1,13 +1,15 @@
 export enum Category {
-	BEACH = 'BEACH',
-	RESORT = 'RESORT',
-	RESTAURANT = 'RESTAURANT',
+	FOOD = 'FOOD',
+	SWIM = 'SWIM',
+	STAY = 'STAY',
+	TOURIST_ATTRACTION = 'TOURIST ATTRACTION',
 }
 
 export enum CategoryColor {
-	BEACH = 'text-blue-700',
-	RESORT = 'text-purple-700',
-	RESTAURANT = 'text-orange-700',
+	SWIM = 'text-blue-700',
+	STAY = 'text-purple-700',
+	FOOD = 'text-orange-700',
+	'TOURIST ATTRACTION' = 'text-emerald-700',
 }
 
 export type Account = {
@@ -28,4 +30,24 @@ export type Context = {
 	user?: Account | null;
 	path: string;
 	error?: Error;
+};
+
+export enum Barangay {
+	APLAYA = 'Aplaya',
+	BOBONTUGAN = 'Bobontugan',
+	CORRALES = 'Corrales',
+	DANAO = 'Danao',
+	JAMPASON = 'Jampason',
+	KIMAYA = 'Kimaya',
+	LOWER_JASAAN = 'Lower Jasaan',
+	LUZBANSON = 'Luzbanson',
+	NATUBO = 'Natubo',
+	SAN_ANTONIO = 'San Antonio',
+	SAN_NICOLAS = 'San Nicolas',
+	UPPER_JASAAN = 'Upper Jasaan',
+}
+
+export type Reservation = {
+	spot: string;
+	email: string;
 };

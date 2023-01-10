@@ -1,27 +1,9 @@
 import { FloatingButton } from '../components/Floating-Button.tsx';
-import PostList from '../components/PostList.tsx';
-import generateCategoryColors from '../lib/generate-category-colors.ts';
-import { Category } from '../type.ts';
+import PostList, { PostListProps } from '../components/PostList.tsx';
+import spot from '../models/spot.ts';
 
 export default function Spots() {
-	const spots = [
-		{
-			image: 'images/spots/2.jpg',
-			title: 'Agutayan Island',
-			categories: generateCategoryColors([
-				Category.BEACH,
-			]),
-			openForReservations: true,
-			opens: '8:00AM - 5:00PM',
-		},
-		{
-			image: 'images/spots/3.jpg',
-			title: 'Brew Haa Coffee and Smoothies',
-			categories: generateCategoryColors([Category.RESTAURANT]),
-			openForReservations: false,
-			opens: '10:00AM - 9:00PM',
-		},
-	];
+	const spots: PostListProps[] = spot;
 	return (
 		<section id='places' class='bg-white pt-10 pb-20'>
 			<div class='container w-full mx-auto'>

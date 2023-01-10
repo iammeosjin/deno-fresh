@@ -1,14 +1,19 @@
-import IconClockHour from 'tablerIcons/clock-hour-2.tsx';
 import IconCalendarTime from 'tablerIcons/calendar-time.tsx';
+import IconMapPin from 'tablerIcons/map-pin.tsx';
 
 import CategoryLabel from './CategoryLabel.tsx';
+import { Barangay } from '../type.ts';
 
 export type PostListProps = {
+	slug: string;
 	image: string;
 	title: string;
 	categories: { title: string; color: string }[];
 	openForReservations: boolean;
-	opens: string;
+	barangay: Barangay;
+	entranceFee?: number;
+	priceRangeLower?: number;
+	priceRangeUpper?: number;
 };
 
 export default function PostList(
@@ -24,7 +29,7 @@ export default function PostList(
 						src={spot.image}
 					/>
 					<a
-						href='/reservation'
+						href={`/reservation/${spot.slug}`}
 						class={`${spot.openForReservations ? '' : 'hidden'}`}
 					>
 						<div class='group reserve-float z-10 absolute top-1 right-2 flex'>
@@ -49,19 +54,10 @@ export default function PostList(
 				<div className='flex items-center mt-1 space-x-3 text-gray-500 dark:text-gray-400'>
 					<div className='flex items-center gap-1'>
 						<div className='relative flex-shrink-0'>
-							<IconClockHour class='w-5 h-5' />
+							<IconMapPin class='w-5 h-5' />
 						</div>
-						<span className='text-sm'>Opens</span>
+						<span className='text-sm'>{spot.barangay}</span>
 					</div>
-					<span className='text-xs text-gray-300 dark:text-gray-600'>
-						&bull;
-					</span>
-					<time
-						className='text-sm'
-						dateTime={new Date().toISOString()}
-					>
-						{spot.opens}
-					</time>
 				</div>
 			</div>
 		</>

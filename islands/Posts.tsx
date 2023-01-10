@@ -24,11 +24,13 @@ export default function Posts(props: { posts: Post[] }) {
 											src={image}
 											class='block absolute rounded-xl h-full min-h-full object-cover'
 										/>
-										<div class='absolute flex flex-col justify-between h-full w-full top-0 left-0 py-0 z-10'>
+										{
+											/* <div class='absolute flex flex-col justify-between h-full w-full top-0 left-0 py-0 z-10'>
 											<div class='text-center absolute bottom-0 w-full text-white p-0 h-16'>
 												{post.title}
 											</div>
-										</div>
+										</div> */
+										}
 									</div>
 								</div>
 							);

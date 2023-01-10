@@ -1,5 +1,4 @@
 import IconListCheck from 'tablerIcons/list-check.tsx';
-import IconCalendarTime from 'tablerIcons/calendar-time.tsx';
 import IconListDetails from 'tablerIcons/list-details.tsx';
 import IconUser from 'tablerIcons/user.tsx';
 import IconDatabase from 'tablerIcons/database.tsx';
@@ -8,9 +7,15 @@ import Instructions from './Instruction.tsx';
 import Agreement from './Agreement.tsx';
 import ReservationForm from './Reservation-Form.tsx';
 import OTPForm from './OTP-Form.tsx';
+import { PostListProps } from '../components/PostList.tsx';
+import { Reservation } from '../type.ts';
 
-export default function ReservationStepper() {
-	const [state, setState] = useState({ step: 1 });
+export default function ReservationStepper(props: {
+	spot?: PostListProps;
+}) {
+	const [state, setState] = useState<
+		{ step: number; reservation?: Reservation }
+	>({ step: 1 });
 
 	const inactiveStepperStyle = {
 		icon: 'border-gray-300 text-gray-500',
@@ -27,6 +32,8 @@ export default function ReservationStepper() {
 		text: 'text-red-400',
 		line: 'border-red-400',
 	};
+
+	if (state.step <= 0) state.step = 1;
 
 	const checkStepperStyle = (index: number, step: number) => {
 		if (index === step) return activeStepperStyle;
@@ -138,12 +145,15 @@ export default function ReservationStepper() {
 				<ReservationForm
 					id={'reservationForm'}
 					show={state.step === 3}
-					onNext={() => setState({ step: state.step + 1 })}
+					spot={props.spot}
+					onNext={(reservation?: Reservation) =>
+						setState({ step: state.step + 1, reservation })}
 				/>
 				<OTPForm
 					id={'otpForm'}
 					show={state.step === 4}
-					onNext={() => setState({ step: state.step + 1 })}
+					reservation={state.reservation!}
+					onPrev={() => setState({ step: state.step - 1 })}
 				/>
 			</div>
 		</section>

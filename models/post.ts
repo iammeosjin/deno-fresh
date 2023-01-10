@@ -31,8 +31,8 @@ export default class PostModel {
 
 			if ((rowCount || 0) < 6) {
 				const titles = [
-					'Phone Case',
-					'Camera',
+					'Kuyamis Opening Program',
+					'Paglaum MisOr: Rise-CDO Cup',
 					'Mugs and Cups',
 					'T-shirts',
 					'Buko Pie',

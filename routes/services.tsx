@@ -7,6 +7,7 @@ import { getCookies } from 'std/http/cookie.ts';
 import Posts from '../islands/Posts.tsx';
 import PostModel from '../models/post.ts';
 import Spots from '../islands/Spots.tsx';
+import chance from '../lib/chance.ts';
 
 export const handler: Handlers<Context & { posts: Post[] }> = {
 	async GET(req, ctx) {
@@ -22,10 +23,10 @@ export const handler: Handlers<Context & { posts: Post[] }> = {
 		return ctx.render({
 			user,
 			path: url.pathname,
-			posts: [
+			posts: chance.shuffle([
 				...posts,
 				...posts,
-			],
+			]),
 		});
 	},
 };

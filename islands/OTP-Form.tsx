@@ -1,7 +1,10 @@
+import { Reservation } from '../type.ts';
+
 export default function OTPForm(
 	props: {
 		id?: string;
-		onNext: () => void;
+		reservation: Reservation;
+		onPrev: () => void;
 		show: boolean;
 	},
 ) {
@@ -32,8 +35,8 @@ export default function OTPForm(
 								</div>
 								<div class='flex flex-row text-sm font-medium text-gray-400'>
 									<p>
-										We have sent a code to your email
-										ba**@getnada.com
+										We have sent a code to your email&nbsp;
+										{props.reservation?.email}
 									</p>
 								</div>
 							</div>
@@ -92,6 +95,16 @@ export default function OTPForm(
 													rel='noopener noreferrer'
 												>
 													Resend
+												</a>
+											</div>
+											<div class='flex flex-row items-center justify-center text-center text-base font-semibold space-x-1 text-gray-500'>
+												<a
+													class='flex flex-row items-center text-red-400 hover:text-red-700 hover:font-bold hover:scale-110'
+													target='_blank'
+													rel='noopener noreferrer'
+													onClick={props.onPrev}
+												>
+													Go Back
 												</a>
 											</div>
 										</div>

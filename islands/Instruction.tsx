@@ -34,9 +34,10 @@ export default function Instructions(
 						<h6>Step 2</h6>
 						<p>
 							Provide your name, email address and mobile number.
-							The Jasaan TACROS will send a copy of your
-							reservation sheet via email. You will receive a
-							verification code on the email address.
+							The Jasaan Tourist Association Center Reservation
+							Online System will send a copy of your reservation
+							sheet via email. You will receive a verification
+							code on the email address.
 						</p>
 					</li>
 					<li class='p-5 bg-white'>

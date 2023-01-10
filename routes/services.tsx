@@ -35,9 +35,9 @@ export default function Home({ data }: PageProps<Context & { posts: Post[] }>) {
 	const props = data || {};
 	return (
 		<>
-			<Head>
-				<title>TACROS</title>
-			</Head>
+			<title>
+				Jasaan Tourist Association Center Reservation Online System
+			</title>
 
 			<body>
 				<link rel='stylesheet' href='css/output.css' />

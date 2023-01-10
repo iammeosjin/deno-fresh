@@ -22,15 +22,15 @@ export default function Home({ data }: PageProps<Context>) {
 	const props = data || {};
 	return (
 		<>
-			<Head>
-				<title>TACROS</title>
+			<title>
+				Jasaan Tourist Association Center Reservation Online System
+			</title>
+
+			<body>
 				<link
 					href='css/fonts/poppins.css'
 					rel='stylesheet'
 				/>
-			</Head>
-
-			<body>
 				<link rel='stylesheet' href='css/output.css' />
 				<link rel='stylesheet' href='css/common.css' />
 				<div className='bg-gradient-to-tr from-red-400 to-yellow-50 relative h-screen w-screen'>

@@ -1,11 +1,8 @@
 import { Handlers, PageProps } from '$fresh/server.ts';
-import { useState } from 'preact/hooks';
-import { Head } from '$fresh/runtime.ts';
 import NavBar from '../components/NavBar.tsx';
 import { Account, Context } from '../type.ts';
 import AccountModel from '../models/account.ts';
 import { getCookies } from 'std/http/cookie.ts';
-import upload from '../lib/upload.ts';
 import ContactUs from '../islands/Contact-Us.tsx';
 
 export const handler: Handlers<Context> = {

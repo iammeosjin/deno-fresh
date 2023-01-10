@@ -64,9 +64,9 @@ export default function AboutServices() {
 									Reservation
 								</h3>
 								<p class='mt-4'>
-									Lorem ipsum dolor sit amet, consetetur sadi
-									aliquyam erat, sed diam voluptua. At vero
-									eos accusam et justo duo dolores
+									Make reservation to some best spots located
+									in Jasaan to secure your occupancy of
+									accommodation
 								</p>
 							</div>
 						</div>
@@ -94,9 +94,10 @@ export default function AboutServices() {
 									Products
 								</h3>
 								<p class='mt-4'>
-									Lorem ipsum dolor sit amet, consetetur sadi
-									aliquyam erat, sed diam voluptua. At vero
-									eos accusam et justo duo dolores
+									Choose and purchase some products made
+									locally in Jasaan Misamis Oriental
+									<br />
+									<br />
 								</p>
 							</div>
 						</div>

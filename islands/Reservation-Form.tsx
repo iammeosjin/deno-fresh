@@ -148,6 +148,7 @@ export default function ReservationForm(
 														name='name'
 														placeholder='Full Name'
 														required={true}
+														autoComplete='off'
 														class='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
 													/>
 												</div>
@@ -172,8 +173,9 @@ export default function ReservationForm(
 														<input
 															type='text'
 															name='mobileNumber'
-															// pattern='^[0-9]{10}$'
+															pattern='^[0-9]{10}$'
 															required={true}
+															autoComplete='off'
 															class='w-full rounded-none rounded-r-lg border text-[#6B7280] font-medium focus:border-blue-500 bg-white py-3 px-6 outline-none focus:border-[#6A64F1] focus:shadow-md'
 															placeholder='Mobile Number'
 														/>

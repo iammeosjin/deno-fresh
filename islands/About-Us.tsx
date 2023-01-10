@@ -34,11 +34,9 @@ export default function AboutUs() {
 									<div class='about-check'>
 										<i class='lni lni-checkmark-circle'></i>
 									</div>
-									<div class='pl-5 pr-2'>
+									<div class='pl-5 pr-2 flex items-center justify-center'>
 										<p>
-											Vero eos et accusam et justo duo
-											dolores et rebum. Stet clita kasd
-											gubergrenv
+											Commerce
 										</p>
 									</div>
 								</li>
@@ -46,11 +44,9 @@ export default function AboutUs() {
 									<div class='about-check'>
 										<i class='lni lni-checkmark-circle'></i>
 									</div>
-									<div class='pl-5 pr-2'>
+									<div class='pl-5 pr-2 flex items-center justify-center'>
 										<p>
-											At vero eos et accusam et justo duo
-											dolores et rebum. Stet clita kasd
-											gubergrenv
+											Compelling Content
 										</p>
 									</div>
 								</li>
@@ -58,11 +54,9 @@ export default function AboutUs() {
 									<div class='about-check'>
 										<i class='lni lni-checkmark-circle'></i>
 									</div>
-									<div class='pl-5 pr-2'>
+									<div class='pl-5 pr-2 flex items-center justify-center'>
 										<p>
-											Dvero eos et accusam et justo duo
-											dolores et rebum. Stet clita kasd
-											gubergrenv
+											Convenient
 										</p>
 									</div>
 								</li>

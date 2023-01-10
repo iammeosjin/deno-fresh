@@ -10,6 +10,7 @@ import ReservationForm from './Reservation-Form.tsx';
 import OTPForm from './OTP-Form.tsx';
 import { PostListProps } from '../components/PostList.tsx';
 import { Reservation } from '../type.ts';
+import OTPFormDone from './OTP-Form-Done.tsx';
 
 const inactiveStepperStyle = {
 	icon: 'border-gray-300 text-gray-500',
@@ -40,8 +41,12 @@ export default function ReservationStepper(props: {
 		number
 	>(1);
 
+	const [error, setError] = useState<
+		boolean
+	>(false);
+
 	const [reservation, setReservation] = useState<
-		Reservation | null
+		Reservation & { otp?: string } | null
 	>(null);
 
 	const submitReservation = (event: any) => {
@@ -51,7 +56,31 @@ export default function ReservationStepper(props: {
 
 		setReservation({
 			spot: event.target.title.value,
+			name: event.target.name.value,
 			email: event.target.email.value,
+			mobileNumber: event.target.mobileNumber.value,
+		});
+	};
+
+	const submitOTP = (event: any) => {
+		event.preventDefault();
+
+		const otp = [
+			event.target.otp1.value,
+			event.target.otp2.value,
+			event.target.otp3.value,
+			event.target.otp4.value,
+		].join('');
+
+		if (otp != '1234') {
+			setError(true);
+			return;
+		}
+
+		setStep(step + 1);
+		setReservation({
+			...reservation!,
+			otp,
 		});
 	};
 
@@ -166,7 +195,15 @@ export default function ReservationStepper(props: {
 					id={'otpForm'}
 					show={step === 4}
 					reservation={reservation!}
-					onPrev={() => setStep(step - 1)}
+					onPrev={() => setStep(3)}
+					error={error}
+					onSubmit={submitOTP}
+				/>
+				<OTPForm
+					id={'otpFormDone'}
+					show={step === 5}
+					reservation={reservation!}
+					error={false}
 				/>
 			</div>
 		</section>

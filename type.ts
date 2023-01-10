@@ -49,5 +49,7 @@ export enum Barangay {
 
 export type Reservation = {
 	spot: string;
+	name: string;
 	email: string;
+	mobileNumber: string;
 };

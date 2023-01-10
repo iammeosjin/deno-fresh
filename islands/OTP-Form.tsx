@@ -1,13 +1,27 @@
 import { Reservation } from '../type.ts';
+import IconAlertCircle from 'tablerIcons/alert-circle.tsx';
 
 export default function OTPForm(
 	props: {
 		id?: string;
-		reservation: Reservation;
-		onPrev: () => void;
+		error: boolean;
+		reservation: Reservation & { otp?: string };
+		onPrev?: () => void;
+		onSubmit?: (e: any) => void;
 		show: boolean;
 	},
 ) {
+	const succeed = props.id === 'otpFormDone';
+	const otpDigits = (props.reservation?.otp || '').split('');
+	const btnClass =
+		`w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-red-300 ${
+			props.error
+				? 'border-red-700'
+				: succeed
+				? 'border-green-700'
+				: 'border-gray-200'
+		}`;
+
 	return (
 		<section
 			id={props.id}
@@ -42,51 +56,63 @@ export default function OTPForm(
 							</div>
 
 							<div>
-								<form action='/services#places' method='GET'>
+								<form
+									action='/services'
+									method='GET'
+									onSubmit={props.onSubmit}
+								>
 									<div class='flex flex-col space-y-16'>
 										<div class='flex flex-row items-center justify-between mx-auto w-full max-w-xs'>
-											<div class='w-16 h-16 '>
-												<input
-													class='w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700'
-													type='text'
-													name=''
-													id=''
-												/>
-											</div>
-											<div class='w-16 h-16 '>
-												<input
-													class='w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700'
-													type='text'
-													name=''
-													id=''
-												/>
-											</div>
-											<div class='w-16 h-16 '>
-												<input
-													class='w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700'
-													type='text'
-													name=''
-													id=''
-												/>
-											</div>
-											<div class='w-16 h-16 '>
-												<input
-													class='w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700'
-													type='text'
-													name=''
-													id=''
-												/>
-											</div>
+											{[1, 2, 3, 4].map((index) => {
+												return (
+													<div class='w-16 h-16 '>
+														<input
+															disabled={succeed}
+															class={btnClass}
+															type='text'
+															value={succeed
+																? otpDigits[
+																	index - 1
+																]
+																: ''}
+															name={succeed
+																? undefined
+																: `otp${index}`}
+														/>
+													</div>
+												);
+											})}
 										</div>
 
 										<div class='flex flex-col space-y-5'>
 											<div>
-												<button class='flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-red-500 hover:bg-red-800 border-none text-white text-base font-bold shadow-sm'>
-													Verify Account
+												<button class='focus:outline-none flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-red-500 hover:bg-red-800 border-none text-white text-base font-bold shadow-sm'>
+													{succeed
+														? 'Go Back to Places'
+														: 'Verify'}
 												</button>
+												<p
+													class={`flex flex-row items-center justify-center text-center w-full pt-1 text-sm font-semibold ${
+														props.error
+															? 'text-red-700'
+															: 'text-green-700'
+													} ${
+														props.error || succeed
+															? ''
+															: 'hidden'
+													}`}
+												>
+													<IconAlertCircle class='w-4 h-4 mr-1' />
+													{' '}
+													Invalid Email OTP
+												</p>
 											</div>
 
-											<div class='flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500'>
+											<div
+												class={`flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500 ${
+													succeed ? 'hidden' : ''
+												}`}
+											>
 												<p>Didn't recieve code?</p>{' '}
 												<a
 													class='flex flex-row items-center text-red-400 hover:text-red-700 hover:font-bold'
@@ -97,9 +123,13 @@ export default function OTPForm(
 													Resend
 												</a>
 											</div>
-											<div class='flex flex-row items-center justify-center text-center text-base font-semibold space-x-1 text-gray-500'>
+											<div
+												class={`flex flex-row items-center justify-center text-center text-base font-semibold space-x-1 text-gray-500 ${
+													succeed ? 'hidden' : ''
+												}`}
+											>
 												<a
-													class='flex flex-row items-center text-red-400 hover:text-red-700 hover:font-bold hover:scale-110'
+													class='cursor-pointer flex flex-row items-center text-red-400 hover:text-red-700 hover:font-bold hover:scale-110 focus:outline-none'
 													target='_blank'
 													rel='noopener noreferrer'
 													onClick={props.onPrev}

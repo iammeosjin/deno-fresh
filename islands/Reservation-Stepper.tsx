@@ -139,7 +139,8 @@ export default function ReservationStepper(props: {
 					onNext={() =>
 						setState({ step: state.step + 1, reservation: null })}
 				/>
-				<Agreement
+				{
+					/* <Agreement
 					id={'agreement'}
 					show={state.step === 2}
 					onNext={() =>
@@ -158,7 +159,8 @@ export default function ReservationStepper(props: {
 					reservation={state.reservation!}
 					onPrev={() =>
 						setState({ step: state.step - 1, reservation: null })}
-				/>
+				/> */
+				}
 			</div>
 		</section>
 	);

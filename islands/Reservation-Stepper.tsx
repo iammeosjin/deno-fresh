@@ -2,15 +2,13 @@ import IconListCheck from 'tablerIcons/list-check.tsx';
 import IconListDetails from 'tablerIcons/list-details.tsx';
 import IconUser from 'tablerIcons/user.tsx';
 import IconDatabase from 'tablerIcons/database.tsx';
-import { JSX } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 import Instructions from './Instruction.tsx';
 import Agreement from './Agreement.tsx';
 import ReservationForm from './Reservation-Form.tsx';
 import OTPForm from './OTP-Form.tsx';
 import { PostListProps } from '../components/PostList.tsx';
 import { Reservation } from '../type.ts';
-import OTPFormDone from './OTP-Form-Done.tsx';
 
 const inactiveStepperStyle = {
 	icon: 'border-gray-300 text-gray-500',

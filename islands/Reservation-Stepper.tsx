@@ -11,6 +11,28 @@ import OTPForm from './OTP-Form.tsx';
 import { PostListProps } from '../components/PostList.tsx';
 import { Reservation } from '../type.ts';
 
+const inactiveStepperStyle = {
+	icon: 'border-gray-300 text-gray-500',
+	text: 'text-gray-500',
+	line: 'border-gray-300',
+};
+const activeStepperStyle = {
+	icon: 'text-red-400 border-red-400',
+	text: 'text-red-400',
+	line: 'border-gray-300',
+};
+const doneStepperStyle = {
+	icon: 'text-white border-red-400 bg-red-400',
+	text: 'text-red-400',
+	line: 'border-red-400',
+};
+
+const checkStepperStyle = (index: number, step: number) => {
+	if (index === step) return activeStepperStyle;
+	if (index < step) return doneStepperStyle;
+	return inactiveStepperStyle;
+};
+
 export default function ReservationStepper(props: {
 	spot?: PostListProps;
 }) {
@@ -22,27 +44,7 @@ export default function ReservationStepper(props: {
 		Reservation | null
 	>(null);
 
-	const inactiveStepperStyle = {
-		icon: 'border-gray-300 text-gray-500',
-		text: 'text-gray-500',
-		line: 'border-gray-300',
-	};
-	const activeStepperStyle = {
-		icon: 'text-red-400 border-red-400',
-		text: 'text-red-400',
-		line: 'border-gray-300',
-	};
-	const doneStepperStyle = {
-		icon: 'text-white border-red-400 bg-red-400',
-		text: 'text-red-400',
-		line: 'border-red-400',
-	};
-
-	const checkStepperStyle = (index: number, step: number) => {
-		if (index === step) return activeStepperStyle;
-		if (index < step) return doneStepperStyle;
-		return inactiveStepperStyle;
-	};
+	console.log('test', step);
 
 	return (
 		<section class='relative container pb-120'>

@@ -1,7 +1,6 @@
 import values from 'ramda/source/values.js';
 import { PostListProps } from '../components/PostList.tsx';
 import { Barangay, Reservation } from '../type.ts';
-import spots from '../models/spot.ts';
 
 export default function ReservationForm(
 	props: {

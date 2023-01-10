@@ -14,8 +14,8 @@ export default function ReservationStepper(props: {
 	spot?: PostListProps;
 }) {
 	const [state, setState] = useState<
-		{ step: number; reservation?: Reservation }
-	>({ step: 1 });
+		{ step: number; reservation?: Reservation | null }
+	>({ step: 1, reservation: null });
 
 	const inactiveStepperStyle = {
 		icon: 'border-gray-300 text-gray-500',
@@ -135,12 +135,14 @@ export default function ReservationStepper(props: {
 				<Instructions
 					id={'instructions'}
 					show={state.step === 1}
-					onNext={() => setState({ step: state.step + 1 })}
+					onNext={() =>
+						setState({ step: state.step + 1, reservation: null })}
 				/>
 				<Agreement
 					id={'agreement'}
 					show={state.step === 2}
-					onNext={() => setState({ step: state.step + 1 })}
+					onNext={() =>
+						setState({ step: state.step + 1, reservation: null })}
 				/>
 				<ReservationForm
 					id={'reservationForm'}
@@ -153,7 +155,8 @@ export default function ReservationStepper(props: {
 					id={'otpForm'}
 					show={state.step === 4}
 					reservation={state.reservation!}
-					onPrev={() => setState({ step: state.step - 1 })}
+					onPrev={() =>
+						setState({ step: state.step - 1, reservation: null })}
 				/>
 			</div>
 		</section>

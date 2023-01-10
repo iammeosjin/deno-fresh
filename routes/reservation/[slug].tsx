@@ -33,6 +33,7 @@ export const handler: Handlers<Context> = {
 export default function Home(props: PageProps<Context>) {
 	const data = props.data || {};
 	const spot = spots.find((index) => index.slug === props.params.slug);
+	console.log('spot', spot);
 
 	return (
 		<>

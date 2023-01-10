@@ -34,6 +34,7 @@ export const handler: Handlers<Context> = {
 function Head(props: HeadProps) {
 	let context: ComponentChildren[];
 	try {
+		console.log('HEAD_CONTEXT', HEAD_CONTEXT);
 		context = useContext(HEAD_CONTEXT);
 	} catch (err) {
 		console.log('err', err);

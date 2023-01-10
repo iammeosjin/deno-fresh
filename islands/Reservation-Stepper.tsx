@@ -2,7 +2,7 @@ import IconListCheck from 'tablerIcons/list-check.tsx';
 import IconListDetails from 'tablerIcons/list-details.tsx';
 import IconUser from 'tablerIcons/user.tsx';
 import IconDatabase from 'tablerIcons/database.tsx';
-
+import { JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import Instructions from './Instruction.tsx';
 import Agreement from './Agreement.tsx';
@@ -44,7 +44,16 @@ export default function ReservationStepper(props: {
 		Reservation | null
 	>(null);
 
-	console.log('test', step);
+	const submitReservation = (event: any) => {
+		event.preventDefault();
+
+		setStep(step + 1);
+
+		setReservation({
+			spot: event.target.title.value,
+			email: event.target.email.value,
+		});
+	};
 
 	return (
 		<section class='relative container pb-120'>
@@ -151,7 +160,7 @@ export default function ReservationStepper(props: {
 					id={'reservationForm'}
 					show={step === 3}
 					spot={props.spot}
-					onNext={() => setStep(step + 1)}
+					onSubmit={submitReservation}
 				/>
 				<OTPForm
 					id={'otpForm'}

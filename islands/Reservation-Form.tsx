@@ -6,21 +6,12 @@ export default function ReservationForm(
 	props: {
 		id?: string;
 		spot?: PostListProps;
-		onNext: (reservation?: Reservation) => void;
+		onSubmit: (e: any) => void;
 		show: boolean;
 	},
 ) {
 	const barangayList = values(Barangay);
 	const spot = props.spot;
-
-	const onSubmit = (e: any) => {
-		e.preventDefault();
-
-		props.onNext({
-			spot: e.target.title.value,
-			email: e.target.email.value,
-		});
-	};
 
 	return (
 		<section
@@ -55,7 +46,7 @@ export default function ReservationForm(
 							<div class='flex items-center justify-center pt-5 lg:pt-0'>
 								<div class='mx-auto w-full max-w-[550px]'>
 									<form
-										onSubmit={onSubmit}
+										onSubmit={props.onSubmit}
 										action=''
 										method='POST'
 									>
@@ -156,7 +147,7 @@ export default function ReservationForm(
 														type='text'
 														name='fName'
 														placeholder='Full Name'
-														required={true}
+														required={false}
 														class='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
 													/>
 												</div>
@@ -182,7 +173,7 @@ export default function ReservationForm(
 															type='text'
 															name='mobileNumber'
 															pattern='^[0-9]{10}$'
-															required={true}
+															required={false}
 															class='w-full rounded-none rounded-r-lg border text-[#6B7280] font-medium focus:border-blue-500 bg-white py-3 px-6 outline-none focus:border-[#6A64F1] focus:shadow-md'
 															placeholder='Mobile Number'
 														/>

@@ -41,16 +41,15 @@
 .image-preview img {
   max-width: 100%;
   object-fit:cover;
-  max-width: 100%;
   width: 100%;
   height: 300px;
 }
 
 @media (min-width: 960px){
   .image-preview img{
-    height: 500px;
-    width: 100%;
     object-fit:cover;
+    height: 500px;
+    max-width:100%;
   }
 }
 

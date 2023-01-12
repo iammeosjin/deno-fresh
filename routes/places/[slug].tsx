@@ -60,9 +60,8 @@ export default function Places(
 					</div>
 					<div class='mt-10 relative'>
 						<div class='image-preview flex items-center justify-end'>
-							<div class='image-holder bg-gray-200 rounded-md overflow-hidden hover:scale-105 grid items-center justify-center'>
+							<div class='image-holder bg-gray-200 rounded-md overflow-hidden hover:scale-105 '>
 								<img
-									class='object-cover'
 									src={`/${spot?.image}`}
 								/>
 							</div>

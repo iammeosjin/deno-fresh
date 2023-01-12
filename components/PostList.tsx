@@ -15,6 +15,7 @@ export type PostListProps = {
 	entranceFee?: number;
 	priceRangeLower?: number;
 	priceRangeUpper?: number;
+	search: string;
 };
 
 export default function PostList(
@@ -46,7 +47,7 @@ export default function PostList(
 					</a>
 				</div>
 
-				<div class='text-xs'>
+				<div class='text-xs mt-2'>
 					<CategoryLabel categories={spot.categories} />
 				</div>
 				<h2 class='text-lg font-semibold leading-snug tracking-tight mt-2'>

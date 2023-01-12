@@ -14,6 +14,16 @@ function generatePrices() {
 	};
 }
 
+function generateSearch(params: PostListProps) {
+	return {
+		...params,
+		search: `${params.title.toLowerCase()} ${
+			params.categories.map((category) => category.title.toLowerCase())
+				.join(' ')
+		} ${params.barangay.toLowerCase()}`,
+	};
+}
+
 const spots: PostListProps[] = [
 	{
 		slug: 'agutayan-island',
@@ -90,6 +100,6 @@ const spots: PostListProps[] = [
 		barangay: Barangay.LUZBANSON,
 		...generatePrices(),
 	},
-];
+].map((spot) => generateSearch(spot));
 
 export default spots;

@@ -3,16 +3,15 @@ export default function CategoryLabel(
 ) {
 	return (
 		<div class='flex gap-3'>
-			{categories?.length &&
-				categories.slice(0).map((category) => (
-					<a href='#'>
-						<label
-							class={`inline-block text-xs font-bold tracking-wider uppercase mt-5  ${category.color}`}
-						>
-							{category.title}
-						</label>
-					</a>
-				))}
+			{categories.map((category) => (
+				<a>
+					<label
+						class={`inline-block font-bold tracking-wider uppercase ${category.color}`}
+					>
+						{category.title}
+					</label>
+				</a>
+			))}
 		</div>
 	);
 }

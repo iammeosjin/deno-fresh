@@ -9,12 +9,13 @@ import * as $2 from './routes/api/joke.ts';
 import * as $3 from './routes/contact.tsx';
 import * as $4 from './routes/index.tsx';
 import * as $5 from './routes/login.tsx';
-import * as $6 from './routes/reservation.tsx';
-import * as $7 from './routes/reservation/[slug].tsx';
-import * as $8 from './routes/reset.tsx';
-import * as $9 from './routes/services.tsx';
-import * as $10 from './routes/test.tsx';
-import * as $11 from './routes/upload.tsx';
+import * as $6 from './routes/places/[slug].tsx';
+import * as $7 from './routes/reservation.tsx';
+import * as $8 from './routes/reservation/[slug].tsx';
+import * as $9 from './routes/reset.tsx';
+import * as $10 from './routes/services.tsx';
+import * as $11 from './routes/test.tsx';
+import * as $12 from './routes/upload.tsx';
 import * as $$0 from './islands/About-Services.tsx';
 import * as $$1 from './islands/About-Us.tsx';
 import * as $$2 from './islands/Agreement.tsx';
@@ -36,12 +37,13 @@ const manifest = {
 		'./routes/contact.tsx': $3,
 		'./routes/index.tsx': $4,
 		'./routes/login.tsx': $5,
-		'./routes/reservation.tsx': $6,
-		'./routes/reservation/[slug].tsx': $7,
-		'./routes/reset.tsx': $8,
-		'./routes/services.tsx': $9,
-		'./routes/test.tsx': $10,
-		'./routes/upload.tsx': $11,
+		'./routes/places/[slug].tsx': $6,
+		'./routes/reservation.tsx': $7,
+		'./routes/reservation/[slug].tsx': $8,
+		'./routes/reset.tsx': $9,
+		'./routes/services.tsx': $10,
+		'./routes/test.tsx': $11,
+		'./routes/upload.tsx': $12,
 	},
 	islands: {
 		'./islands/About-Services.tsx': $$0,

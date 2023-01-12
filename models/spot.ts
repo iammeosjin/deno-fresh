@@ -1,6 +1,18 @@
 import { PostListProps } from '../components/PostList.tsx';
 import generateCategoryColors from '../lib/generate-category-colors.ts';
 import { Barangay, Category } from '../type.ts';
+import chance from '../lib/chance.ts';
+
+function generatePrices() {
+	const priceRangeLower = chance.floating({ min: 10, max: 50 });
+	return {
+		address: chance.address(),
+		entranceFee: chance.floating({ min: 10, max: 100 }).toFixed(2),
+		priceRangeLower: priceRangeLower.toFixed(2),
+		priceRangeUpper: chance.floating({ min: priceRangeLower, max: 100 })
+			.toFixed(2),
+	};
+}
 
 const spots: PostListProps[] = [
 	{
@@ -13,6 +25,7 @@ const spots: PostListProps[] = [
 		]),
 		openForReservations: false,
 		barangay: Barangay.DANAO,
+		...generatePrices(),
 	},
 	{
 		slug: 'brew-haa-coffee-and-smoothies',
@@ -21,6 +34,7 @@ const spots: PostListProps[] = [
 		categories: generateCategoryColors([Category.FOOD]),
 		openForReservations: true,
 		barangay: Barangay.LOWER_JASAAN,
+		...generatePrices(),
 	},
 	{
 		slug: 'carloise-restaurant',
@@ -29,6 +43,7 @@ const spots: PostListProps[] = [
 		categories: generateCategoryColors([Category.FOOD]),
 		openForReservations: true,
 		barangay: Barangay.LOWER_JASAAN,
+		...generatePrices(),
 	},
 	{
 		slug: 'perys-resto-and-grill',
@@ -37,6 +52,7 @@ const spots: PostListProps[] = [
 		categories: generateCategoryColors([Category.FOOD]),
 		openForReservations: false,
 		barangay: Barangay.APLAYA,
+		...generatePrices(),
 	},
 	{
 		slug: 'sophie-red-hotel',
@@ -49,6 +65,7 @@ const spots: PostListProps[] = [
 		]),
 		openForReservations: true,
 		barangay: Barangay.BOBONTUGAN,
+		...generatePrices(),
 	},
 	{
 		slug: 'jasaan-immaculate-paris-church',
@@ -59,6 +76,7 @@ const spots: PostListProps[] = [
 		]),
 		openForReservations: false,
 		barangay: Barangay.KIMAYA,
+		...generatePrices(),
 	},
 	{
 		slug: 'sagpulon-falls',
@@ -70,6 +88,7 @@ const spots: PostListProps[] = [
 		]),
 		openForReservations: false,
 		barangay: Barangay.LUZBANSON,
+		...generatePrices(),
 	},
 ];
 

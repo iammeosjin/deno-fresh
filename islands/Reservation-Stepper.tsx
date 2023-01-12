@@ -56,6 +56,15 @@ export default function ReservationStepper(props: {
 	const submitReservation = (event: any) => {
 		event.preventDefault();
 
+		if (event.target.title.value === 'default') {
+			event.target.title.value = '';
+		}
+
+		if (!event.target.checkValidity()) {
+			event.target.reportValidity();
+			return;
+		}
+
 		setStep(step + 1);
 
 		setReservation({

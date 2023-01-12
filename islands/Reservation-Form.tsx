@@ -38,9 +38,9 @@ export default function ReservationForm(
 			</div>
 			<div class='mt-10 relative'>
 				<div class='image-preview flex items-center justify-end'>
-					<div class='grid items-center justify-center rounded-md overflow-hidden hover:scale-105 bg-gray-50 w-full'>
+					<div class='image-holder bg-gray-50 rounded-md overflow-hidden hover:scale-105 grid items-center justify-center'>
 						<img
-							class='object-cover '
+							class='object-cover'
 							src={spot?.image
 								? `/${spot.image}`
 								: '/images/logo.png'}
@@ -68,6 +68,7 @@ export default function ReservationForm(
 																.onBarangayChange}
 														disabled={props
 															.disabled}
+														required={true}
 														class='form-select w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
 													>
 														{props.disabled
@@ -101,7 +102,6 @@ export default function ReservationForm(
 												<div class='mb-5'>
 													<select
 														name='title'
-														required={true}
 														value={props.spot
 															? undefined
 															: 'default'}
@@ -111,6 +111,7 @@ export default function ReservationForm(
 																.onSpotChange}
 														disabled={props
 															.disabled}
+														required={true}
 														class='form-select w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
 													>
 														{props.disabled
@@ -157,6 +158,7 @@ export default function ReservationForm(
 											<div class='w-full px-3 sm:w-1/2'>
 												<div class='mb-5'>
 													<input
+														required={true}
 														type='date'
 														name='date'
 														id='date'
@@ -167,6 +169,7 @@ export default function ReservationForm(
 											<div class='w-full px-3 sm:w-1/2'>
 												<div class='mb-5'>
 													<input
+														required={true}
 														type='time'
 														name='time'
 														id='time'

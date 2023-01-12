@@ -11,6 +11,7 @@ export type PostListProps = {
 	categories: { title: string; color: string }[];
 	openForReservations: boolean;
 	barangay: Barangay;
+	address?: string;
 	entranceFee?: number;
 	priceRangeLower?: number;
 	priceRangeUpper?: number;
@@ -24,10 +25,12 @@ export default function PostList(
 		<>
 			<div class='cursor-pointer md:w-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 p-6 flex flex-col'>
 				<div class='relative inline-block overflow-hidden transition-all bg-gray-100 rounded-md max-w-300 max-h-300 w-300 h-300 hover:scale-105'>
-					<img
-						class='z-0 hover:shadow-lg w-full h-full object-cover'
-						src={spot.image}
-					/>
+					<a href={`/places/${spot.slug}`}>
+						<img
+							class='z-0 hover:shadow-lg w-full h-full object-cover'
+							src={spot.image}
+						/>
+					</a>
 					<a
 						href={`/reservation/${spot.slug}`}
 						class={`${spot.openForReservations ? '' : 'hidden'}`}
@@ -43,7 +46,9 @@ export default function PostList(
 					</a>
 				</div>
 
-				<CategoryLabel categories={spot.categories} />
+				<div class='text-xs'>
+					<CategoryLabel categories={spot.categories} />
+				</div>
 				<h2 class='text-lg font-semibold leading-snug tracking-tight mt-2'>
 					<a href='#'>
 						<span class='link-underline link-underline-red'>

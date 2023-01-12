@@ -95,9 +95,7 @@ export default function AboutServices() {
 								</h3>
 								<p class='mt-4'>
 									Choose and purchase some products made
-									locally in Jasaan Misamis Oriental
-									<br />
-									<br />
+									locally in <br />Jasaan Misamis Oriental
 								</p>
 							</div>
 						</div>

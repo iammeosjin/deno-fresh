@@ -33,6 +33,32 @@ export default function Places(
 ) {
 	const data = props.data || {};
 	const { spot } = data;
+
+	let priceRange = (
+		<span class='leading-7 text-lg'>
+			{spot
+				.priceRangeLower} - {spot
+				.priceRangeUpper}
+		</span>
+	);
+
+	if (!spot.priceRangeLower && !spot.priceRangeUpper) {
+		priceRange = (
+			<span class='leading-6 text-lg'>
+				{spot
+					.entranceFee}
+			</span>
+		);
+
+		if (!spot.entranceFee) {
+			priceRange = (
+				<span class='leading-6 text-base'>
+					N/A
+				</span>
+			);
+		}
+	}
+
 	return (
 		<>
 			<title>
@@ -116,13 +142,7 @@ export default function Places(
 															<div className='relative flex-shrink-0 text-lg'>
 																<IconCoin class='w-6 h-6' />
 															</div>
-															<span class='leading-6 text-lg'>
-																{spot
-																	.priceRangeLower}
-																{' '}
-																- {spot
-																	.priceRangeUpper}
-															</span>
+															{priceRange}
 														</div>
 													</div>
 												</div>

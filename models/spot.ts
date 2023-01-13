@@ -3,15 +3,26 @@ import generateCategoryColors from '../lib/generate-category-colors.ts';
 import { Barangay, Category } from '../type.ts';
 import chance from '../lib/chance.ts';
 
-function generatePrices() {
+function generatePrices(
+	params?: Partial<{ removePriceRange: boolean; removeEntranceFee: boolean }>,
+) {
 	const priceRangeLower = chance.floating({ min: 10, max: 50 });
-	return {
+	const result = {
 		address: chance.address(),
 		entranceFee: chance.floating({ min: 10, max: 100 }).toFixed(2),
 		priceRangeLower: priceRangeLower.toFixed(2),
 		priceRangeUpper: chance.floating({ min: priceRangeLower, max: 100 })
 			.toFixed(2),
 	};
+	if (params?.removeEntranceFee) {
+		delete result.entranceFee;
+	}
+
+	if (params?.removePriceRange) {
+		delete result.priceRangeLower;
+		delete result.priceRangeUpper;
+	}
+	return result;
 }
 
 function generateSearch(params: PostListProps) {
@@ -35,7 +46,7 @@ const spots: PostListProps[] = [
 		]),
 		openForReservations: false,
 		barangay: Barangay.DANAO,
-		...generatePrices(),
+		...generatePrices({ removePriceRange: true }),
 	},
 	{
 		slug: 'brew-haa-coffee-and-smoothies',
@@ -86,6 +97,7 @@ const spots: PostListProps[] = [
 		]),
 		openForReservations: false,
 		barangay: Barangay.KIMAYA,
+		...generatePrices({ removeEntranceFee: true, removePriceRange: true }),
 	},
 	{
 		slug: 'sagpulon-falls',
@@ -97,7 +109,7 @@ const spots: PostListProps[] = [
 		]),
 		openForReservations: false,
 		barangay: Barangay.LUZBANSON,
-		...generatePrices(),
+		...generatePrices({ removePriceRange: true }),
 	},
 ].map((spot) => generateSearch(spot));
 

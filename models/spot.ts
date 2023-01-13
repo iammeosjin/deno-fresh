@@ -86,7 +86,6 @@ const spots: PostListProps[] = [
 		]),
 		openForReservations: false,
 		barangay: Barangay.KIMAYA,
-		...generatePrices(),
 	},
 	{
 		slug: 'sagpulon-falls',

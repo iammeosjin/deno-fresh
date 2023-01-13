@@ -51,7 +51,7 @@ export default function PostList(
 					<CategoryLabel categories={spot.categories} />
 				</div>
 				<h2 class='text-lg font-semibold leading-snug tracking-tight mt-2'>
-					<a href='#'>
+					<a href={`/places/${spot.slug}`}>
 						<span class='link-underline link-underline-red'>
 							{spot.title}
 						</span>

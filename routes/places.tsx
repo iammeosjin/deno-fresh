@@ -3,18 +3,7 @@ import { getCookies } from 'std/http/cookie.ts';
 import NavBar from '../components/NavBar.tsx';
 import { Account, Barangay, Category, Context } from '../type.ts';
 import AccountModel from '../models/account.ts';
-import { Button } from '../components/Button.tsx';
-import { Head } from '../components/Head.tsx';
 import AddPlace from '../islands/Add-Place.tsx';
-
-function toTitleCase(str: string) {
-	return str.replace(
-		/\w\S*/g,
-		function (txt) {
-			return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-		},
-	);
-}
 
 export const handler: Handlers<Context> = {
 	async GET(req, ctx) {
@@ -36,18 +25,18 @@ export default function Places(
 
 	return (
 		<>
-			<Head>
-				<title>
-					Jasaan Tourist Association Center Reservation Online System
-				</title>
-			</Head>
+			<title>
+				Jasaan Tourist Association Center Reservation Online System
+			</title>
 
 			<body>
-				<link rel='stylesheet' href='css/output.css' />
-				<link rel='stylesheet' href='css/common.css' />
+				<link rel='stylesheet' href='/css/output.css' />
+				<link rel='stylesheet' href='/css/common.css' />
+				<link rel='stylesheet' href='/css/slider.css' />
 				<NavBar user={data.user} path={data.path} />
 				<AddPlace />
-				<script src='js/flowbite.js' />
+				<script src='/js/flowbite.js' />
+				<script src='/js/slider.js' />
 			</body>
 		</>
 	);

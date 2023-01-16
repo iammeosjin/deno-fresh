@@ -78,7 +78,7 @@ export default function Places(
 								<div class='section_title text-center pb-6'>
 									<h5 class='sub_title'>Details</h5>
 									<h4 class='main_title'>
-										Reservation Information
+										Place Information
 									</h4>
 								</div>
 							</div>
@@ -109,13 +109,15 @@ export default function Places(
 												</div>
 												<div class='w-full px-3 sm:w-1/2'>
 													<div class='mb-3'>
-														<div className='flex items-center gap-1 tracking-wide'>
-															<span class='leading-6 text-sm'>
-																<CategoryLabel
-																	categories={spot
-																		.categories}
-																/>
-															</span>
+														<div className='leading-6 text-sm flex items-center gap-4 tracking-wide'>
+															{spot.categories
+																.map((
+																	category,
+																) => (
+																	<CategoryLabel
+																		category={category}
+																	/>
+																))}
 														</div>
 													</div>
 												</div>

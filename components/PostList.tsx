@@ -48,7 +48,11 @@ export default function PostList(
 				</div>
 
 				<div class='text-xs mt-2'>
-					<CategoryLabel categories={spot.categories} />
+					<div class='flex gap-4'>
+						{spot.categories.map((category) => (
+							<CategoryLabel category={category} />
+						))}
+					</div>
 				</div>
 				<h2 class='text-lg font-semibold leading-snug tracking-tight mt-2'>
 					<a href={`/places/${spot.slug}`}>

@@ -1,12 +1,12 @@
 import { Handlers, PageProps } from '$fresh/server.ts';
-import { HEAD_CONTEXT, HeadProps } from '$fresh/runtime.ts';
+
 import NavBar from '../components/NavBar.tsx';
 import { Account, Context } from '../type.ts';
 import AccountModel from '../models/account.ts';
 import { getCookies } from 'std/http/cookie.ts';
 import ReservationStepper from '../islands/Reservation-Stepper.tsx';
 import { ComponentChildren } from 'preact';
-import { useContext } from 'preact/hooks';
+import { Head } from '../components/Head.tsx';
 
 export const handler: Handlers<Context> = {
 	async GET(req, ctx) {
@@ -30,22 +30,6 @@ export const handler: Handlers<Context> = {
 		return ctx.render({ user, path: url.pathname });
 	},
 };
-
-function Head(props: HeadProps) {
-	let context: ComponentChildren[];
-	try {
-		console.log('HEAD_CONTEXT', HEAD_CONTEXT);
-		context = useContext(HEAD_CONTEXT);
-	} catch (err) {
-		console.log('err', err);
-		throw new Error(
-			'<Head> component is not supported in the browser, or during suspense renders.',
-			{ cause: err },
-		);
-	}
-	context.push(props.children);
-	return null;
-}
 
 export default function Home(
 	props: PageProps<Context> & { children: ComponentChildren },

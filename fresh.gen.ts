@@ -9,25 +9,27 @@ import * as $2 from './routes/api/joke.ts';
 import * as $3 from './routes/contact.tsx';
 import * as $4 from './routes/index.tsx';
 import * as $5 from './routes/login.tsx';
-import * as $6 from './routes/places/[slug].tsx';
-import * as $7 from './routes/reservation.tsx';
-import * as $8 from './routes/reservation/[slug].tsx';
-import * as $9 from './routes/reset.tsx';
-import * as $10 from './routes/services.tsx';
-import * as $11 from './routes/test.tsx';
-import * as $12 from './routes/upload.tsx';
+import * as $6 from './routes/places.tsx';
+import * as $7 from './routes/places/[slug].tsx';
+import * as $8 from './routes/reservation.tsx';
+import * as $9 from './routes/reservation/[slug].tsx';
+import * as $10 from './routes/reset.tsx';
+import * as $11 from './routes/services.tsx';
+import * as $12 from './routes/test.tsx';
+import * as $13 from './routes/upload.tsx';
 import * as $$0 from './islands/About-Services.tsx';
 import * as $$1 from './islands/About-Us.tsx';
-import * as $$2 from './islands/Agreement.tsx';
-import * as $$3 from './islands/Contact-Us.tsx';
-import * as $$4 from './islands/Counter.tsx';
-import * as $$5 from './islands/Instruction.tsx';
-import * as $$6 from './islands/OTP-Form.tsx';
-import * as $$7 from './islands/Posts.tsx';
-import * as $$8 from './islands/Reservation-Form.tsx';
-import * as $$9 from './islands/Reservation-Stepper.tsx';
-import * as $$10 from './islands/Spots.tsx';
-import * as $$11 from './islands/Team-Members.tsx';
+import * as $$2 from './islands/Add-Place.tsx';
+import * as $$3 from './islands/Agreement.tsx';
+import * as $$4 from './islands/Contact-Us.tsx';
+import * as $$5 from './islands/Counter.tsx';
+import * as $$6 from './islands/Instruction.tsx';
+import * as $$7 from './islands/OTP-Form.tsx';
+import * as $$8 from './islands/Posts.tsx';
+import * as $$9 from './islands/Reservation-Form.tsx';
+import * as $$10 from './islands/Reservation-Stepper.tsx';
+import * as $$11 from './islands/Spots.tsx';
+import * as $$12 from './islands/Team-Members.tsx';
 
 const manifest = {
 	routes: {
@@ -37,27 +39,29 @@ const manifest = {
 		'./routes/contact.tsx': $3,
 		'./routes/index.tsx': $4,
 		'./routes/login.tsx': $5,
-		'./routes/places/[slug].tsx': $6,
-		'./routes/reservation.tsx': $7,
-		'./routes/reservation/[slug].tsx': $8,
-		'./routes/reset.tsx': $9,
-		'./routes/services.tsx': $10,
-		'./routes/test.tsx': $11,
-		'./routes/upload.tsx': $12,
+		'./routes/places.tsx': $6,
+		'./routes/places/[slug].tsx': $7,
+		'./routes/reservation.tsx': $8,
+		'./routes/reservation/[slug].tsx': $9,
+		'./routes/reset.tsx': $10,
+		'./routes/services.tsx': $11,
+		'./routes/test.tsx': $12,
+		'./routes/upload.tsx': $13,
 	},
 	islands: {
 		'./islands/About-Services.tsx': $$0,
 		'./islands/About-Us.tsx': $$1,
-		'./islands/Agreement.tsx': $$2,
-		'./islands/Contact-Us.tsx': $$3,
-		'./islands/Counter.tsx': $$4,
-		'./islands/Instruction.tsx': $$5,
-		'./islands/OTP-Form.tsx': $$6,
-		'./islands/Posts.tsx': $$7,
-		'./islands/Reservation-Form.tsx': $$8,
-		'./islands/Reservation-Stepper.tsx': $$9,
-		'./islands/Spots.tsx': $$10,
-		'./islands/Team-Members.tsx': $$11,
+		'./islands/Add-Place.tsx': $$2,
+		'./islands/Agreement.tsx': $$3,
+		'./islands/Contact-Us.tsx': $$4,
+		'./islands/Counter.tsx': $$5,
+		'./islands/Instruction.tsx': $$6,
+		'./islands/OTP-Form.tsx': $$7,
+		'./islands/Posts.tsx': $$8,
+		'./islands/Reservation-Form.tsx': $$9,
+		'./islands/Reservation-Stepper.tsx': $$10,
+		'./islands/Spots.tsx': $$11,
+		'./islands/Team-Members.tsx': $$12,
 	},
 	baseUrl: import.meta.url,
 	config,

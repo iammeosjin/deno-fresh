@@ -62,7 +62,7 @@ export default function Home(
 				<Spots spots={props.spots} />
 				<script src='js/flowbite.js' />
 				<script src='js/swiper-bundle.min.js' />
-				<script src='js/common.js' />
+				<script src='js/swiper.js' />
 			</body>
 		</>
 	);

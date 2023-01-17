@@ -16,3 +16,11 @@ new Swiper('.mySwiper', {
     prevEl: '.swiper-button-prev',
   },
 });
+
+
+new Swiper("#image-preview", {
+  autoHeight: true,
+  pagination: {
+    el: ".swiper-pagination",
+  },
+});

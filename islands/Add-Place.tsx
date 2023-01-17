@@ -20,10 +20,13 @@ export default function AddPlace() {
 		Category,
 	);
 
-	const [state, setState] = useState<{ tags: Category[] }>({ tags: [] });
+	const [state, setState] = useState<{ tags: Category[]; images: string[] }>(
+		{ tags: [], images: [] },
+	);
 
 	const tags = generateCategoryColors(state.tags);
-
+	const images = state.images; // ['/images/posts/1.jpg', '/images/posts/2.jpg'];
+	console.log(images);
 	return (
 		<section
 			class={`relative lg:pt-16 `}
@@ -42,13 +45,81 @@ export default function AddPlace() {
 			</div>
 			<div class='mt-10 relative'>
 				<div class='image-preview flex items-center justify-end'>
-					<div class='image-holder bg-gray-200 rounded-md overflow-hidden cursor-pointer'>
-						<IconCameraPlus class='w-16 h-16 mx-auto flex items-center min-h-full' />
+					<div
+						class={`image-holder rounded-md overflow-hidden cursor-pointer ${
+							images.length === 0 ? 'hidden' : ''
+						}`}
+					>
+						<div
+							id='image-preview'
+							class='swiper'
+							style='width:100%;height:100%'
+						>
+							<div class='swiper-wrapper'>
+								{images.map((image) => (
+									<div
+										class='swiper-slide'
+										style='width:100%'
+									>
+										<img
+											class='object-cover'
+											src={image}
+										/>
+									</div>
+								))}
+							</div>
+							<div class='swiper-pagination'></div>
+						</div>
+					</div>
+
+					<div
+						class={`image-holder bg-gray-50 rounded-md overflow-hidden cursor-pointer border border-dashed border-gray-500 relative ${
+							images.length === 0 ? '' : 'hidden'
+						}`}
+					>
+						<input
+							type='file'
+							multiple
+							required={true}
+							accept='image/*'
+							onChange={(e) => {
+								const files = [];
+								for (
+									const file of e.currentTarget
+										.files as any
+								) {
+									files.push(
+										URL.createObjectURL(file),
+									);
+								}
+
+								if (files.length > 0) {
+									setState({
+										...state,
+										images: files,
+									});
+								}
+							}}
+							class='cursor-pointer relative block opacity-0 w-full h-full p-20 z-50'
+						/>
+						<div class='text-center p-10 absolute top-0 bottom-0 right-0 left-0 m-auto h-full '>
+							<div class='w-full h-full items-center'>
+								<div class='row h-full items-center'>
+									<h4 class='w-full'>
+										Drop files anywhere to upload
+										<br />or
+										<p class='text-base font-normal text-gray-500'>
+											Select Files
+										</p>
+									</h4>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class='container'>
 					<div class='row justify-end'>
-						<div class='lg:w-1/2 pl-5 pr-5 lg:mt-5'>
+						<div class='lg:w-1/2 pl-5 pr-5'>
 							<div class='flex items-center justify-center pt-5 lg:pt-0'>
 								<div class='mx-auto w-full max-w-[550px]'>
 									<div class='-mx-3 flex flex-wrap'>

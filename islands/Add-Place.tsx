@@ -61,6 +61,7 @@ export default function AddPlace() {
 					mobileNumber: target.mobileNumber.value,
 					categories: state.tags,
 					openForReservations: target.openForReservation.checked,
+					entranceFee: target.entranceFee.value,
 					minCottagePriceRange: target.minCottagePriceRange.value,
 					maxCottagePriceRange: target.maxCottagePriceRange.value,
 					minRoomPriceRange: target.minRoomPriceRange.value,

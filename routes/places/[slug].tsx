@@ -70,6 +70,7 @@ export default function Places(
 			<body>
 				<link rel='stylesheet' href='/css/output.css' />
 				<link rel='stylesheet' href='/css/common.css' />
+				<link rel='stylesheet' href='/css/swiper-bundle.min.css' />
 				<NavBar user={data.user} path={data.path} />
 				<section
 					class={`relative lg:pt-16 `}
@@ -89,9 +90,31 @@ export default function Places(
 					<div class='mt-10 relative'>
 						<div class='image-preview flex items-center justify-end'>
 							<div class='image-holder bg-gray-200 rounded-md overflow-hidden hover:scale-105 '>
-								<img
+								<div
+									id='image-preview'
+									class='swiper'
+									style='width:100%;height:100%'
+								>
+									<div class='swiper-wrapper'>
+										{(spot.images || []).map((image) => (
+											<div
+												class='swiper-slide'
+												style='width:100%'
+											>
+												<img
+													class='object-cover'
+													src={image}
+												/>
+											</div>
+										))}
+									</div>
+									<div class='swiper-pagination'></div>
+								</div>
+								{
+									/* <img
 									src={`${spot?.images[0]}`}
-								/>
+								/> */
+								}
 							</div>
 						</div>
 						<div class='container '>
@@ -162,6 +185,8 @@ export default function Places(
 					</div>
 				</section>
 				<script src='/js/flowbite.js' />
+				<script src='/js/swiper-bundle.min.js' />
+				<script src='/js/swiper.js' />
 			</body>
 		</>
 	);

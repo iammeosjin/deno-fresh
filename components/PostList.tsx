@@ -2,7 +2,6 @@ import IconCalendarTime from 'tablerIcons/calendar-time.tsx';
 import IconMapPin from 'tablerIcons/map-pin.tsx';
 
 import CategoryLabel from './CategoryLabel.tsx';
-import { Barangay } from '../type.ts';
 import { Spot } from '../models/spot.ts';
 import toTitleCase from '../lib/to-title-case.ts';
 

@@ -41,13 +41,13 @@ export default function Places(
 				<link rel='stylesheet' href='/css/output.css' />
 				<link rel='stylesheet' href='/css/common.css' />
 				<link rel='stylesheet' href='/css/slider.css' />
-				<link rel='stylesheet' href='css/swiper-bundle.min.css' />
+				<link rel='stylesheet' href='/css/swiper-bundle.min.css' />
 				<NavBar user={data.user} path={data.path} />
 				<AddPlace />
 				<script src='/js/flowbite.js' />
 				<script src='/js/slider.js' />
-				<script src='js/swiper-bundle.min.js' />
-				<script src='js/swiper.js' />
+				<script src='/js/swiper-bundle.min.js' />
+				<script src='/js/swiper.js' />
 			</body>
 		</>
 	);

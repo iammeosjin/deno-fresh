@@ -1,12 +1,14 @@
 // deno-lint-ignore-file no-explicit-any
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import CategoryLabel from '../components/CategoryLabel.tsx';
 import IconX from 'tablerIcons/x.tsx';
+import IconTrash from 'tablerIcons/trash.tsx';
 import IconTag from 'tablerIcons/tag.tsx';
 import values from 'ramda/source/values.js';
 import uniq from 'ramda/source/uniq.js';
 import reject from 'ramda/source/reject.js';
 import equals from 'ramda/source/equals.js';
+import isEmpty from 'ramda/source/isEmpty.js';
 import { Barangay, Category } from '../type.ts';
 import generateCategoryColors from '../lib/generate-category-colors.ts';
 import { Button } from '../components/Button.tsx';
@@ -21,8 +23,18 @@ export default function AddPlace() {
 		{ tags: [], files: [] },
 	);
 
+	const [images, setImages] = useState<{ name: string; url: string }[]>([]);
+
 	const tags = generateCategoryColors(state.tags);
-	const images = state.files.map((file) => URL.createObjectURL(file)); // ['/images/posts/1.jpg', '/images/posts/2.jpg'];
+	useEffect(() => {
+		setImages(state.files.map((file) => {
+			return {
+				name: file.name,
+				url: URL.createObjectURL(file),
+			};
+		}));
+		swiper.update();
+	}, [state.files]);
 
 	return (
 		<form
@@ -113,19 +125,35 @@ export default function AddPlace() {
 								id='image-preview'
 								class='swiper'
 								style='width:100%;height:100%'
+								onLoad={() => console.log('onload')}
+								onChange={() => console.log('onchange')}
 							>
 								<div class='swiper-wrapper'>
-									{images.map((image) => (
-										<div
-											class='swiper-slide'
-											style='width:100%'
-										>
-											<img
-												class='object-cover'
-												src={image}
-											/>
-										</div>
-									))}
+									{images.map((image, index) => {
+										return (
+											<div
+												class='swiper-slide'
+												style='width:100%'
+											>
+												<img
+													class='object-cover'
+													src={image.url}
+												/>
+												<div class='group z-50 absolute top-1 right-2 flex'>
+													<div
+														onClick={() => {
+															swiper.removeSlide(
+																index,
+															);
+														}}
+														class='bg-gray-50 text-white text-gray-700 min-w-min outline-none focus:outline-none border-none px-1 py-1 rounded-full flex'
+													>
+														<IconTrash class='w-10 h-10' />
+													</div>
+												</div>
+											</div>
+										);
+									})}
 								</div>
 								<div class='swiper-pagination'></div>
 							</div>

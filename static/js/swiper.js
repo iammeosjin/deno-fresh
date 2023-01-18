@@ -26,7 +26,6 @@ const imagePreviewSwiperConfig = {
 };
 const swiper = new Swiper("#image-preview", {
   autoHeight: true,
-  freeMode: true,
   pagination: {
     el: ".swiper-pagination",
   },

@@ -33,7 +33,6 @@ export default function AddPlace() {
 				url: URL.createObjectURL(file),
 			};
 		}));
-		swiper.update();
 	}, [state.files]);
 
 	return (
@@ -125,8 +124,6 @@ export default function AddPlace() {
 								id='image-preview'
 								class='swiper'
 								style='width:100%;height:100%'
-								onLoad={() => console.log('onload')}
-								onChange={() => console.log('onchange')}
 							>
 								<div class='swiper-wrapper'>
 									{images.map((image, index) => {
@@ -145,6 +142,19 @@ export default function AddPlace() {
 															swiper.removeSlide(
 																index,
 															);
+															setState({
+																...state,
+																files: [
+																	...state
+																		.files
+																		.filter(
+																			(file) =>
+																				file.name !==
+																					image
+																						.name
+																		),
+																],
+															});
 														}}
 														class='bg-gray-50 text-white text-gray-700 min-w-min outline-none focus:outline-none border-none px-1 py-1 rounded-full flex'
 													>

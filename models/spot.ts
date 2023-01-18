@@ -1,116 +1,217 @@
-import { PostListProps } from '../components/PostList.tsx';
+// deno-lint-ignore-file no-explicit-any
+
+import head from 'ramda/source/head.js';
+import toPairs from 'ramda/source/toPairs.js';
+import isEmpty from 'ramda/source/isEmpty.js';
+import filter from 'ramda/source/filter.js';
+import identity from 'ramda/source/identity.js';
+import { Account, Barangay, Category } from '../type.ts';
+import pool from '../lib/pool.ts';
 import generateCategoryColors from '../lib/generate-category-colors.ts';
-import { Barangay, Category } from '../type.ts';
-import chance from '../lib/chance.ts';
 
-function generatePrices(
-	params?: Partial<{ removePriceRange: boolean; removeEntranceFee: boolean }>,
-) {
-	const priceRangeLower = chance.floating({ min: 10, max: 50 });
-	const result = {
-		address: chance.address(),
-		entranceFee: chance.floating({ min: 10, max: 100 }).toFixed(2),
-		priceRangeLower: priceRangeLower.toFixed(2),
-		priceRangeUpper: chance.floating({ min: priceRangeLower, max: 100 })
-			.toFixed(2),
-	};
-	if (params?.removeEntranceFee) {
-		delete result.entranceFee;
-	}
+export type Spot = {
+	slug: string;
+	images: string[];
+	name: string;
+	categories: Category[];
+	openForReservations: boolean;
+	barangay: Barangay;
+	address?: string;
+	entranceFee?: number;
+	minCottagePriceRange?: number;
+	maxCottagePriceRange?: number;
+	minRoomPriceRange?: number;
+	maxRoomPriceRange?: number;
+	search: string;
+	owner: string;
+};
 
-	if (params?.removePriceRange) {
-		delete result.priceRangeLower;
-		delete result.priceRangeUpper;
-	}
-	return result;
+function generateSearch(params: Omit<Spot, 'search'>) {
+	return `${params.name.toLowerCase()} ${
+		params.categories.map((category) => category.toLowerCase())
+			.join(' ')
+	} ${params.barangay.toLowerCase()}`;
 }
 
-function generateSearch(params: PostListProps) {
-	return {
-		...params,
-		search: `${params.title.toLowerCase()} ${
-			params.categories.map((category) => category.title.toLowerCase())
-				.join(' ')
-		} ${params.barangay.toLowerCase()}`,
-	};
+export default class SpotModel {
+	static async initialize() {
+		const connection = await pool.connect();
+		try {
+			// Create the table
+			await connection.queryObject`
+				CREATE TABLE IF NOT EXISTS "spots" (
+					id SERIAL PRIMARY KEY,
+					images TEXT[],
+					name TEXT NOT NULL,
+					slug TEXT NOT NULL,
+					categories TEXT[],
+					openForReservations BOOL DEFAULT FALSE,
+					barangay VARCHAR,
+					address TEXT,
+					entranceFee FLOAT,
+					minCottagePriceRange FLOAT,
+					maxCottagePriceRange FLOAT,
+					minRoomPriceRange FLOAT,
+					maxRoomPriceRange FLOAT,
+					owner TEXT,
+					search TEXT,
+					UNIQUE (barangay, name),
+					UNIQUE (slug)
+				);
+			`;
+
+			await connection.queryObject`
+			CREATE INDEX IF NOT EXISTS "spot_search" ON "spots"("slug");
+			`;
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
+	}
+
+	static async findById(id: number) {
+		const connection = await pool.connect();
+		let account: Account | null = null;
+		try {
+			const { rows } = await connection.queryObject<Account>(
+				`
+				SELECT * FROM "accounts" WHERE id = ${id}
+			`,
+			);
+			account = head(rows);
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
+
+		return account;
+	}
+
+	static async create(input: Omit<Spot, 'search'>) {
+		const connection = await pool.connect();
+		try {
+			await connection.queryArray(
+				`
+				INSERT INTO
+				"spots"(
+					"images",
+					"name",
+					"slug",
+					"categories",
+					"barangay",
+					"address",
+					"openforreservations",
+					"entrancefee",
+					"mincottagepricerange",
+					"maxcottagepricerange",
+					"minroompricerange",
+					"maxroompricerange",
+					"owner",
+					"search"
+				)
+				VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+			`,
+				input.images,
+				input.name.toLowerCase(),
+				input.name.toLowerCase().replace(/ /g, '-'),
+				input.categories,
+				input.barangay.toLowerCase(),
+				input.address,
+				input.openForReservations,
+				input.entranceFee,
+				input.minCottagePriceRange,
+				input.maxCottagePriceRange,
+				input.minRoomPriceRange,
+				input.maxRoomPriceRange,
+				input.owner,
+				generateSearch(input),
+			);
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
+	}
+
+	static async findBySlug(slug: string) {
+		const connection = await pool.connect();
+		let doc: Spot | null = null;
+		try {
+			const { rows } = await connection.queryObject<Spot>(
+				`
+				SELECT 
+					slug, 
+					name, 
+					images,
+					address,
+					barangay, 
+					categories, 
+					openforreservations as "openForReservations", 
+					entrancefee as "entranceFee", 
+					mincottagepricerange as "minCottagePriceRange", 
+					maxcottagepricerange as "maxCottagePriceRange",
+					minroompricerange as "minRoomPriceRange",
+					maxroompricerange as "maxRoomPriceRange"
+				FROM spots WHERE slug = '${slug}'
+			`,
+			);
+			doc = head(rows);
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
+
+		return doc;
+	}
+
+	static async find(params: {
+		filter?: Partial<
+			{ barangay: string | null; openForReservations: boolean }
+		>;
+	}) {
+		const connection = await pool.connect();
+
+		const filters: string[] = [];
+
+		const input = filter(identity, params.filter || {});
+
+		if (!isEmpty(input)) {
+			toPairs(input).map(([key, value]: [string, any]) => {
+				if (typeof value === 'string') {
+					filters.push(`${key}='${value}'`);
+				} else {
+					filters.push(`${key}=${value}`);
+				}
+			});
+		}
+
+		try {
+			const { rows } = await connection.queryObject<Spot>(
+				`
+				SELECT
+					slug, 
+					name, 
+					images,
+					address,
+					barangay, 
+					categories, 
+					openforreservations as "openForReservations", 
+					entrancefee as "entranceFee", 
+					mincottagepricerange as "minCottagePriceRange", 
+					maxcottagepricerange as "maxCottagePriceRange",
+					minroompricerange as "minRoomPriceRange",
+					maxroompricerange as "maxRoomPriceRange"
+				FROM spots ${
+					isEmpty(filters) ? '' : `WHERE ${filters.join(' AND ')}`
+				}
+	`,
+			);
+			return rows.map((row) => ({
+				...row,
+				categories: generateCategoryColors(row.categories),
+			}));
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
+	}
 }
-
-const spots: PostListProps[] = [
-	{
-		slug: 'agutayan-island',
-		image: 'images/spots/2.jpg',
-		title: 'Agutayan Island',
-		categories: generateCategoryColors([
-			Category.SWIM,
-			Category.TOURIST_ATTRACTION,
-		]),
-		openForReservations: false,
-		barangay: Barangay.DANAO,
-		...generatePrices({ removePriceRange: true }),
-	},
-	{
-		slug: 'brew-haa-coffee-and-smoothies',
-		image: 'images/spots/3.jpg',
-		title: 'Brew Haa Coffee and Smoothies',
-		categories: generateCategoryColors([Category.FOOD]),
-		openForReservations: true,
-		barangay: Barangay.LOWER_JASAAN,
-		...generatePrices(),
-	},
-	{
-		slug: 'carloise-restaurant',
-		image: 'images/spots/carloise_2.jpg',
-		title: 'Carloise Restaurant',
-		categories: generateCategoryColors([Category.FOOD]),
-		openForReservations: true,
-		barangay: Barangay.LOWER_JASAAN,
-		...generatePrices(),
-	},
-	{
-		slug: 'perys-resto-and-grill',
-		image: 'images/spots/perys_2.jpg',
-		title: 'Pery’s Resto and Grill',
-		categories: generateCategoryColors([Category.FOOD]),
-		openForReservations: false,
-		barangay: Barangay.APLAYA,
-		...generatePrices(),
-	},
-	{
-		slug: 'sophie-red-hotel',
-		image: 'images/spots/sophie_red_hotel_2.jpg',
-		title: 'Sophie Red Hotel',
-		categories: generateCategoryColors([
-			Category.FOOD,
-			Category.STAY,
-			Category.SWIM,
-		]),
-		openForReservations: true,
-		barangay: Barangay.BOBONTUGAN,
-		...generatePrices(),
-	},
-	{
-		slug: 'jasaan-immaculate-paris-church',
-		image: 'images/spots/paris_church_1.jpg',
-		title: 'Jasaan Immaculate Paris Church',
-		categories: generateCategoryColors([
-			Category.TOURIST_ATTRACTION,
-		]),
-		openForReservations: false,
-		barangay: Barangay.KIMAYA,
-		...generatePrices({ removeEntranceFee: true, removePriceRange: true }),
-	},
-	{
-		slug: 'sagpulon-falls',
-		image: 'images/spots/sagpulon_4.jpg',
-		title: 'Sagpulon Falls',
-		categories: generateCategoryColors([
-			Category.TOURIST_ATTRACTION,
-			Category.SWIM,
-		]),
-		openForReservations: false,
-		barangay: Barangay.LUZBANSON,
-		...generatePrices({ removePriceRange: true }),
-	},
-].map((spot) => generateSearch(spot));
-
-export default spots;

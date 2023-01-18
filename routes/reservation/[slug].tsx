@@ -5,9 +5,9 @@ import { Account, Context } from '../../type.ts';
 import AccountModel from '../../models/account.ts';
 import { getCookies } from 'std/http/cookie.ts';
 import ReservationStepper from '../../islands/Reservation-Stepper.tsx';
-import spots from '../../models/spot.ts';
+import SpotModel, { Spot } from '../../models/spot.ts';
 
-export const handler: Handlers<Context> = {
+export const handler: Handlers<Context & { spot: Spot }> = {
 	async GET(req, ctx) {
 		const cookies = getCookies(req.headers);
 		let user: Account | undefined | null = undefined;
@@ -16,23 +16,25 @@ export const handler: Handlers<Context> = {
 		}
 		const url = new URL(req.url);
 
-		return ctx.render({ user, path: url.pathname });
-	},
+		const { slug } = ctx.params;
 
-	async POST(req, ctx) {
-		const cookies = getCookies(req.headers);
-		let user: Account | undefined | null = undefined;
-		if (cookies.user) {
-			user = await AccountModel.findById(parseInt(cookies.user, 10));
-		}
-		const url = new URL(req.url);
-		return ctx.render({ user, path: url.pathname });
+		const spot = await SpotModel.findBySlug(slug);
+
+		return ctx.render({ user, path: url.pathname, spot: spot! });
 	},
+	// async POST(req, ctx) {
+	// 	const cookies = getCookies(req.headers);
+	// 	let user: Account | undefined | null = undefined;
+	// 	if (cookies.user) {
+	// 		user = await AccountModel.findById(parseInt(cookies.user, 10));
+	// 	}
+	// 	const url = new URL(req.url);
+	// 	return ctx.render({ user, path: url.pathname });
+	// },
 };
 
-export default function Home(props: PageProps<Context>) {
+export default function Home(props: PageProps<Context & { spot: Spot }>) {
 	const data = props.data || {};
-	const spot = spots.find((index) => index.slug === props.params.slug);
 
 	return (
 		<>
@@ -44,7 +46,7 @@ export default function Home(props: PageProps<Context>) {
 				<link rel='stylesheet' href='/css/output.css' />
 				<link rel='stylesheet' href='/css/common.css' />
 				<NavBar user={data.user} path={data.path} />
-				<ReservationStepper spot={spot} />
+				<ReservationStepper spot={data.spot} />
 				<script src='/js/flowbite.js' />
 			</body>
 		</>

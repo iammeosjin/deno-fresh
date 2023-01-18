@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import compose from 'ramda/source/compose.js';
 import nth from 'ramda/source/nth.js';
 import split from 'ramda/source/split.js';
@@ -16,7 +17,7 @@ const getBoundary = compose(
 const ipfsToken = Deno.env.get('IPFS_TOKEN');
 const env = Deno.env.get('ENVIRONMENT');
 
-export default async function upload(req: Request, key: string) {
+export default async function upload(req: Request) {
 	let boundary;
 	const contentType = req.headers.get('content-type');
 
@@ -29,7 +30,6 @@ export default async function upload(req: Request, key: string) {
 	}
 
 	const bucket = resolve(Deno.cwd(), './static/bucket');
-	console.log('bucket', bucket);
 
 	const body = req.body?.getReader();
 	const reader = readerFromStreamReader(body!);
@@ -39,20 +39,26 @@ export default async function upload(req: Request, key: string) {
 		dir: bucket,
 	});
 
-	const files = (form.files(key) || []);
-	const file = files[0];
-
-	const name = crypto.randomUUID().replace(/-/g, '');
+	const result: { name: string; url: string; uuid: string }[] = [];
 
 	const uploader = env === 'production'
 		? IPFS.uploadFileToNFTStorage
-		: IPFS.uploadFileLocal;
+		: IPFS.uploadBufferLocal;
 
-	return {
-		name: name,
-		url: await uploader(
-			{ name, content: file.content as Uint8Array },
-			ipfsToken as string,
-		),
-	};
+	for (const entry of form.entries()) {
+		const [name, files] = entry;
+
+		const file: any = files![0];
+
+		result.push({
+			name: name,
+			uuid: crypto.randomUUID().replace(/-/g, ''),
+			url: await uploader(
+				{ name, content: file.content as Uint8Array },
+				ipfsToken as string,
+			),
+		});
+	}
+
+	return result;
 }

@@ -1,9 +1,8 @@
 import { Handlers, PageProps } from '$fresh/server.ts';
-import { Head } from '$fresh/runtime.ts';
 import NavBar from '../components/NavBar.tsx';
 import { Account, Context, Post } from '../type.ts';
 import AccountModel from '../models/account.ts';
-import spots from '../models/spot.ts';
+import SpotModel from '../models/spot.ts';
 import { getCookies } from 'std/http/cookie.ts';
 import Posts from '../islands/Posts.tsx';
 import PostModel from '../models/post.ts';
@@ -25,13 +24,10 @@ export const handler: Handlers<
 		const posts = await PostModel.find();
 		const search = url.searchParams.get('search');
 
+		const spots = await SpotModel.find({});
 		return ctx.render({
 			user,
-			spots: search
-				? spots.filter((spot) =>
-					spot.search.includes(search.toLowerCase())
-				)
-				: spots,
+			spots: spots as unknown as PostListProps[],
 			path: url.pathname,
 			posts: chance.shuffle([
 				...posts,

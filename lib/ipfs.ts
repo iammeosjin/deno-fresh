@@ -1,5 +1,37 @@
 export default class IPFS {
 	static async uploadFileLocal(params: {
+		file: File;
+		name: string;
+	}) {
+		const form = new FormData();
+		form.append(
+			'file',
+			params.file,
+		);
+
+		// const headers = new Headers();
+
+		// headers.set('Authorization', `Bearer ${ipfsToken}`);
+
+		const response = await fetch(
+			`http://127.0.0.1:5001/api/v0/add?stream-channels=true&pin=false&wrap-with-directory=false&progress=false`,
+			{
+				method: 'POST',
+				headers: new Headers(),
+				body: form,
+			},
+		);
+
+		if (response.status >= 300) {
+			console.log(await response.text());
+			throw new Error('Invalid IPFS request');
+		}
+
+		const body = await response.json();
+
+		return `http://localhost:8080/ipfs/${body.Hash}`;
+	}
+	static async uploadBufferLocal(params: {
 		content: Uint8Array;
 		name: string;
 	}) {

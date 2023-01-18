@@ -6,17 +6,18 @@ import config from './deno.json' assert { type: 'json' };
 import * as $0 from './routes/[name].tsx';
 import * as $1 from './routes/about.tsx';
 import * as $2 from './routes/api/joke.ts';
-import * as $3 from './routes/contact.tsx';
-import * as $4 from './routes/index.tsx';
-import * as $5 from './routes/login.tsx';
-import * as $6 from './routes/places.tsx';
-import * as $7 from './routes/places/[slug].tsx';
-import * as $8 from './routes/reservation.tsx';
-import * as $9 from './routes/reservation/[slug].tsx';
-import * as $10 from './routes/reset.tsx';
-import * as $11 from './routes/services.tsx';
-import * as $12 from './routes/test.tsx';
-import * as $13 from './routes/upload.tsx';
+import * as $3 from './routes/api/spots.ts';
+import * as $4 from './routes/contact.tsx';
+import * as $5 from './routes/index.tsx';
+import * as $6 from './routes/login.tsx';
+import * as $7 from './routes/places.tsx';
+import * as $8 from './routes/places/[slug].tsx';
+import * as $9 from './routes/reservation.tsx';
+import * as $10 from './routes/reservation/[slug].tsx';
+import * as $11 from './routes/reset.tsx';
+import * as $12 from './routes/services.tsx';
+import * as $13 from './routes/test.tsx';
+import * as $14 from './routes/upload.tsx';
 import * as $$0 from './islands/About-Services.tsx';
 import * as $$1 from './islands/About-Us.tsx';
 import * as $$2 from './islands/Add-Place.tsx';
@@ -36,17 +37,18 @@ const manifest = {
 		'./routes/[name].tsx': $0,
 		'./routes/about.tsx': $1,
 		'./routes/api/joke.ts': $2,
-		'./routes/contact.tsx': $3,
-		'./routes/index.tsx': $4,
-		'./routes/login.tsx': $5,
-		'./routes/places.tsx': $6,
-		'./routes/places/[slug].tsx': $7,
-		'./routes/reservation.tsx': $8,
-		'./routes/reservation/[slug].tsx': $9,
-		'./routes/reset.tsx': $10,
-		'./routes/services.tsx': $11,
-		'./routes/test.tsx': $12,
-		'./routes/upload.tsx': $13,
+		'./routes/api/spots.ts': $3,
+		'./routes/contact.tsx': $4,
+		'./routes/index.tsx': $5,
+		'./routes/login.tsx': $6,
+		'./routes/places.tsx': $7,
+		'./routes/places/[slug].tsx': $8,
+		'./routes/reservation.tsx': $9,
+		'./routes/reservation/[slug].tsx': $10,
+		'./routes/reset.tsx': $11,
+		'./routes/services.tsx': $12,
+		'./routes/test.tsx': $13,
+		'./routes/upload.tsx': $14,
 	},
 	islands: {
 		'./islands/About-Services.tsx': $$0,

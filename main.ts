@@ -11,8 +11,10 @@ import PostModel from './models/post.ts';
 
 import twindPlugin from '$fresh/plugins/twind.ts';
 import twindConfig from './twind.config.ts';
+import SpotModel from './models/spot.ts';
 
 await AccountModel.initialize();
 await PostModel.initialize();
+await SpotModel.initialize();
 
 await start(manifest, { plugins: [twindPlugin(twindConfig)] });

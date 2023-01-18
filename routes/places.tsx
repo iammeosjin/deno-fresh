@@ -4,6 +4,7 @@ import NavBar from '../components/NavBar.tsx';
 import { Account, Barangay, Category, Context } from '../type.ts';
 import AccountModel from '../models/account.ts';
 import AddPlace from '../islands/Add-Place.tsx';
+import SpotModel from '../models/spot.ts';
 
 export const handler: Handlers<Context> = {
 	async GET(req, ctx) {
@@ -15,6 +16,13 @@ export const handler: Handlers<Context> = {
 		const url = new URL(req.url);
 
 		return ctx.render({ user, path: url.pathname });
+	},
+	async POST(req) {
+		const body = await req.json();
+		await SpotModel.create(body);
+		return new Response('OK', {
+			status: 200, // "See Other"
+		});
 	},
 };
 

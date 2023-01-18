@@ -3,19 +3,11 @@ import IconMapPin from 'tablerIcons/map-pin.tsx';
 
 import CategoryLabel from './CategoryLabel.tsx';
 import { Barangay } from '../type.ts';
+import { Spot } from '../models/spot.ts';
+import toTitleCase from '../lib/to-title-case.ts';
 
-export type PostListProps = {
-	slug: string;
-	image: string;
-	title: string;
+export type PostListProps = Omit<Spot, 'categories'> & {
 	categories: { title: string; color: string }[];
-	openForReservations: boolean;
-	barangay: Barangay;
-	address?: string;
-	entranceFee?: number;
-	priceRangeLower?: number;
-	priceRangeUpper?: number;
-	search: string;
 };
 
 export default function PostList(
@@ -29,7 +21,7 @@ export default function PostList(
 					<a href={`/places/${spot.slug}`}>
 						<img
 							class='z-0 hover:shadow-lg w-full h-full object-cover'
-							src={spot.image}
+							src={spot.images[0]}
 						/>
 					</a>
 					<a
@@ -57,7 +49,7 @@ export default function PostList(
 				<h2 class='text-lg font-semibold leading-snug tracking-tight mt-2'>
 					<a href={`/places/${spot.slug}`}>
 						<span class='link-underline link-underline-red'>
-							{spot.title}
+							{toTitleCase(spot.name)}
 						</span>
 					</a>
 				</h2>
@@ -66,7 +58,9 @@ export default function PostList(
 						<div className='relative flex-shrink-0'>
 							<IconMapPin class='w-5 h-5' />
 						</div>
-						<span className='text-sm'>{spot.barangay}</span>
+						<span className='text-sm'>
+							{toTitleCase(spot.barangay)}
+						</span>
 					</div>
 				</div>
 			</div>

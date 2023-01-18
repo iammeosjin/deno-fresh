@@ -3,13 +3,14 @@ import { getCookies } from 'std/http/cookie.ts';
 import NavBar from '../../components/NavBar.tsx';
 import { Account, Context } from '../../type.ts';
 import AccountModel from '../../models/account.ts';
-import spots from '../../models/spot.ts';
-import { PostListProps } from '../../components/PostList.tsx';
+import SpotModel, { Spot } from '../../models/spot.ts';
 import CategoryLabel from '../../components/CategoryLabel.tsx';
 import IconMapPin from 'tablerIcons/map-pin.tsx';
 import IconCoin from 'tablerIcons/coin.tsx';
+import generateCategoryColors from '../../lib/generate-category-colors.ts';
+import toTitleCase from '../../lib/to-title-case.ts';
 
-export const handler: Handlers<Context & { spot: PostListProps }> = {
+export const handler: Handlers<Context & { spot: Spot }> = {
 	async GET(req, ctx) {
 		const cookies = getCookies(req.headers);
 		let user: Account | undefined | null = undefined;
@@ -20,29 +21,30 @@ export const handler: Handlers<Context & { spot: PostListProps }> = {
 
 		const { slug } = ctx.params;
 
-		const spot = await Promise.resolve(
-			spots.find((index) => index.slug === slug),
-		);
+		const spot = await SpotModel.findBySlug(slug);
 
 		return ctx.render({ user, path: url.pathname, spot: spot! });
 	},
 };
 
 export default function Places(
-	props: PageProps<Context & { spot: PostListProps }>,
+	props: PageProps<Context & { spot: Spot }>,
 ) {
 	const data = props.data || {};
 	const { spot } = data;
 
+	const categories = generateCategoryColors(spot.categories);
+
+	const priceRangeLower = spot.minRoomPriceRange || spot.minCottagePriceRange;
+	const priceRangeUpper = spot.maxRoomPriceRange || spot.maxCottagePriceRange;
+
 	let priceRange = (
 		<span class='leading-7 text-lg'>
-			{spot
-				.priceRangeLower} - {spot
-				.priceRangeUpper}
+			{priceRangeLower} - {priceRangeUpper}
 		</span>
 	);
 
-	if (!spot.priceRangeLower && !spot.priceRangeUpper) {
+	if (!priceRangeLower && !priceRangeUpper) {
 		priceRange = (
 			<span class='leading-6 text-lg'>
 				{spot
@@ -88,7 +90,7 @@ export default function Places(
 						<div class='image-preview flex items-center justify-end'>
 							<div class='image-holder bg-gray-200 rounded-md overflow-hidden hover:scale-105 '>
 								<img
-									src={`/${spot?.image}`}
+									src={`${spot?.images[0]}`}
 								/>
 							</div>
 						</div>
@@ -102,7 +104,9 @@ export default function Places(
 													<div class='mb-1'>
 														<div className='flex items-center gap-1 tracking-wide'>
 															<h2 class='leading-6 text-2xl'>
-																{spot.title}
+																{toTitleCase(
+																	spot.name,
+																)}
 															</h2>
 														</div>
 													</div>
@@ -110,7 +114,7 @@ export default function Places(
 												<div class='w-full px-3 sm:w-1/2'>
 													<div class='mb-3'>
 														<div className='leading-6 text-sm flex items-center gap-4 tracking-wide'>
-															{spot.categories
+															{categories
 																.map((
 																	category,
 																) => (
@@ -131,9 +135,10 @@ export default function Places(
 																<IconMapPin class='w-6 h-6' />
 															</div>
 															<span class='leading-6 text-lg'>
-																{spot.barangay}
-																{' '}
-																| {spot.address}
+																{toTitleCase(
+																	spot.barangay,
+																)} |{' '}
+																{spot.address}
 															</span>
 														</div>
 													</div>

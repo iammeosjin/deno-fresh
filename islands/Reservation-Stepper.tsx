@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import IconListCheck from 'tablerIcons/list-check.tsx';
 import IconListDetails from 'tablerIcons/list-details.tsx';
 import IconUser from 'tablerIcons/user.tsx';
@@ -9,7 +10,7 @@ import ReservationForm from './Reservation-Form.tsx';
 import OTPForm from './OTP-Form.tsx';
 import { PostListProps } from '../components/PostList.tsx';
 import { Reservation } from '../type.ts';
-import spots from '../models/spot.ts';
+import spots, { Spot } from '../models/spot.ts';
 
 const inactiveStepperStyle = {
 	icon: 'border-gray-300 text-gray-500',
@@ -34,7 +35,7 @@ const checkStepperStyle = (index: number, step: number) => {
 };
 
 export default function ReservationStepper(props: {
-	spot?: PostListProps;
+	spot?: Spot;
 }) {
 	const [step, setStep] = useState<
 		number
@@ -44,8 +45,8 @@ export default function ReservationStepper(props: {
 		{
 			error: boolean;
 			disabled: boolean;
-			spot?: PostListProps;
-			availableSpots?: PostListProps[];
+			spot?: Spot;
+			availableSpots?: Spot[];
 		}
 	>({ error: false, disabled: !!props.spot });
 
@@ -97,14 +98,16 @@ export default function ReservationStepper(props: {
 		});
 	};
 
-	const onBarangayChange = (event: any) => {
+	const onBarangayChange = async (event: any) => {
+		const response = await fetch(
+			`/api/spots?barangay=${event.target.value.toLowerCase()}&openForReservations=true`,
+		);
+		const spots = await response.json();
 		setInput({
 			error: false,
 			disabled: false,
 			spot: undefined,
-			availableSpots: spots.filter((spot) =>
-				spot.barangay === event.target.value && spot.openForReservations
-			),
+			availableSpots: spots,
 		});
 	};
 
@@ -112,7 +115,9 @@ export default function ReservationStepper(props: {
 		setInput({
 			error: false,
 			disabled: false,
-			spot: spots.find((spot) => spot.slug === event.target.value),
+			spot: (input.availableSpots || []).find((spot) =>
+				spot.slug === event.target.value
+			),
 			availableSpots: input.availableSpots,
 		});
 	};

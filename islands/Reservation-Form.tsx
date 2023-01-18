@@ -1,12 +1,13 @@
+// deno-lint-ignore-file no-explicit-any
 import values from 'ramda/source/values.js';
-import { PostListProps } from '../components/PostList.tsx';
+import { Spot } from '../models/spot.ts';
 import { Barangay } from '../type.ts';
 
 export default function ReservationForm(
 	props: {
 		id?: string;
-		spot?: PostListProps;
-		availableSpots?: PostListProps[];
+		spot?: Spot;
+		availableSpots?: Spot[];
 		onSubmit: (e: any) => void;
 		onBarangayChange: (e: any) => void;
 		onSpotChange: (e: any) => void;
@@ -40,8 +41,8 @@ export default function ReservationForm(
 					<div class='image-holder bg-gray-50 rounded-md overflow-hidden hover:scale-105 grid items-center justify-center'>
 						<img
 							class='object-cover'
-							src={spot?.image
-								? `/${spot.image}`
+							src={spot?.images[0]
+								? spot.images[0]
 								: '/images/logo.png'}
 						/>
 					</div>
@@ -120,7 +121,7 @@ export default function ReservationForm(
 																		?.slug}
 																>
 																	{spot
-																		?.title}
+																		?.name}
 																</option>
 															)
 															: [
@@ -142,7 +143,7 @@ export default function ReservationForm(
 																						.slug}
 																				>
 																					{spot
-																						.title}
+																						.name}
 																				</option>
 																			);
 																		},

@@ -5,7 +5,7 @@ export default function OTPForm(
 	props: {
 		id?: string;
 		error: boolean;
-		reservation: Reservation & { otp?: string };
+		reservation: Omit<Reservation, 'id'> & { otp?: string };
 		onPrev?: () => void;
 		onSubmit?: (e: any) => void;
 		show: boolean;

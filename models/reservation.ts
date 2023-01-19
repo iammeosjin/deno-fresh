@@ -125,6 +125,36 @@ export default class ReservationModel {
 		}
 	}
 
+	static async find(filter: {
+		spot: string;
+		email: string;
+		mobileNumber: string;
+	}) {
+		const connection = await pool.connect();
+
+		try {
+			const { rows } = await connection.queryObject<Reservation>(
+				`
+				SELECT
+					"id",
+					"spot",
+					"name",
+					"mobileNumber",
+					"email",
+					"schedule",
+					"dateTimeCreated"
+				FROM reservations 
+				WHERE "spot" = '${filter.spot}' AND "email"='${filter.email}' AND "mobileNumber"='${filter.mobileNumber}' AND "deleted"=false
+				LIMIT 1
+			`,
+			);
+			return rows;
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
+	}
+
 	static async findBySpot(spot: string) {
 		const connection = await pool.connect();
 
@@ -140,7 +170,7 @@ export default class ReservationModel {
 					"schedule",
 					"dateTimeCreated"
 				FROM reservations 
-				WHERE "spot" = '${spot}' AND "deleted"=true
+				WHERE "spot" = '${spot}' AND "deleted"=false
 				LIMIT 1
 			`,
 			);

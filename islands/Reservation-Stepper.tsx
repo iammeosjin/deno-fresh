@@ -3,13 +3,16 @@ import IconListCheck from 'tablerIcons/list-check.tsx';
 import IconListDetails from 'tablerIcons/list-details.tsx';
 import IconUser from 'tablerIcons/user.tsx';
 import IconDatabase from 'tablerIcons/database.tsx';
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import Instructions from './Instruction.tsx';
 import Agreement from './Agreement.tsx';
 import ReservationForm from './Reservation-Form.tsx';
 import OTPForm from './OTP-Form.tsx';
 import { Reservation } from '../type.ts';
 import { Spot } from '../models/spot.ts';
+import { DateTime } from 'https://cdn.skypack.dev/luxon?dts';
+import { Button } from '../components/Button.tsx';
+import toTitleCase from '../lib/to-title-case.ts';
 
 const inactiveStepperStyle = {
 	icon: 'border-gray-300 text-gray-500',
@@ -40,6 +43,10 @@ export default function ReservationStepper(props: {
 		number
 	>(1);
 
+	const [error, setError] = useState<
+		string | null
+	>(null);
+
 	const [input, setInput] = useState<
 		{
 			error: boolean;
@@ -50,10 +57,15 @@ export default function ReservationStepper(props: {
 	>({ error: false, disabled: !!props.spot });
 
 	const [reservation, setReservation] = useState<
-		Reservation & { otp?: string } | null
+		Omit<Reservation, 'id'> & { otp?: string } | null
 	>(null);
 
-	const submitReservation = (event: any) => {
+	if (error) {
+		console.log('error', error);
+		document.getElementById('error-modal')?.classList.remove('hidden');
+	}
+
+	const submitReservation = async (event: any) => {
 		event.preventDefault();
 
 		if (event.target.title.value === 'default') {
@@ -62,6 +74,47 @@ export default function ReservationStepper(props: {
 
 		if (!event.target.checkValidity()) {
 			event.target.reportValidity();
+			return;
+		}
+		const schedule = new Date(event.target.schedule.value);
+		if (schedule < new Date()) {
+			setError(
+				`Cannot set schedule behind the current time`,
+			);
+			return;
+		}
+
+		const headers = new Headers();
+		headers.set('Content-Type', 'application/json');
+		const response = await fetch('/api/reservation', {
+			method: 'POST',
+			headers,
+			body: JSON.stringify({
+				spot: event.target.title.value,
+				name: event.target.name.value,
+				email: event.target.email.value,
+				mobileNumber: event.target.mobileNumber.value,
+				schedule: schedule.toISOString() as any,
+			}),
+		});
+
+		if (response.status >= 400) {
+			const body = await response.json();
+			const spot = props.spot || input.spot;
+			if (body.code === 'DUPLICATE_RESERVATION') {
+				setError(
+					`You have a pending reservation in ${
+						toTitleCase(spot!.name)
+					} at ${
+						DateTime.fromJSDate(
+							new Date(body.reservation.schedule),
+						).setZone('utc+8').toFormat(
+							'MMM dd, yyyy ccc hh:mm a',
+						)
+					}`,
+				);
+			}
+
 			return;
 		}
 
@@ -134,6 +187,26 @@ export default function ReservationStepper(props: {
 
 	return (
 		<section class='relative container pb-120'>
+			<div
+				id='error-modal'
+				class='hidden bg-gray-50 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 z-50'
+			>
+				<div class='bg-white px-12 py-12 rounded-md text-center'>
+					<h1 class='text-xl mb-4 font-bold text-slate-500'>
+						{error}
+					</h1>
+					<Button
+						onClick={() => {
+							setError(null);
+							document.getElementById('error-modal')?.classList
+								.add('hidden');
+						}}
+						class='px-7 py-2 ml-2 rounded-md text-md text-white font-semibold'
+					>
+						Ok
+					</Button>
+				</div>
+			</div>
 			<div class='p-5'>
 				<div class='mx-4 p-4'>
 					<div class='flex items-center'>
@@ -225,17 +298,17 @@ export default function ReservationStepper(props: {
 			<div id='stepper' class='container'>
 				<Instructions
 					id={'instructions'}
-					show={step === 1}
+					show={step === 0}
 					onNext={() => setStep(step + 1)}
 				/>
 				<Agreement
 					id={'agreement'}
-					show={step === 2}
+					show={step === 0}
 					onNext={() => setStep(step + 1)}
 				/>
 				<ReservationForm
 					id={'reservationForm'}
-					show={step === 3}
+					show={step === 1}
 					spot={spot}
 					onSubmit={submitReservation}
 					onBarangayChange={onBarangayChange}
@@ -245,7 +318,7 @@ export default function ReservationStepper(props: {
 				/>
 				<OTPForm
 					id={'otpForm'}
-					show={step === 4}
+					show={step === 2}
 					reservation={reservation!}
 					onPrev={() => setStep(3)}
 					error={input.error}

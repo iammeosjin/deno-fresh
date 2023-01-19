@@ -97,7 +97,7 @@ export default function OTPForm(
 															? 'text-red-700'
 															: 'text-green-700'
 													} ${
-														props.error || succeed
+														props.error
 															? ''
 															: 'hidden'
 													}`}

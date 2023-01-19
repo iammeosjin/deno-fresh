@@ -8,9 +8,8 @@ import Instructions from './Instruction.tsx';
 import Agreement from './Agreement.tsx';
 import ReservationForm from './Reservation-Form.tsx';
 import OTPForm from './OTP-Form.tsx';
-import { PostListProps } from '../components/PostList.tsx';
 import { Reservation } from '../type.ts';
-import spots, { Spot } from '../models/spot.ts';
+import { Spot } from '../models/spot.ts';
 
 const inactiveStepperStyle = {
 	icon: 'border-gray-300 text-gray-500',
@@ -73,10 +72,12 @@ export default function ReservationStepper(props: {
 			name: event.target.name.value,
 			email: event.target.email.value,
 			mobileNumber: event.target.mobileNumber.value,
+			schedule: new Date(event.target.schedule.value)
+				.toISOString() as any,
 		});
 	};
 
-	const submitOTP = (event: any) => {
+	const submitOTP = async (event: any) => {
 		event.preventDefault();
 
 		const otp = [
@@ -90,6 +91,13 @@ export default function ReservationStepper(props: {
 			setInput({ error: true, disabled: false });
 			return;
 		}
+		const headers = new Headers();
+		headers.set('Content-Type', 'application/json');
+		await fetch('/reservation', {
+			method: 'POST',
+			headers,
+			body: JSON.stringify(reservation),
+		});
 
 		setStep(step + 1);
 		setReservation({

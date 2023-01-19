@@ -1,5 +1,4 @@
 import { Handlers, PageProps } from '$fresh/server.ts';
-import { Head } from 'https://deno.land/x/fresh@1.1.2/runtime.ts';
 import NavBar from '../components/NavBar.tsx';
 import AccountModel from '../models/account.ts';
 import { Account, Context } from '../type.ts';

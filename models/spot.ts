@@ -163,6 +163,34 @@ export default class SpotModel {
 		return doc;
 	}
 
+	static async findByOwner(owner: string) {
+		const connection = await pool.connect();
+		try {
+			const { rows } = await connection.queryObject<Spot>(
+				`
+				SELECT 
+					slug, 
+					name, 
+					images,
+					address,
+					barangay, 
+					categories, 
+					openforreservations as "openForReservations", 
+					entrancefee as "entranceFee", 
+					mincottagepricerange as "minCottagePriceRange", 
+					maxcottagepricerange as "maxCottagePriceRange",
+					minroompricerange as "minRoomPriceRange",
+					maxroompricerange as "maxRoomPriceRange"
+				FROM spots WHERE owner = '${owner}'
+			`,
+			);
+			return rows;
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
+	}
+
 	static async find(params: {
 		filter?: Partial<
 			{ barangay: string | null; openForReservations: boolean }

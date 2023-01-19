@@ -8,7 +8,6 @@ import values from 'ramda/source/values.js';
 import uniq from 'ramda/source/uniq.js';
 import reject from 'ramda/source/reject.js';
 import equals from 'ramda/source/equals.js';
-import isEmpty from 'ramda/source/isEmpty.js';
 import { Barangay, Category } from '../type.ts';
 import generateCategoryColors from '../lib/generate-category-colors.ts';
 import { Button } from '../components/Button.tsx';
@@ -69,7 +68,7 @@ export default function AddPlace() {
 					barangay: target.barangay.value,
 					name: target.placeName.value,
 					address: target.address.value,
-					mobileNumber: target.mobileNumber.value,
+					owner: target.mobileNumber.value,
 					categories: state.tags,
 					openForReservations: target.openForReservation.checked,
 					entranceFee: target.entranceFee.value,
@@ -148,10 +147,12 @@ export default function AddPlace() {
 																	...state
 																		.files
 																		.filter(
-																			(file) =>
-																				file.name !==
-																					image
-																						.name
+																			(
+																				file,
+																			) => file
+																				.name !==
+																				image
+																					.name,
 																		),
 																],
 															});

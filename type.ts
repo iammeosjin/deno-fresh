@@ -28,6 +28,7 @@ export type Post = {
 
 export type Context = {
 	user?: Account | null;
+	owner?: string | null;
 	path: string;
 	error?: Error;
 };
@@ -48,8 +49,10 @@ export enum Barangay {
 }
 
 export type Reservation = {
+	id: number;
 	spot: string;
 	name: string;
 	email: string;
 	mobileNumber: string;
+	schedule: Date;
 };

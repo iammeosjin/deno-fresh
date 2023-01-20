@@ -3,7 +3,7 @@ import IconListCheck from 'tablerIcons/list-check.tsx';
 import IconListDetails from 'tablerIcons/list-details.tsx';
 import IconUser from 'tablerIcons/user.tsx';
 import IconDatabase from 'tablerIcons/database.tsx';
-import { useEffect, useState } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 import Instructions from './Instruction.tsx';
 import Agreement from './Agreement.tsx';
 import ReservationForm from './Reservation-Form.tsx';
@@ -13,6 +13,8 @@ import { Spot } from '../models/spot.ts';
 import { DateTime } from 'https://cdn.skypack.dev/luxon?dts';
 import { Button } from '../components/Button.tsx';
 import toTitleCase from '../lib/to-title-case.ts';
+import totp from '../lib/otp.ts';
+import isNil from 'ramda/source/isNil.js';
 
 const inactiveStepperStyle = {
 	icon: 'border-gray-300 text-gray-500',
@@ -52,6 +54,8 @@ export default function ReservationStepper(props: {
 			error: boolean;
 			disabled: boolean;
 			spot?: Spot;
+			otp?: string;
+			otpTimestamp?: number;
 			availableSpots?: Spot[];
 		}
 	>({ error: false, disabled: !!props.spot });
@@ -77,6 +81,7 @@ export default function ReservationStepper(props: {
 			return;
 		}
 		const schedule = new Date(event.target.schedule.value);
+		const spot = props.spot || input.spot;
 		if (schedule < new Date()) {
 			setError(
 				`Cannot set schedule behind the current time`,
@@ -100,7 +105,6 @@ export default function ReservationStepper(props: {
 
 		if (response.status >= 400) {
 			const body = await response.json();
-			const spot = props.spot || input.spot;
 			if (body.code === 'DUPLICATE_RESERVATION') {
 				setError(
 					`You have a pending reservation in ${
@@ -118,7 +122,51 @@ export default function ReservationStepper(props: {
 			return;
 		}
 
+		const timestamp = Date.now();
+		const token = totp.generate({ timestamp });
+
+		await fetch('/api/email', {
+			method: 'POST',
+			headers,
+			body: JSON.stringify({
+				email: event.target.email.value,
+				title: 'Reservation OTP',
+				body:
+					`<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
+						<div style="margin:50px auto;width:70%;padding:20px 0">
+							<div style="border-bottom:1px solid #eee">
+								<a href="https://tacros.deno.dev/about#team" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Jasaan Tourist Association Center</a>
+							</div>
+							<p style="font-size:1.1em">Hi ${
+						toTitleCase(event.target.name.value)
+					},</p>
+							<p>
+							Thank you for choosing Jasaan Tourist Association Center. This is to confirm you reservation at ${
+						toTitleCase(spot!.name)
+					} on ${
+						DateTime.fromJSDate(
+							new Date(event.target.schedule.value),
+						).setZone('utc+8').toFormat(
+							'MMM dd, yyyy ccc hh:mm a',
+						)
+					}
+							</p>
+							<br/>
+							<p>Use the following OTP to complete your reservation. OTP is valid for 5 minutes</p>
+							<h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${token}</h2>
+							<hr style="border:none;border-top:1px solid #eee" />
+						</div>
+					</div>`,
+			}),
+		});
+
 		setStep(step + 1);
+
+		setInput({
+			...input,
+			otp: token,
+			otpTimestamp: timestamp,
+		});
 
 		setReservation({
 			spot: event.target.title.value,
@@ -140,10 +188,25 @@ export default function ReservationStepper(props: {
 			event.target.otp4.value,
 		].join('');
 
-		if (otp != '1234') {
+		const delta = totp.validate({
+			token: otp,
+			window: 1,
+			timestamp: input.otpTimestamp,
+		});
+
+		console.log(otp, input.otp);
+		console.log('delta', delta);
+
+		if (isNil(delta) || (delta || 0) > 0) {
 			setInput({ error: true, disabled: false });
 			return;
 		}
+
+		if (otp !== input.otp) {
+			setInput({ error: true, disabled: false });
+			return;
+		}
+
 		const headers = new Headers();
 		headers.set('Content-Type', 'application/json');
 		await fetch('/reservation', {
@@ -298,17 +361,17 @@ export default function ReservationStepper(props: {
 			<div id='stepper' class='container'>
 				<Instructions
 					id={'instructions'}
-					show={step === 0}
+					show={step === 1}
 					onNext={() => setStep(step + 1)}
 				/>
 				<Agreement
 					id={'agreement'}
-					show={step === 0}
+					show={step === 2}
 					onNext={() => setStep(step + 1)}
 				/>
 				<ReservationForm
 					id={'reservationForm'}
-					show={step === 1}
+					show={step === 3}
 					spot={spot}
 					onSubmit={submitReservation}
 					onBarangayChange={onBarangayChange}
@@ -318,7 +381,7 @@ export default function ReservationStepper(props: {
 				/>
 				<OTPForm
 					id={'otpForm'}
-					show={step === 2}
+					show={step === 4}
 					reservation={reservation!}
 					onPrev={() => setStep(3)}
 					error={input.error}

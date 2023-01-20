@@ -15,6 +15,7 @@
     "https://cdn.skypack.dev/-/luxon@v3.2.1-CDelY5O7HgJ51zFP7o8O/dist=es2019,mode=types/src/misc.d.ts": "52ed17fe2c0a4bb27a4f13e99234b3d1f364dc27f9bd7964946d5ec62792a0cc",
     "https://cdn.skypack.dev/-/luxon@v3.2.1-CDelY5O7HgJ51zFP7o8O/dist=es2019,mode=types/src/settings.d.ts": "d1582c4a1587316a67c1641cfe354a8d30d9457fa7c8a9e6e5198b27840fc6e6",
     "https://cdn.skypack.dev/-/luxon@v3.2.1-CDelY5O7HgJ51zFP7o8O/dist=es2019,mode=types/src/zone.d.ts": "45938045285af93edb0065d83c44410e18b34fd1285b5ce46e025a46d5042a46",
+    "https://cdn.skypack.dev/-/node-mailjet@v6.0.1-LLYO8YXeH64WkO6o7cbN/dist=es2019,mode=imports/optimized/node-mailjet.js": "670eedad8f1ffd327ffb9e8fa0bd8f52aacd11188132b11b53fa06ce870d9096",
     "https://cdn.skypack.dev/-/nodemailer@v6.9.0-kZXu07IbytXOPyTE1xkv/dist=es2019,mode=imports/optimized/nodemailer.js": "dad2d0f2d76190539b813e386e780d56cb31592c54e9176e4ab3e1fef45eb0e5",
     "https://cdn.skypack.dev/-/nodemailer@v6.9.0-kZXu07IbytXOPyTE1xkv/dist=es2019,mode=types/index.d.ts": "ede945a7352fc38cdc45cec1dff244fae93b979ba7f52fca4a7ad75ef99fa3af",
     "https://cdn.skypack.dev/-/nodemailer@v6.9.0-kZXu07IbytXOPyTE1xkv/dist=es2019,mode=types/lib/dkim/index.d.ts": "bbcfce3b6c04b8299943c79e2893897e9c98182833910f425c7f46a4f465cfe3",

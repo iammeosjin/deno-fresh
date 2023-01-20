@@ -7,10 +7,15 @@ export const handler: Handlers<Context> = {
 		const body = await req.json();
 
 		try {
-			await sendEmail(body.email, {
+			const response = await sendEmail(body.email, {
 				title: body.title,
 				body: body.body,
 			});
+			const message = await response.text();
+			console.log(message);
+			if (response.status >= 400) {
+				throw new Error(message);
+			}
 		} catch {
 			return new Response(null, {
 				status: 400,

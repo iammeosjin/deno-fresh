@@ -125,6 +125,36 @@ export default function ReservationStepper(props: {
 		const timestamp = Date.now();
 		const token = totp.generate({ timestamp });
 
+		// const emailResponse = await sendEmail(event.target.email.value, {
+		// 	title: 'Reservation OTP',
+		// 	body:
+		// 		`<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
+		// 				<div style="margin:50px auto;width:70%;padding:20px 0">
+		// 					<div style="border-bottom:1px solid #eee">
+		// 						<a href="https://tacros.deno.dev/about#team" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Jasaan Tourist Association Center</a>
+		// 					</div>
+		// 					<p style="font-size:1.1em">Hi ${
+		// 			toTitleCase(event.target.name.value)
+		// 		},</p>
+		// 					<p>
+		// 					Thank you for choosing Jasaan Tourist Association Center. This is to confirm you reservation at ${
+		// 			toTitleCase(spot!.name)
+		// 		} on ${
+		// 			DateTime.fromJSDate(
+		// 				new Date(event.target.schedule.value),
+		// 			).setZone('utc+8').toFormat(
+		// 				'MMM dd, yyyy ccc hh:mm a',
+		// 			)
+		// 		}
+		// 					</p>
+		// 					<br/>
+		// 					<p>Use the following OTP to complete your reservation. OTP is valid for 5 minutes</p>
+		// 					<h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${token}</h2>
+		// 					<hr style="border:none;border-top:1px solid #eee" />
+		// 				</div>
+		// 			</div>`,
+		// });
+
 		const emailResponse = await fetch('/api/email', {
 			method: 'POST',
 			headers,

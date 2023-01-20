@@ -3,7 +3,7 @@ import { SmtpClient } from 'https://deno.land/x/smtp@v0.7.0/mod.ts';
 const client = new SmtpClient();
 
 const gmailCreds =
-	(Deno.env.get('GMAIL') || 'fakejohnroa@gmail.com:puzzbwouzjzoeuvl')
+	(Deno.env.get('GMAIL') || 'fakejohnroa@gmail.com:qesqrvkxoczuhowi')
 		.split(':');
 
 export default async function sendEmail(email: string, params: {

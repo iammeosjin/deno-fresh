@@ -1,7 +1,7 @@
 import { SmtpClient } from 'https://deno.land/x/smtp@v0.7.0/mod.ts';
 
 const client = new SmtpClient({
-	content_encoding: 'quoted-printable',
+	content_encoding: 'base64',
 });
 
 const gmailCreds =
@@ -25,7 +25,7 @@ export default async function sendEmail(email: string, params: {
 		console.log('sending');
 
 		await client.send({
-			from: 'fakejohnroa@gmail.com', // Your Email address
+			from: 'tacros@support.com', // Your Email address
 			to: email, // Email address of the destination
 			subject: params.title,
 			content: params.body,

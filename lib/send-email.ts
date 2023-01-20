@@ -11,6 +11,7 @@ export default async function sendEmail(email: string, params: {
 	body: string;
 }) {
 	try {
+		console.log('connecting');
 		await client.connectTLS({
 			hostname: 'smtp.gmail.com',
 			port: 465,
@@ -18,12 +19,16 @@ export default async function sendEmail(email: string, params: {
 			password: gmailCreds[1],
 		});
 
+		console.log('sending');
+
 		await client.send({
 			from: 'fakejohnroa@gmail.com', // Your Email address
 			to: email, // Email address of the destination
 			subject: params.title,
 			content: params.body,
 		});
+
+		console.log('closing');
 
 		await client.close();
 	} catch (error) {

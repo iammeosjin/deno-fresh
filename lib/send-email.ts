@@ -19,7 +19,7 @@ export default async function sendEmail(email: string, params: {
 		});
 
 		await client.send({
-			from: 'someone@163.com', // Your Email address
+			from: 'fakejohnroa@gmail.com', // Your Email address
 			to: email, // Email address of the destination
 			subject: params.title,
 			content: params.body,
@@ -28,5 +28,6 @@ export default async function sendEmail(email: string, params: {
 		await client.close();
 	} catch (error) {
 		console.log('error', error);
+		throw error;
 	}
 }

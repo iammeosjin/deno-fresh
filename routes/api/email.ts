@@ -6,10 +6,16 @@ export const handler: Handlers<Context> = {
 	async POST(req) {
 		const body = await req.json();
 
-		await sendEmail(body.email, {
-			title: body.title,
-			body: body.body,
-		});
+		try {
+			await sendEmail(body.email, {
+				title: body.title,
+				body: body.body,
+			});
+		} catch {
+			return new Response(null, {
+				status: 400,
+			});
+		}
 		return new Response(null, {
 			status: 200,
 		});

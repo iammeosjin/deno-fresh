@@ -125,7 +125,7 @@ export default function ReservationStepper(props: {
 		const timestamp = Date.now();
 		const token = totp.generate({ timestamp });
 
-		await fetch('/api/email', {
+		const emailResponse = await fetch('/api/email', {
 			method: 'POST',
 			headers,
 			body: JSON.stringify({
@@ -159,6 +159,13 @@ export default function ReservationStepper(props: {
 					</div>`,
 			}),
 		});
+
+		if (emailResponse.status >= 400) {
+			setError(
+				`Cannot send email. Connection refused.`,
+			);
+			return;
+		}
 
 		setStep(step + 1);
 

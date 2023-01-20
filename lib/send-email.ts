@@ -1,7 +1,7 @@
 import { SmtpClient } from 'https://deno.land/x/smtp@v0.7.0/mod.ts';
 
 const client = new SmtpClient({
-	content_encoding: 'base64',
+	content_encoding: 'quoted-printable',
 });
 
 const gmailCreds =

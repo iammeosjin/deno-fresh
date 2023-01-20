@@ -20,3 +20,16 @@ await SpotModel.initialize();
 await ReservationModel.initialize();
 
 await start(manifest, { plugins: [twindPlugin(twindConfig)] });
+
+globalThis.addEventListener('unhandledrejection', (e) => {
+	const err = e.reason;
+	if (
+		err instanceof Deno.errors.ConnectionReset ||
+		err instanceof Deno.errors.BrokenPipe
+	) {
+		console.warn(
+			'unhandled rejection',
+			err,
+		);
+	}
+});

@@ -6,8 +6,8 @@ export default function sendEmail(email: string, params: {
 	myHeaders.append('Content-Type', 'application/json');
 	myHeaders.append(
 		'Authorization',
-		'Basic ' + Deno.env.get('MJ_TOKEN') ||
-			'ODI0MGE0NTIyZjg2MTcxY2Q2NTdkNTlmY2Q2N2MxMTg6MWVlMjdhNGRiMTFiMzQ2NzY4ZjVjMDg3MWJiYTYyODY=',
+		'Basic ' + (Deno.env.get('MJ_TOKEN') ||
+			'ODI0MGE0NTIyZjg2MTcxY2Q2NTdkNTlmY2Q2N2MxMTg6MWVlMjdhNGRiMTFiMzQ2NzY4ZjVjMDg3MWJiYTYyODY='),
 	);
 
 	const raw = JSON.stringify({

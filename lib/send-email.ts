@@ -6,12 +6,13 @@ export default function sendEmail(email: string, params: {
 	myHeaders.append('Content-Type', 'application/json');
 	myHeaders.append(
 		'Authorization',
-		'Basic MzAyZDJmZjlkYzhiNzIyZGVjOTdlYWJhODZiZDY4MjA6ZThjNzkxMjJiODkzY2MxZTMyZTE3NmEzODhiMDUwNTU=',
+		'Basic ' + Deno.env.get('MJ_TOKEN') ||
+			'ODI0MGE0NTIyZjg2MTcxY2Q2NTdkNTlmY2Q2N2MxMTg6MWVlMjdhNGRiMTFiMzQ2NzY4ZjVjMDg3MWJiYTYyODY=',
 	);
 
 	const raw = JSON.stringify({
-		FromEmail: Deno.env.get('MJ_APIKEY_PRIVATE') ||
-			'iammeosjin@gmail.com',
+		FromEmail: Deno.env.get('MJ_EMAIL') ||
+			'jasaantacros.123@gmail.com',
 		FromName: 'Jasaan Tourist Association Center',
 		Subject: params.title,
 		'Html-part': params.body,

@@ -3,7 +3,7 @@ import { SmtpClient } from 'https://deno.land/x/smtp@v0.7.0/mod.ts';
 const client = new SmtpClient();
 
 const gmailCreds =
-	(Deno.env.get('GMAIL') || 'fakejohnroa@gmail.com:qesqrvkxoczuhowi')
+	(Deno.env.get('GMAIL') || 'iammeosjin@gmail.com:xGEtwaAd6MpYQv3g')
 		.split(':');
 
 export default async function sendEmail(email: string, params: {
@@ -12,9 +12,10 @@ export default async function sendEmail(email: string, params: {
 }) {
 	try {
 		console.log('connecting');
-		await client.connectTLS({
-			hostname: 'smtp.gmail.com',
-			port: 465,
+		console.log(gmailCreds);
+		await client.connect({
+			hostname: 'smtp-relay.sendinblue.com',
+			port: 587,
 			username: gmailCreds[0],
 			password: gmailCreds[1],
 		});

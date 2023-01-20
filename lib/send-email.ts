@@ -1,6 +1,8 @@
 import { SmtpClient } from 'https://deno.land/x/smtp@v0.7.0/mod.ts';
 
-const client = new SmtpClient();
+const client = new SmtpClient({
+	content_encoding: 'quoted-printable',
+});
 
 const gmailCreds =
 	(Deno.env.get('GMAIL') || 'iammeosjin@gmail.com:xGEtwaAd6MpYQv3g')

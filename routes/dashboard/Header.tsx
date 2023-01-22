@@ -1,39 +1,14 @@
-import { Context } from '../type.ts';
+import { Context } from '../../type.ts';
 
 type NavBarProps = Pick<Context, 'user' | 'path' | 'owner'>;
 
 export default function NavBar(props: NavBarProps) {
-	const navigations = [
-		{
-			title: 'Home',
-			path: '/',
-		},
-		{
-			title: 'About',
-			path: '/about',
-		},
-		{
-			title: 'Services',
-			path: '/services',
-		},
-		{
-			title: 'Contact',
-			path: '/contact',
-		},
-	];
-
 	const theme = {
 		bg: 'bg-transparent',
 	};
 
-	const fixInset = ['/', '/login', '/reset'].includes(props.path);
-
-	if (!fixInset) {
-		theme.bg = 'bg-white';
-	}
-
 	return (
-		<header class={fixInset ? 'fixed w-full inset-0' : 'w-full z-10'}>
+		<header class={'w-full z-10'}>
 			<nav class={'border-gray-200 py-2.5 ' + theme.bg}>
 				<div class='flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto'>
 					<a href='#' class='flex items-center'>
@@ -86,10 +61,10 @@ export default function NavBar(props: NavBarProps) {
 							)
 							: (
 								<a
-									href='/login'
-									class='font-bold text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 focus:outline-none'
+									href='/dashboard?logout=true'
+									class='font-bold text-red-500 hover:bg-red-500 hover:text-white focus:ring-4 focus:ring-red-300 rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 focus:outline-none'
 								>
-									Login
+									Logout
 								</a>
 							)}
 
@@ -128,33 +103,6 @@ export default function NavBar(props: NavBarProps) {
 								</path>
 							</svg>
 						</button>
-					</div>
-					<div
-						class='items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1'
-						id='mobile-menu-2'
-					>
-						<ul class='flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0'>
-							{navigations.map((navigation) => {
-								let navClass =
-									`text-xl lg:hover:text-red-700 font-extrabold block py-2 pl-3 pr-4 text-gray-${
-										props.path === '/' ? '200' : '400'
-									} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:p-0`;
-								if (props.path === navigation.path) {
-									navClass =
-										'text-xl font-extrabold block py-2 pl-3 pr-4 text-red bg-red-700 rounded lg:bg-transparent lg:text-red-700 lg:p-0';
-								}
-								return (
-									<li>
-										<a
-											href={navigation.path}
-											class={navClass}
-										>
-											{navigation.title}
-										</a>
-									</li>
-								);
-							})}
-						</ul>
 					</div>
 				</div>
 			</nav>

@@ -12,7 +12,6 @@ export const handler: Handlers<Context> = {
 				body: body.body,
 			});
 			const message = await response.text();
-			console.log(message);
 			if (response.status >= 400) {
 				throw new Error(message);
 			}

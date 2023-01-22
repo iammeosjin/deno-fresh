@@ -2,19 +2,26 @@ import { Handlers, PageProps } from '$fresh/server.ts';
 import { Account, Context } from '../type.ts';
 import AccountModel from '../models/account.ts';
 import ReservationModel from '../models/reservation.ts';
-import { getCookies, setCookie } from 'std/http/cookie.ts';
+import { deleteCookie, getCookies, setCookie } from 'std/http/cookie.ts';
 import SpotModel from '../models/spot.ts';
 
 export const handler: Handlers<Context> = {
-	async GET(req, ctx) {
+	GET(req, ctx) {
 		const cookies = getCookies(req.headers);
-		let user: Account | undefined | null = undefined;
-		if (cookies.user) {
-			user = await AccountModel.findById(parseInt(cookies.user, 10));
-		}
 		const url = new URL(req.url);
 
-		return ctx.render({ user, owner: cookies.owner, path: url.pathname });
+		const logout = url.searchParams.get('logout') === 'true';
+		if (logout) {
+			const headers = new Headers(req.headers);
+			deleteCookie(headers, 'owner', { domain: url.hostname });
+			headers.set('location', '/dashboard');
+			return new Response(null, {
+				status: 303, // "See Other"
+				headers,
+			});
+		}
+
+		return ctx.render({ owner: cookies.owner, path: url.pathname });
 	},
 	async POST(req, ctx) {
 		const form = await req.formData();

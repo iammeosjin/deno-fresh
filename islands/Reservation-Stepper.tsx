@@ -65,7 +65,6 @@ export default function ReservationStepper(props: {
 	>(null);
 
 	if (error) {
-		console.log('error', error);
 		document.getElementById('error-modal')?.classList.remove('hidden');
 	}
 

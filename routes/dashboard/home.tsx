@@ -7,6 +7,7 @@ import ReservationModel from '../../models/reservation.ts';
 import SpotModel, { Spot } from '../../models/spot.ts';
 
 import Reservations from '../../islands/Reservations.tsx';
+import NavBar from './Header.tsx';
 
 export const handler: Handlers<
 	Context & {
@@ -77,6 +78,7 @@ export default function Places(
 				<link rel='stylesheet' href='/css/output.css' />
 				<link rel='stylesheet' href='/css/common.css' />
 				<link rel='stylesheet' href='/css/swiper-bundle.min.css' />
+				<NavBar owner={data.owner} path={data.path} />
 				<section id='places' class='bg-white pt-10 pb-20'>
 					<div class='container w-full mx-auto'>
 						<div class='row justify-center'>

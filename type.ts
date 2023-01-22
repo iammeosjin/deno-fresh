@@ -23,7 +23,8 @@ export type Post = {
 	title: string;
 	description: string;
 	message: string;
-	url: string;
+	images: string[];
+	dateTimeCreated: Date;
 };
 
 export type Context = {

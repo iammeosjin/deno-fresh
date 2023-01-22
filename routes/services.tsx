@@ -4,7 +4,7 @@ import { Account, Context, Post } from '../type.ts';
 import AccountModel from '../models/account.ts';
 import SpotModel from '../models/spot.ts';
 import { getCookies } from 'std/http/cookie.ts';
-import Posts from '../islands/Posts.tsx';
+import Posts from '../islands/Stories.tsx';
 import PostModel from '../models/post.ts';
 import Spots from '../islands/Spots.tsx';
 import chance from '../lib/chance.ts';

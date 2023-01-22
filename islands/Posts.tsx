@@ -1,44 +1,225 @@
-import { Post } from '../type.ts';
+// deno-lint-ignore-file no-explicit-any
+import { Button } from '../components/Button.tsx';
+import { Context, Post } from '../type.ts';
+import IconTrash from 'tablerIcons/trash.tsx';
+import values from 'ramda/source/values.js';
+import equals from 'ramda/source/equals.js';
+import reject from 'ramda/source/reject.js';
+import { useEffect, useState } from 'preact/hooks';
+import toTitleCase from '../lib/to-title-case.ts';
 
-export default function Posts(props: { posts: Post[] }) {
+export default function Posts(
+	props: Omit<Context, 'path'> & { posts: Post[] },
+) {
 	const { posts } = props;
+	const [images, setImages] = useState<File[]>([]);
 	return (
-		<section class='bg-gray-100 pt-7 pb-4'>
-			<div class='row justify-center'>
-				<div class='w-full'>
-					<div class='section_title text-center pb-6'>
-						<h5 class='sub_title'>Posts</h5>
-						<h4 class='main_title'>Some of Our Recent Posts</h4>
-					</div>
-				</div>
-			</div>
-			<div class='mx-auto container h-full'>
-				<div class='swiper mySwiper'>
-					<div class='swiper-wrapper '>
-						{posts.map((post) => {
-							const image = post.url;
-							return (
-								<div class='swiper-slide'>
-									<div class='h-full min-h-full story-item relative hover:opacity-90 cursor-pointer transition duration-200 ease-in-out'>
-										<img
-											src={image}
-											class='block absolute rounded-xl h-full min-h-full object-cover'
-										/>
-										{
-											/* <div class='absolute flex flex-col justify-between h-full w-full top-0 left-0 py-0 z-10'>
-											<div class='text-center absolute bottom-0 w-full text-white p-0 h-16'>
-												{post.title}
-											</div>
-										</div> */
-										}
+		<section
+			id='posts'
+			class='w-full pt-0 lg:pt-5 lg:pb-16 relative bg-gray-100'
+		>
+			<div class='flex row mx-auto sm:w-full md:w-full lg:w-5/12 xl:w-2/6 sm:w-full lg:mt-0'>
+				<div class={`container ${props.user ? '' : 'hidden'}`}>
+					<form
+						method='POST'
+						action='/api/posts'
+						onSubmit={async (e) => {
+							e.preventDefault();
+							const form = new FormData();
+							for (const image of images) {
+								form.append(
+									image.name,
+									image,
+								);
+							}
+
+							const response = await fetch('/upload', {
+								method: 'POST',
+								body: form,
+							});
+
+							if (response.status > 300) {
+								throw new Error(
+									`Error in uploading file: ${await response
+										.text()}`,
+								);
+							}
+
+							const files = await response.json();
+
+							const target: any = e.target;
+
+							const input = reject(equals(''), {
+								images: files.map((image: any) => image.url),
+								title: target.title.value,
+								description: target.description.value,
+							});
+
+							const headers = new Headers();
+							headers.set('Content-Type', 'application/json');
+
+							const addPostResponse = await fetch('/api/posts', {
+								method: 'POST',
+								headers,
+								body: JSON.stringify(input),
+							});
+
+							if (addPostResponse.status > 300) {
+								throw new Error(
+									`Error adding the spot: ${await addPostResponse
+										.text()}`,
+								);
+							}
+
+							window.location.href = '/?#posts';
+						}}
+					>
+						<div class='bg-white shadow-md border border-gray-200 rounded-lg mb-5'>
+							<div class='post-image-preview rounded-t-lg w-full object-cover sm:h-72'>
+								<div
+									class={`image-holder rounded-md overflow-hidden cursor-pointer ${
+										images.length === 0 ? 'hidden' : ''
+									}`}
+								>
+									<div
+										id='image-preview'
+										class='swiper'
+										style='width:100%;height:100%'
+									>
+										<div class='swiper-wrapper'>
+											{images.map((image, index) => {
+												return (
+													<div
+														class='swiper-slide'
+														style='width:100%'
+													>
+														<img
+															class='object-cover'
+															src={URL
+																.createObjectURL(
+																	image,
+																)}
+														/>
+														<div class='group z-50 absolute top-1 right-2 flex'>
+															<div
+																onClick={() => {
+																	swiper
+																		.removeSlide(
+																			index,
+																		);
+
+																	setImages(
+																		images
+																			.filter(
+																				(
+																					file,
+																				) => file
+																					.name !==
+																					image
+																						.name,
+																			),
+																	);
+																}}
+																class='bg-gray-50 text-white text-gray-700 min-w-min outline-none focus:outline-none border-none px-1 py-1 rounded-full flex'
+															>
+																<IconTrash class='w-8 h-8' />
+															</div>
+														</div>
+													</div>
+												);
+											})}
+										</div>
+										<div class='swiper-pagination'></div>
 									</div>
 								</div>
-							);
-						})}
-					</div>
-					<div class='swiper-button-next'></div>
-					<div class='swiper-button-prev'></div>
-					<div class='swiper-pagination'></div>
+								<div
+									class={`bg-gray-50 rounded-md overflow-hidden cursor-pointer border border-dashed border-gray-500 relative h-full ${
+										images.length === 0 ? '' : 'hidden'
+									}`}
+								>
+									<input
+										type='file'
+										multiple
+										name='files'
+										required={true}
+										accept='image/*'
+										onChange={(e) => {
+											setImages(
+												[
+													...e.currentTarget
+														.files as any,
+												],
+											);
+										}}
+										class='cursor-pointer relative block opacity-0 w-full h-full p-20 z-50'
+									/>
+									<div class='text-center p-10 absolute top-0 bottom-0 right-0 left-0 m-auto h-full w-full'>
+										<div class='w-full h-full items-center'>
+											<div class='row h-full items-center'>
+												<h4 class='w-full'>
+													Drop files anywhere to
+													upload
+													<br />or
+													<p class='text-base font-normal text-gray-500'>
+														Select Files
+													</p>
+												</h4>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class='p-5 pt-1'>
+								<div class='mb-5'>
+									<input
+										type='text'
+										name='title'
+										required={true}
+										autoComplete='off'
+										class='w-full rounded-none rounded-lg border text-[#6B7280] font-medium focus:border-red-300 bg-white py-3 px-6 outline-none focus:shadow-md'
+										placeholder='Title'
+									/>
+								</div>
+								<div class=''>
+									<textarea
+										name='description'
+										class='w-full rounded-none rounded-lg border text-[#6B7280] font-medium focus:border-red-300 bg-white py-3 px-6 outline-none focus:shadow-md'
+										placeholder='Description'
+									>
+									</textarea>
+								</div>
+							</div>
+							<div class='flex pb-3'>
+								<Button class='w-full'>Submit Post</Button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class='container'>
+					{posts.map((post) => {
+						return (
+							<div class='bg-white shadow-md border border-gray-200 rounded-lg mb-5'>
+								<a href='#'>
+									<img
+										class='rounded-t-lg w-full object-cover sm:h-72'
+										style='height: 28rem'
+										src={post.images[0]}
+										alt=''
+									/>
+								</a>
+								<div class='p-5'>
+									<a href='#'>
+										<h5 class='text-gray-900 font-bold text-2xl tracking-tight mb-2'>
+											{toTitleCase(post.title)}
+										</h5>
+									</a>
+									<p class='font-normal text-gray-700 mb-3'>
+										{post.description}
+									</p>
+								</div>
+							</div>
+						);
+					})}
 				</div>
 			</div>
 		</section>

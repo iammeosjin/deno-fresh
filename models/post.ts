@@ -18,8 +18,8 @@ export default class PostModel {
 					title TEXT NOT NULL,
 					description TEXT,
 					message TEXT,
-					url TEXT NOT NULL,
-					datetime_created timestamp(6) NOT NULL
+					images TEXT[],
+					"dateTimeCreated" TIMESTAMPTZ NOT NULL
 				);
 			`;
 
@@ -42,7 +42,7 @@ export default class PostModel {
 					return connection.queryArray<
 						[[string, string, string, string, Timestamp]]
 					>(
-						`INSERT INTO posts (title, description, message, url, datetime_created) VALUES ($1, $2, $3, $4, $5::TIMESTAMP)`,
+						`INSERT INTO posts ("title", "description", "message", "images", "dateTimeCreated") VALUES ($1, $2, $3, $4, $5::TIMESTAMPTZ)`,
 						titles[index],
 						chance.sentence({
 							words: chance.integer({ min: 5, max: 8 }),
@@ -50,7 +50,7 @@ export default class PostModel {
 						chance.paragraph({
 							sentences: chance.integer({ min: 1, max: 4 }),
 						}),
-						`images\/posts\/${index + 1}.jpg`,
+						[`images\/posts\/${index + 1}.jpg`],
 						new Date().toISOString(),
 					);
 				}, 6);
@@ -80,13 +80,22 @@ export default class PostModel {
 		return doc;
 	}
 
-	static async find() {
+	static async find(params?: {
+		sort?: {
+			key: string;
+			order: 'ASC' | 'DESC';
+		};
+	}) {
 		const connection = await pool.connect();
 		let docs: Post[] = [];
+		let order = 'ORDER BY "dateTimeCreated" DESC';
+		if (params?.sort) {
+			order = `ORDER BY ${params.sort.key} ${params.sort.order}`;
+		}
 		try {
 			const { rows } = await connection.queryObject<Post>(
 				`
-				SELECT * FROM "posts" LIMIT 20
+				SELECT * FROM "posts" ${order}
 			`,
 			);
 			docs = rows;
@@ -96,5 +105,32 @@ export default class PostModel {
 		}
 
 		return docs;
+	}
+
+	static async create(input: Omit<Post, 'id'>) {
+		const connection = await pool.connect();
+		try {
+			await connection.queryArray(
+				`
+				INSERT INTO
+				"posts"(
+					"title", 
+					"description", 
+					"message", 
+					"images", 
+					"dateTimeCreated"
+				)
+				VALUES ($1, $2, $3, $4, $5::TIMESTAMPTZ)
+			`,
+				input.title.toLowerCase(),
+				input.description?.toLowerCase(),
+				input.message?.toLowerCase(),
+				input.images,
+				new Date().toISOString(),
+			);
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
 	}
 }

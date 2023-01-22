@@ -1,5 +1,42 @@
 @import url('./fonts/nunito.css');
 
+.post-image-preview {
+  margin-left: auto;
+  margin-right: auto;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 28rem
+}
+
+.post-image-preview .image-holder {
+  max-width: 100%;
+  width: 100%;
+  height: 28rem
+}
+
+@media (min-width: 960px){
+  .post-image-preview .image-holder{
+    height: 28rem;
+    width: 100%;
+  }
+}
+
+.post-image-preview img {
+  max-width: 100%;
+  object-fit:cover;
+  width: 100%;
+  height: 28rem;
+}
+
+@media (min-width: 960px){
+  .post-image-preview img{
+    object-fit:cover;
+    height: 28rem;
+    max-width:100%;
+  }
+}
+
 .image-preview {
   height: auto;
   margin-left: auto;
@@ -165,7 +202,6 @@
 video.bg-video {
   transform: translateX(-50%) translateY(-50%);
   min-width: 100%;
-  min-height: 100%;
   width: auto;
   height: auto;
   top: 50%;

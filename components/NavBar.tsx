@@ -26,7 +26,7 @@ export default function NavBar(props: NavBarProps) {
 		bg: 'bg-transparent',
 	};
 
-	const fixInset = ['/', '/login', '/reset'].includes(props.path);
+	const fixInset = ['/login', '/reset'].includes(props.path);
 
 	if (!fixInset) {
 		theme.bg = 'bg-white';

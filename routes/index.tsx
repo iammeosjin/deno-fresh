@@ -1,11 +1,12 @@
 import { Handlers, PageProps } from '$fresh/server.ts';
-import { Head } from '$fresh/runtime.ts';
 import NavBar from '../components/NavBar.tsx';
-import { Account, Context } from '../type.ts';
+import { Account, Context, Post } from '../type.ts';
 import AccountModel from '../models/account.ts';
 import { getCookies } from 'std/http/cookie.ts';
+import Posts from '../islands/Posts.tsx';
+import PostModel from '../models/post.ts';
 
-export const handler: Handlers<Context> = {
+export const handler: Handlers<Context & { posts: Post[] }> = {
 	async GET(req, ctx) {
 		const cookies = getCookies(req.headers);
 		let user: Account | undefined | null = undefined;
@@ -14,11 +15,13 @@ export const handler: Handlers<Context> = {
 		}
 		const url = new URL(req.url);
 
-		return ctx.render({ user, path: url.pathname });
+		const posts = await PostModel.find();
+
+		return ctx.render({ user, path: url.pathname, posts });
 	},
 };
 
-export default function Home({ data }: PageProps<Context>) {
+export default function Home({ data }: PageProps<Context & { posts: Post[] }>) {
 	const props = data || {};
 	return (
 		<>
@@ -33,9 +36,15 @@ export default function Home({ data }: PageProps<Context>) {
 				/>
 				<link rel='stylesheet' href='css/output.css' />
 				<link rel='stylesheet' href='css/common.css' />
-				<div className='bg-gradient-to-tr from-red-400 to-yellow-50 relative h-screen w-screen'>
+				<link rel='stylesheet' href='/css/swiper-bundle.min.css' />
+				<NavBar user={props.user} path={props.path} />
+				<div
+					className='bg-gradient-to-tr from-red-400 to-yellow-50 relative w-full'
+					style='height:32rem;'
+				>
 					<video
-						className='absolute inset-0 w-full h-screen object-cover bg-video mix-blend-multiply filter brightness-50'
+						className='absolute inset-0 flex flex-col w-full object-cover mix-blend-multiply filter brightness-50'
+						style='height:32rem;'
 						playsInline={true}
 						autoPlay={true}
 						muted={true}
@@ -44,7 +53,6 @@ export default function Home({ data }: PageProps<Context>) {
 						<source src='/res/bg.mp4' type='video/mp4' />
 					</video>
 					<div className='absolute inset-0 flex flex-col justify-center items-center w-full max-w-full mx-auto text-center'>
-						<NavBar user={props.user} path={props.path} />
 						<div>
 							<h1 className='text-red-400 font-poppins font-extrabold text-3xl sm:text-4xl md:text-5xl md:leading-snug'>
 								Welcome to <br />
@@ -55,7 +63,10 @@ export default function Home({ data }: PageProps<Context>) {
 						</div>
 					</div>
 				</div>
+				<Posts posts={data.posts} user={props.user} />
 				<script src='js/flowbite.js' />
+				<script src='/js/swiper-bundle.min.js' />
+				<script src='/js/swiper.js' />
 			</body>
 		</>
 	);

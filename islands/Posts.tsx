@@ -195,6 +195,18 @@ export default function Posts(
 						</div>
 					</form>
 				</div>
+				<div class='container w-full mx-auto'>
+					<div class='row justify-center'>
+						<div class='w-full lg:w-1/2'>
+							<div class='section_title text-center pb-6'>
+								<h5 class='sub_title'>Discover</h5>
+								<h4 class='main_title'>
+									Recent Posts
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class='container'>
 					{posts.map((post) => {
 						return (

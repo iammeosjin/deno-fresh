@@ -69,6 +69,7 @@ export default function OTPForm(
 														<input
 															disabled={succeed}
 															class={btnClass}
+															maxLength={1}
 															type='text'
 															value={succeed
 																? otpDigits[

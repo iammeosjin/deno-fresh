@@ -11,6 +11,8 @@ export default function Receipt(
 	},
 ) {
 	const { reservation } = props;
+
+	if (!reservation) return <></>;
 	return (
 		<>
 			<div
@@ -18,7 +20,7 @@ export default function Receipt(
 				id='invoice-POS'
 				style='box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
           padding: 1rem;
-          margin: 10px auto;
+          margin: 4rem auto;
           width: 20rem;
           background: #FFF;
           justify-items: center;

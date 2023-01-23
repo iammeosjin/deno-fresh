@@ -16,6 +16,7 @@ import toTitleCase from '../lib/to-title-case.ts';
 import totp from '../lib/otp.ts';
 import isNil from 'ramda/source/isNil.js';
 import Receipt from './Receipt.tsx';
+import receiptTemplate from '../lib/receipt-template.ts';
 
 const inactiveStepperStyle = {
 	icon: 'border-gray-300 text-gray-500',
@@ -135,13 +136,13 @@ export default function ReservationStepper(props: {
 					`<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
 						<div style="margin:50px auto;width:70%;padding:20px 0">
 							<div style="border-bottom:1px solid #eee">
-								<a href="https://tacros.deno.dev/about#team" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Jasaan Tourist Association Center</a>
+								<a href="https://tacros.deno.dev/about#team" style="font-size:1.4em;color: #ef4444;text-decoration:none;font-weight:600">Jasaan Tourist Association Center</a>
 							</div>
 							<p style="font-size:1.1em">Hi ${
 						toTitleCase(event.target.name.value)
 					},</p>
 							<p>
-							Thank you for choosing Jasaan Tourist Association Center. This is to confirm you reservation at ${
+							This is to confirm you reservation at ${
 						toTitleCase(spot!.name)
 					} on ${
 						DateTime.fromJSDate(
@@ -223,6 +224,26 @@ export default function ReservationStepper(props: {
 			headers,
 			body: JSON.stringify(reservation),
 		});
+
+		const emailResponse = await fetch('/api/email', {
+			method: 'POST',
+			headers,
+			body: JSON.stringify({
+				email: reservation?.email,
+				title: 'Reservation Invoice',
+				body: receiptTemplate({
+					...reservation,
+					spot: (props.spot || input.spot) as Spot,
+				} as any),
+			}),
+		});
+
+		if (emailResponse.status >= 400) {
+			setError(
+				`Cannot send receipt to email.`,
+			);
+			return;
+		}
 
 		setStep(step + 1);
 		setReservation({

@@ -21,6 +21,7 @@ const capitalize = converge(
 );
 
 export default function toTitleCase(title: string) {
+	if (!title) return title;
 	return compose(
 		join(' '),
 		map(capitalize),

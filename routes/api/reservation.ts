@@ -31,12 +31,15 @@ export const handler: Handlers<Context> = {
 
 		reservations = await ReservationModel.findPendingReservations({
 			spot: body.spot,
-			email: body.email,
-			mobileNumber: body.mobileNumber,
 			schedule: body.schedule,
 		});
 
 		let invalidReservation;
+
+		reservations = reservations.filter((reservation) =>
+			reservation.email === body.email ||
+			reservation.mobileNumber === body.mobileNumber
+		);
 
 		for (const reservation of reservations) {
 			if (reservation.schedule < new Date()) {

@@ -36,7 +36,6 @@ export default function Home({ data }: PageProps<Context>) {
 				<NavBar user={props.user} path={props.path} />
 				<Services />
 				<AboutUs />
-				<TeamMembers />
 				<script src='js/flowbite.js' />
 			</body>
 		</>

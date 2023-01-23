@@ -1,6 +1,28 @@
+// deno-lint-ignore-file no-explicit-any
+import { Button } from '../components/Button.tsx';
+
 export default function ContactUs() {
 	return (
 		<section class='relative lg:pt-120 pb-120'>
+			<div
+				id='message-modal'
+				class='hidden bg-gray-50 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 z-50'
+			>
+				<div class='bg-white px-12 py-12 rounded-md text-center'>
+					<h1 class='text-xl mb-4 font-bold text-slate-500'>
+						Message has been sent!
+					</h1>
+					<Button
+						onClick={() => {
+							document.getElementById('message-modal')?.classList
+								.add('hidden');
+						}}
+						class='px-7 py-2 ml-2 rounded-md text-md text-white font-semibold'
+					>
+						Ok
+					</Button>
+				</div>
+			</div>
 			<div class='contact_image flex items-center justify-end'>
 				<div class='grid items-center justify-center h-full'>
 					<img src='images/contact.svg' alt='about' />
@@ -22,8 +44,26 @@ export default function ContactUs() {
 							<div class='contact_form'>
 								<form
 									id='contact-form'
-									action='/contact'
+									action='/messages'
 									method='POST'
+									onSubmit={async (e) => {
+										e.preventDefault();
+										const target = e.target as any;
+										await fetch(
+											'/messages',
+											{
+												method: 'POST',
+												body: JSON.stringify({
+													name: target.name.value,
+													email: target.email.value,
+													message:
+														target.message.value,
+												}),
+											},
+										);
+										document.getElementById('message-modal')
+											?.classList.remove('hidden');
+									}}
 								>
 									<div class='row'>
 										<div class='md:w-1/2'>
@@ -34,6 +74,7 @@ export default function ContactUs() {
 														id='name'
 														type='text'
 														placeholder='Name'
+														required={true}
 														class='w-full rounded-md py-4 px-6 border border-solid border-body-color'
 													/>
 												</div>
@@ -47,6 +88,7 @@ export default function ContactUs() {
 														id='email'
 														type='email'
 														placeholder='Email'
+														required={true}
 														class='w-full rounded-md py-4 px-6 border border-solid border-body-color'
 													/>
 												</div>

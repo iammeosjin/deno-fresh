@@ -27,6 +27,14 @@ export type Post = {
 	dateTimeCreated: Date;
 };
 
+export type Message = {
+	id: number;
+	name: string;
+	email: string;
+	message: string;
+	dateTimeCreated: Date;
+};
+
 export type Context = {
 	user?: Account | null;
 	owner?: string | null;

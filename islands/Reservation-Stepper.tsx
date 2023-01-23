@@ -120,6 +120,12 @@ export default function ReservationStepper(props: {
 				);
 			}
 
+			if (body.code === 'RESERVATION_LIMIT_REACH') {
+				setError(
+					`Already reach the reservation limit of this place`,
+				);
+			}
+
 			return;
 		}
 

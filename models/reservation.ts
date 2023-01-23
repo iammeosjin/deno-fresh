@@ -130,6 +130,40 @@ export default class ReservationModel {
 		}
 	}
 
+	static async findReservations(filter: {
+		spot: string;
+		startOfDay: string;
+		endOfDay: string;
+	}) {
+		const connection = await pool.connect();
+
+		try {
+			const { rows } = await connection.queryObject<Reservation>(
+				`
+				SELECT
+					"id",
+					"spot",
+					"name",
+					"mobileNumber",
+					"email",
+					"schedule",
+					"dateTimeCreated",
+					"cottageType"
+				FROM reservations 
+				WHERE 
+					"spot" = '${filter.spot}' 
+					AND "deleted"=false 
+					AND "schedule" >= '${filter.startOfDay}'::TIMESTAMPTZ
+					AND "schedule" < '${filter.endOfDay}'::TIMESTAMPTZ
+			`,
+			);
+			return rows;
+		} finally {
+			// Release the connection back into the pool
+			connection.release();
+		}
+	}
+
 	static async findPendingReservations(filter: {
 		spot: string;
 		email: string;

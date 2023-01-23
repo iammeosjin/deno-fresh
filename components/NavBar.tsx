@@ -66,9 +66,14 @@ export default function NavBar(props: NavBarProps) {
 									</button>
 									<ul class='bg-transparent rounded-sm transform scale-0 group-hover:scale-100 absolute
                     transition duration-150 ease-in-out origin-top z-10'>
-										<a href='places'>
+										<a href='/places'>
 											<li class='text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700'>
 												Add New Spot
+											</li>
+										</a>
+										<a href='/messages'>
+											<li class='text-gray-400 font-extrabold rounded-sm px-1 border-b border-gray-100 py-1 hover:bg-red-700'>
+												Messages
 											</li>
 										</a>
 										<a href='/reset'>

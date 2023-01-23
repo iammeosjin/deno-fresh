@@ -1,12 +1,35 @@
 import { Handlers } from '$fresh/server.ts';
 import { Context } from '../../type.ts';
 import ReservationModel from '../../models/reservation.ts';
+import { DateTime } from 'https://cdn.skypack.dev/luxon?dts';
 
 export const handler: Handlers<Context> = {
 	async POST(req) {
 		const body = await req.json();
 
-		const reservations = await ReservationModel.findPendingReservations({
+		const startOfDay = DateTime.fromISO(body.schedule).startOf(
+			'day',
+		);
+		const endOfDay = DateTime.fromISO(body.schedule).endOf('day');
+
+		let reservations = await ReservationModel.findReservations({
+			spot: body.spot,
+			startOfDay: startOfDay.toISO(),
+			endOfDay: endOfDay.toISO(),
+		});
+
+		if (reservations.length > 5) {
+			return new Response(
+				JSON.stringify({
+					code: 'RESERVATION_LIMIT_REACH',
+				}),
+				{
+					status: 400,
+				},
+			);
+		}
+
+		reservations = await ReservationModel.findPendingReservations({
 			spot: body.spot,
 			email: body.email,
 			mobileNumber: body.mobileNumber,

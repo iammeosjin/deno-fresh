@@ -13,11 +13,13 @@ import ReservationModel from './models/reservation.ts';
 import twindPlugin from '$fresh/plugins/twind.ts';
 import twindConfig from './twind.config.ts';
 import SpotModel from './models/spot.ts';
+import MessageModel from './models/message.ts';
 
 await AccountModel.initialize();
 await PostModel.initialize();
 await SpotModel.initialize();
 await ReservationModel.initialize();
+await MessageModel.initialize();
 
 await start(manifest, { plugins: [twindPlugin(twindConfig)] });
 

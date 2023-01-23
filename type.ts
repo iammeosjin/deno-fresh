@@ -56,4 +56,5 @@ export type Reservation = {
 	email: string;
 	mobileNumber: string;
 	schedule: Date;
+	cottageType?: 'SMALL' | 'MEDIUM' | 'LARGE';
 };

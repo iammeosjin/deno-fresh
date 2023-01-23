@@ -210,6 +210,51 @@ export default function ReservationForm(
 													</div>
 												</div>
 											</div>
+											<div class='w-full px-3 sm:w-1/2'>
+												<div class='mb-5'>
+													<label
+														for='toggle-cottage-checked'
+														class='flex items-center cursor-pointer relative mb-1'
+													>
+														<input
+															type='checkbox'
+															id='toggle-cottage-checked'
+															class='sr-only'
+															checked={false}
+															name='cottageEnabled'
+															onChange={() => {
+																document
+																	.getElementById(
+																		'cottageType',
+																	)?.classList
+																	.toggle(
+																		'hidden',
+																	);
+															}}
+														/>
+														<div class='toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full'>
+														</div>
+														<span class='ml-3 text-base font-medium text-[#6B7280]'>
+															Add Cottage
+														</span>
+													</label>
+													<select
+														id='cottageType'
+														name='cottageType'
+														class='hidden form-select w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
+													>
+														<option value='SMALL'>
+															Small
+														</option>
+														<option value='MEDIUM'>
+															Medium
+														</option>
+														<option value='LARGE'>
+															Large
+														</option>
+													</select>
+												</div>
+											</div>
 										</div>
 
 										<div>

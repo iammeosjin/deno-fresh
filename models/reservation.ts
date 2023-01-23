@@ -14,6 +14,7 @@ export default class ReservationModel {
 					"mobileNumber" TEXT NOT NULL,
 					email TEXT NOT NULL,
 					schedule TIMESTAMPTZ NOT NULL,
+					"cottageType" TEXT,
 					"dateTimeCreated" TIMESTAMPTZ NOT NULL,
 					deleted BOOL DEFAULT FALSE
 				);
@@ -41,9 +42,10 @@ export default class ReservationModel {
 					"mobileNumber",
 					"email",
 					"schedule",
-					"dateTimeCreated"
+					"dateTimeCreated",
+					"cottageType"
 				)
-				VALUES($1, $2, $3, $4, $5::TIMESTAMPTZ, $6::TIMESTAMPTZ)
+				VALUES($1, $2, $3, $4, $5::TIMESTAMPTZ, $6::TIMESTAMPTZ, $7)
 			`,
 				input.spot,
 				input.name.toLowerCase(),
@@ -51,6 +53,7 @@ export default class ReservationModel {
 				input.email,
 				input.schedule.toISOString(),
 				new Date().toISOString(),
+				input.cottageType,
 			);
 		} finally {
 			// Release the connection back into the pool
@@ -87,7 +90,8 @@ export default class ReservationModel {
 					"mobileNumber",
 					"email",
 					"schedule",
-					"dateTimeCreated"
+					"dateTimeCreated",
+					"cottageType"
 				FROM reservations WHERE "mobileNumber" = '${mobileNumber}' AND "deleted"=true
 			`,
 			);
@@ -111,7 +115,8 @@ export default class ReservationModel {
 					"mobileNumber",
 					"email",
 					"schedule",
-					"dateTimeCreated"
+					"dateTimeCreated",
+					"cottageType"
 				FROM reservations 
 				WHERE "spot" IN (${
 					spots.map((spot) => `'${spot}'`)
@@ -142,7 +147,8 @@ export default class ReservationModel {
 					"mobileNumber",
 					"email",
 					"schedule",
-					"dateTimeCreated"
+					"dateTimeCreated",
+					"cottageType"
 				FROM reservations 
 				WHERE "spot" = '${filter.spot}' AND "email"='${filter.email}' AND "mobileNumber"='${filter.mobileNumber}' AND "deleted"=false
 				LIMIT 1
@@ -168,7 +174,8 @@ export default class ReservationModel {
 					"mobileNumber",
 					"email",
 					"schedule",
-					"dateTimeCreated"
+					"dateTimeCreated",
+					"cottageType"
 				FROM reservations 
 				WHERE "spot" = '${spot}' AND "deleted"=false
 				LIMIT 1

@@ -22,40 +22,6 @@ export default class PostModel {
 					"dateTimeCreated" TIMESTAMPTZ NOT NULL
 				);
 			`;
-
-			const { rowCount } = await connection.queryObject<Post>(
-				`
-				SELECT * FROM "posts"
-			`,
-			);
-
-			if ((rowCount || 0) < 6) {
-				const titles = [
-					'Kuyamis Opening Program',
-					'Paglaum MisOr: Rise-CDO Cup',
-					'Mugs and Cups',
-					'T-shirts',
-					'Buko Pie',
-					'Food & Beverages',
-				];
-				const promises = times((index: number) => {
-					return connection.queryArray<
-						[[string, string, string, string, Timestamp]]
-					>(
-						`INSERT INTO posts ("title", "description", "message", "images", "dateTimeCreated") VALUES ($1, $2, $3, $4, $5::TIMESTAMPTZ)`,
-						titles[index],
-						chance.sentence({
-							words: chance.integer({ min: 5, max: 8 }),
-						}),
-						chance.paragraph({
-							sentences: chance.integer({ min: 1, max: 4 }),
-						}),
-						[`images\/posts\/${index + 1}.jpg`],
-						new Date().toISOString(),
-					);
-				}, 6);
-				await Promise.all(promises);
-			}
 		} finally {
 			// Release the connection back into the pool
 			connection.release();

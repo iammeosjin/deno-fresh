@@ -15,6 +15,7 @@ import { Button } from '../components/Button.tsx';
 import toTitleCase from '../lib/to-title-case.ts';
 import totp from '../lib/otp.ts';
 import isNil from 'ramda/source/isNil.js';
+import Receipt from './Receipt.tsx';
 
 const inactiveStepperStyle = {
 	icon: 'border-gray-300 text-gray-500',
@@ -395,11 +396,12 @@ export default function ReservationStepper(props: {
 					error={input.error}
 					onSubmit={submitOTP}
 				/>
-				<OTPForm
-					id={'otpFormDone'}
+				<Receipt
 					show={step === 5}
-					reservation={reservation!}
-					error={false}
+					reservation={{
+						...reservation,
+						spot: props.spot || input.spot,
+					} as any}
 				/>
 			</div>
 		</section>

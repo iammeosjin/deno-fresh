@@ -36,12 +36,13 @@ import * as $$6 from './islands/Instruction.tsx';
 import * as $$7 from './islands/OTP-Form.tsx';
 import * as $$8 from './islands/Place.tsx';
 import * as $$9 from './islands/Posts.tsx';
-import * as $$10 from './islands/Reservation-Form.tsx';
-import * as $$11 from './islands/Reservation-Stepper.tsx';
-import * as $$12 from './islands/Reservations.tsx';
-import * as $$13 from './islands/Spots.tsx';
-import * as $$14 from './islands/Stories.tsx';
-import * as $$15 from './islands/Team-Members.tsx';
+import * as $$10 from './islands/Receipt.tsx';
+import * as $$11 from './islands/Reservation-Form.tsx';
+import * as $$12 from './islands/Reservation-Stepper.tsx';
+import * as $$13 from './islands/Reservations.tsx';
+import * as $$14 from './islands/Spots.tsx';
+import * as $$15 from './islands/Stories.tsx';
+import * as $$16 from './islands/Team-Members.tsx';
 
 const manifest = {
 	routes: {
@@ -80,12 +81,13 @@ const manifest = {
 		'./islands/OTP-Form.tsx': $$7,
 		'./islands/Place.tsx': $$8,
 		'./islands/Posts.tsx': $$9,
-		'./islands/Reservation-Form.tsx': $$10,
-		'./islands/Reservation-Stepper.tsx': $$11,
-		'./islands/Reservations.tsx': $$12,
-		'./islands/Spots.tsx': $$13,
-		'./islands/Stories.tsx': $$14,
-		'./islands/Team-Members.tsx': $$15,
+		'./islands/Receipt.tsx': $$10,
+		'./islands/Reservation-Form.tsx': $$11,
+		'./islands/Reservation-Stepper.tsx': $$12,
+		'./islands/Reservations.tsx': $$13,
+		'./islands/Spots.tsx': $$14,
+		'./islands/Stories.tsx': $$15,
+		'./islands/Team-Members.tsx': $$16,
 	},
 	baseUrl: import.meta.url,
 	config,

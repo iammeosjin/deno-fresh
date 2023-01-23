@@ -222,14 +222,27 @@ export default function ReservationForm(
 															class='sr-only'
 															checked={false}
 															name='cottageEnabled'
-															onChange={() => {
-																document
-																	.getElementById(
-																		'cottageType',
-																	)?.classList
-																	.toggle(
-																		'hidden',
-																	);
+															onChange={(e) => {
+																if (
+																	e.currentTarget
+																		.checked
+																) {
+																	document
+																		.getElementById(
+																			'cottageType',
+																		)?.classList
+																		.remove(
+																			'hidden',
+																		);
+																} else {
+																	document
+																		.getElementById(
+																			'cottageType',
+																		)?.classList
+																		.add(
+																			'hidden',
+																		);
+																}
 															}}
 														/>
 														<div class='toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full'>

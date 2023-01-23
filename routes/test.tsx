@@ -6,6 +6,7 @@ import AccountModel from '../models/account.ts';
 import { Button } from '../components/Button.tsx';
 import { Head } from '../components/Head.tsx';
 import AddPlace from '../islands/Add-Place.tsx';
+import Receipt from '../islands/Receipt.tsx';
 
 function toTitleCase(str: string) {
 	return str.replace(
@@ -46,7 +47,7 @@ export default function Places(
 				<link rel='stylesheet' href='css/output.css' />
 				<link rel='stylesheet' href='css/common.css' />
 				<NavBar user={data.user} path={data.path} />
-				<AddPlace />
+				<Receipt />
 				<script src='js/flowbite.js' />
 			</body>
 		</>

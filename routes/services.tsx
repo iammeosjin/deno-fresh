@@ -21,9 +21,15 @@ export const handler: Handlers<
 		const url = new URL(req.url);
 
 		const posts = await PostModel.find();
-		const search = url.searchParams.get('search');
+		let search = url.searchParams.get('search');
 
-		const spots = await SpotModel.find({});
+		let filter = {};
+		if (search) {
+			search = search.toLowerCase();
+			filter = { search: search };
+		}
+
+		const spots = await SpotModel.find({ filter });
 		return ctx.render({
 			user,
 			spots: spots as unknown as PostListProps[],

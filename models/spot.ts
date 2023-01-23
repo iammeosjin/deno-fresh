@@ -202,7 +202,11 @@ export default class SpotModel {
 
 	static async find(params: {
 		filter?: Partial<
-			{ barangay: string | null; openForReservations: boolean }
+			{
+				barangay: string | null;
+				search?: string;
+				openForReservations: boolean;
+			}
 		>;
 	}) {
 		const connection = await pool.connect();
@@ -213,7 +217,10 @@ export default class SpotModel {
 
 		if (!isEmpty(input)) {
 			toPairs(input).map(([key, value]: [string, any]) => {
-				if (typeof value === 'string') {
+				console.log(key, value);
+				if (key === 'search') {
+					filters.push(`${key} LIKE '%${value}%'`);
+				} else if (typeof value === 'string') {
 					filters.push(`${key}='${value}'`);
 				} else {
 					filters.push(`${key}=${value}`);

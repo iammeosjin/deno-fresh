@@ -4,7 +4,6 @@ import { Account, Context, Post } from '../type.ts';
 import AccountModel from '../models/account.ts';
 import SpotModel from '../models/spot.ts';
 import { getCookies } from 'std/http/cookie.ts';
-import Posts from '../islands/Stories.tsx';
 import PostModel from '../models/post.ts';
 import Spots from '../islands/Spots.tsx';
 import chance from '../lib/chance.ts';
@@ -54,7 +53,6 @@ export default function Home(
 				<link rel='stylesheet' href='css/swiper-bundle.min.css' />
 				<link rel='stylesheet' href='css/floating-button.css' />
 				<NavBar user={props.user} path={props.path} />
-				<Posts posts={props.posts} />
 				<Spots spots={props.spots} />
 				<script src='js/flowbite.js' />
 				<script src='js/swiper-bundle.min.js' />

@@ -2,7 +2,9 @@ import { Spot } from '../models/spot.ts';
 import toTitleCase from '../lib/to-title-case.ts';
 import CategoryLabel from '../components/CategoryLabel.tsx';
 import IconMapPin from 'tablerIcons/map-pin.tsx';
-import IconCoin from 'tablerIcons/coin.tsx';
+import IconDoorEnter from 'tablerIcons/door-enter.tsx';
+import IconBuildingCottage from 'tablerIcons/building-cottage.tsx';
+import IconBed from 'tablerIcons/bed.tsx';
 import generateCategoryColors from '../lib/generate-category-colors.ts';
 
 export default function Place(
@@ -13,31 +15,52 @@ export default function Place(
 	const { spot } = props;
 	const categories = generateCategoryColors(spot.categories);
 
-	const priceRangeLower = spot.minRoomPriceRange || spot.minCottagePriceRange;
-	const priceRangeUpper = spot.maxRoomPriceRange || spot.maxCottagePriceRange;
+	const entranceFee = spot.entranceFee
+		? new Number(spot?.entranceFee).toFixed(2)
+		: undefined;
 
-	let priceRange = (
-		<span class='leading-7 text-lg'>
-			{priceRangeLower} - {priceRangeUpper}
-		</span>
-	);
+	const minRoomPriceRange = spot.minRoomPriceRange
+		? new Number(spot?.minRoomPriceRange).toFixed(2)
+		: undefined;
 
-	if (!priceRangeLower && !priceRangeUpper) {
-		priceRange = (
-			<span class='leading-6 text-lg'>
-				{spot
-					.entranceFee}
-			</span>
-		);
+	const maxRoomPriceRange = spot.maxRoomPriceRange
+		? new Number(spot?.maxRoomPriceRange).toFixed(2)
+		: undefined;
 
-		if (!spot.entranceFee) {
-			priceRange = (
-				<span class='leading-6 text-base'>
-					N/A
-				</span>
-			);
+	const minCottagePriceRange = spot.minCottagePriceRange
+		? new Number(spot?.minCottagePriceRange).toFixed(2)
+		: undefined;
+
+	const maxCottagePriceRange = spot.maxCottagePriceRange
+		? new Number(spot?.maxCottagePriceRange).toFixed(2)
+		: undefined;
+
+	let roomPriceRange = undefined;
+
+	if (minRoomPriceRange || maxRoomPriceRange) {
+		roomPriceRange = `${minRoomPriceRange} - ${maxRoomPriceRange}`;
+		if (!minRoomPriceRange) {
+			roomPriceRange = maxRoomPriceRange;
+		}
+
+		if (!maxRoomPriceRange) {
+			roomPriceRange = minRoomPriceRange;
 		}
 	}
+
+	let cottagePriceRange = undefined;
+
+	if (minCottagePriceRange || maxCottagePriceRange) {
+		cottagePriceRange = `${minCottagePriceRange} - ${maxCottagePriceRange}`;
+		if (!minCottagePriceRange) {
+			cottagePriceRange = maxCottagePriceRange;
+		}
+
+		if (!maxCottagePriceRange) {
+			cottagePriceRange = minCottagePriceRange;
+		}
+	}
+
 	return (
 		<section
 			class={`relative lg:pt-16 `}
@@ -111,32 +134,94 @@ export default function Place(
 											</div>
 										</div>
 										<div class='px-3 sm:w-1/2 mb-3'>
-											<hr class='bg-gray-100' />
 										</div>
 										<div class='w-full px-3 sm:w-1/2'>
 											<div class='mb-3'>
-												<div className='flex items-center gap-1 tracking-wide'>
-													<div className='relative flex-shrink-0 text-lg'>
-														<IconMapPin class='w-6 h-6' />
+												<fieldset class='flex p-2 pr-5 pl-5 border-0 border-t border-gray-300'>
+													<legend class='pl-2 pr-2 text-[#6B7280]'>
+														Location
+													</legend>
+													<div className='flex items-center gap-1 tracking-wide'>
+														<div className='relative flex-shrink-0 text-lg'>
+															<IconMapPin class='w-6 h-6' />
+														</div>
+														<span class='leading-6 text-lg font-bold'>
+															{toTitleCase(
+																spot.barangay,
+															)} | {spot.address}
+														</span>
 													</div>
-													<span class='leading-6 text-lg'>
-														{toTitleCase(
-															spot.barangay,
-														)} | {spot.address}
-													</span>
-												</div>
+												</fieldset>
 											</div>
 										</div>
 										<div class='w-full px-3 sm:w-1/2'>
-											<div class='mb-5'>
-												<div className='flex items-center gap-1 tracking-wide'>
-													<div className='relative flex-shrink-0 text-lg'>
-														<IconCoin class='w-6 h-6' />
-													</div>
-													{priceRange}
-												</div>
+											<div class='mb-3'>
+												{spot.entranceFee
+													? (
+														<fieldset class='flex p-2 pr-5 pl-5 border-0 border-t border-gray-300'>
+															<legend class='pl-2 pr-2 text-[#6B7280]'>
+																Entrance fee
+															</legend>
+															<div className='flex items-center gap-1 tracking-wide font-bold'>
+																<div className='relative flex-shrink-0 text-lg'>
+																	<IconDoorEnter class='w-6 h-6' />
+																</div>
+																<span class='font-semibold'>
+																	₱
+																</span>
+																{entranceFee}
+															</div>
+														</fieldset>
+													)
+													: ''}
 											</div>
 										</div>
+										{spot.entranceFee
+											? (
+												<div class='w-full px-3 sm:w-1/2'>
+													<div class='mb-3'>
+														<fieldset class='flex p-2 pr-5 pl-5 border-0 border-t border-gray-300'>
+															<legend class='pl-2 pr-2 text-[#6B7280]'>
+																Room Price Range
+															</legend>
+															<div className='flex items-center gap-1 tracking-wide font-bold'>
+																<div className='relative flex-shrink-0 text-lg'>
+																	<IconBed class='w-6 h-6' />
+																</div>
+																<span class='font-semibold'>
+																	₱
+																</span>
+																{roomPriceRange}
+															</div>
+														</fieldset>
+													</div>
+												</div>
+											)
+											: ''}
+
+										{spot.entranceFee
+											? (
+												<div class='w-full px-3 sm:w-1/2'>
+													<div class='mb-3'>
+														<fieldset class='flex p-2 pr-5 pl-5 border-0 border-t border-gray-300'>
+															<legend class='pl-2 pr-2 text-[#6B7280]'>
+																Cottage Price
+																Range
+															</legend>
+															<div className='flex items-center gap-1 tracking-wide font-bold'>
+																<div className='relative flex-shrink-0 text-lg'>
+																	<IconBuildingCottage class='w-6 h-6' />
+																</div>
+																<span class='font-semibold'>
+																	₱
+																</span>
+																{cottagePriceRange}
+															</div>
+														</fieldset>
+													</div>
+												</div>
+											)
+											: ''}
 									</div>
 								</div>
 							</div>

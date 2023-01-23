@@ -24,6 +24,8 @@ export type Spot = {
 	maxRoomPriceRange?: number;
 	search: string;
 	owner: string;
+	roomEnabled: boolean;
+	cottageEnabled: boolean;
 };
 
 function generateSearch(params: Omit<Spot, 'search'>) {
@@ -55,13 +57,16 @@ export default class SpotModel {
 					maxRoomPriceRange FLOAT,
 					owner TEXT,
 					search TEXT,
+					"roomEnabled" BOOL DEFAULT FALSE,
+					"cottageEnabled" BOOL DEFAULT FALSE,
 					UNIQUE (barangay, name),
 					UNIQUE (slug)
 				);
 			`;
 
 			await connection.queryObject`
-			CREATE INDEX IF NOT EXISTS "spot_search" ON "spots"("slug");
+			CREATE INDEX IF NOT EXISTS "spot_search" ON "spots"("search");
+			CREATE INDEX IF NOT EXISTS "spot_slug" ON "spots"("slug");
 			`;
 		} finally {
 			// Release the connection back into the pool
@@ -107,9 +112,11 @@ export default class SpotModel {
 					"minroompricerange",
 					"maxroompricerange",
 					"owner",
-					"search"
+					"search",
+					"roomEnabled",
+					"cottageEnabled"
 				)
-				VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+				VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
 			`,
 				input.images,
 				input.name.toLowerCase(),
@@ -125,6 +132,8 @@ export default class SpotModel {
 				input.maxRoomPriceRange,
 				input.owner,
 				generateSearch(input),
+				input.roomEnabled,
+				input.cottageEnabled,
 			);
 		} finally {
 			// Release the connection back into the pool

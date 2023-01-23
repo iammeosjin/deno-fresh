@@ -76,6 +76,8 @@ export default function AddPlace() {
 					maxCottagePriceRange: target.maxCottagePriceRange.value,
 					minRoomPriceRange: target.minRoomPriceRange.value,
 					maxRoomPriceRange: target.maxRoomPriceRange.value,
+					roomEnabled: target.roomEnabled.checked,
+					cottageEnabled: target.cottageEnabled.checked,
 				});
 
 				const headers = new Headers();
@@ -430,6 +432,39 @@ export default function AddPlace() {
 											</div>
 											<div class='w-full px-3 sm:w-1/2'>
 												<div class='mb-5'>
+													<label
+														for='toggle-room-checked'
+														class='flex items-center cursor-pointer relative'
+													>
+														<input
+															type='checkbox'
+															id='toggle-room-checked'
+															class='sr-only'
+															checked={false}
+															name='roomEnabled'
+															onChange={(e) => {
+																document
+																	.getElementById(
+																		'roomPrices',
+																	)?.classList
+																	.toggle(
+																		'hidden',
+																	);
+															}}
+														/>
+														<div class='toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full'>
+														</div>
+														<span class='ml-3 text-base font-medium text-[#6B7280]'>
+															Rooms Available
+														</span>
+													</label>
+												</div>
+											</div>
+											<div
+												id='roomPrices'
+												class='hidden w-full px-3 sm:w-1/2'
+											>
+												<div class='mb-5'>
 													<fieldset class='flex p-5 border rounded-lg border-gray-300 '>
 														<legend class='pl-2 pr-2 text-[#6B7280]'>
 															Price range of rooms
@@ -453,6 +488,39 @@ export default function AddPlace() {
 												</div>
 											</div>
 											<div class='w-full px-3 sm:w-1/2'>
+												<div class='mb-5'>
+													<label
+														for='toggle-cottage-checked'
+														class='flex items-center cursor-pointer relative'
+													>
+														<input
+															type='checkbox'
+															id='toggle-cottage-checked'
+															class='sr-only'
+															checked={false}
+															name='cottageEnabled'
+															onChange={() => {
+																document
+																	.getElementById(
+																		'cottagePrices',
+																	)?.classList
+																	.toggle(
+																		'hidden',
+																	);
+															}}
+														/>
+														<div class='toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full'>
+														</div>
+														<span class='ml-3 text-base font-medium text-[#6B7280]'>
+															Cottages Available
+														</span>
+													</label>
+												</div>
+											</div>
+											<div
+												id='cottagePrices'
+												class='hidden w-full px-3 sm:w-1/2'
+											>
 												<div class='mb-5'>
 													<fieldset class='flex p-5 border rounded-lg border-gray-300 '>
 														<legend class='pl-2 pr-2 text-[#6B7280]'>

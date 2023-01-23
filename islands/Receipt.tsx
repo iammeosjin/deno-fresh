@@ -1,6 +1,5 @@
 import { Reservation } from '../type.ts';
-import IconAlertCircle from 'tablerIcons/alert-circle.tsx';
-import receiptTemplate from '../lib/receipt-template.ts';
+import { DateTime } from 'https://cdn.skypack.dev/luxon?dts';
 import { Spot } from '../models/spot.ts';
 import toTitleCase from '../lib/to-title-case.ts';
 
@@ -87,6 +86,15 @@ export default function Receipt(
 							<span style='font-weight: 600;'>
 								{reservation.spot.barangay}, {reservation.spot
 									.address}
+							</span>
+							<br />
+							Date:{' '}
+							<span style='font-weight: 600;'>
+								{DateTime.fromJSDate(
+									new Date(reservation.schedule),
+								).setZone('utc+8').toFormat(
+									'MMM dd, yyyy ccc hh:mm a',
+								)}
 							</span>
 							<br />
 							{reservation.cottageType

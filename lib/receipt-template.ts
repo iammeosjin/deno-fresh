@@ -1,6 +1,7 @@
 import { Spot } from '../models/spot.ts';
 import { Reservation } from '../type.ts';
 import toTitleCase from './to-title-case.ts';
+import { DateTime } from 'https://cdn.skypack.dev/luxon?dts';
 
 export default function receiptTemplate(
 	reservation: Omit<Reservation, 'spot' | 'id'> & { spot: Spot },
@@ -87,6 +88,17 @@ export default function receiptTemplate(
                 Address:
                 <span style='font-weight: 600;'>
                 ${reservation.spot.barangay}, ${reservation.spot.address}
+                </span>
+                <br />
+                Date:
+                <span style='font-weight: 600;'>
+                  ${
+		DateTime.fromJSDate(
+			new Date(reservation.schedule),
+		).setZone('utc+8').toFormat(
+			'MMM dd, yyyy ccc hh:mm a',
+		)
+	}
                 </span>
                 <br />
                 ${

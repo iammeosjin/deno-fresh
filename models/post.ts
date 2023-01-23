@@ -1,11 +1,6 @@
-import { Chance } from 'https://cdn.skypack.dev/chance?dts';
 import head from 'ramda/source/head.js';
-import times from 'ramda/source/times.js';
 import { Post } from '../type.ts';
 import pool from '../lib/pool.ts';
-import { Timestamp } from 'postgres/query/types.ts';
-
-const chance = new Chance();
 
 export default class PostModel {
 	static async initialize() {

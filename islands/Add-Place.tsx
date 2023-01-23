@@ -422,7 +422,7 @@ export default function AddPlace() {
 											<div class='w-full px-3 sm:w-1/2'>
 												<div class='mb-5'>
 													<input
-														type='text'
+														type='number'
 														name='entranceFee'
 														placeholder='Entrance fee'
 														autoComplete='off'

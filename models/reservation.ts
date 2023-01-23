@@ -130,10 +130,11 @@ export default class ReservationModel {
 		}
 	}
 
-	static async find(filter: {
+	static async findPendingReservations(filter: {
 		spot: string;
 		email: string;
 		mobileNumber: string;
+		schedule: Date;
 	}) {
 		const connection = await pool.connect();
 
@@ -150,8 +151,12 @@ export default class ReservationModel {
 					"dateTimeCreated",
 					"cottageType"
 				FROM reservations 
-				WHERE "spot" = '${filter.spot}' AND "email"='${filter.email}' AND "mobileNumber"='${filter.mobileNumber}' AND "deleted"=false
-				LIMIT 1
+				WHERE 
+					"spot" = '${filter.spot}' 
+					AND "email"='${filter.email}' 
+					AND "mobileNumber"='${filter.mobileNumber}' 
+					AND "deleted"=false 
+					AND "schedule" >= '${filter.schedule}'::TIMESTAMPTZ
 			`,
 			);
 			return rows;

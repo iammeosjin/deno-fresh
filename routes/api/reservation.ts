@@ -6,10 +6,11 @@ export const handler: Handlers<Context> = {
 	async POST(req) {
 		const body = await req.json();
 
-		const reservations = await ReservationModel.find({
+		const reservations = await ReservationModel.findPendingReservations({
 			spot: body.spot,
 			email: body.email,
 			mobileNumber: body.mobileNumber,
+			schedule: body.schedule,
 		});
 
 		let invalidReservation;

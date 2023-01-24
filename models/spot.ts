@@ -2,8 +2,8 @@
 
 import head from 'ramda/source/head.js';
 import toPairs from 'ramda/source/toPairs.js';
-import isEmpty from 'ramda/source/isEmpty.js';
 import filter from 'ramda/source/filter.js';
+import isEmpty from 'ramda/source/isEmpty.js';
 import identity from 'ramda/source/identity.js';
 import { Account, Barangay, Category } from '../type.ts';
 import pool from '../lib/pool.ts';

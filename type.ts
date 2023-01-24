@@ -52,7 +52,9 @@ export enum Barangay {
 	LOWER_JASAAN = 'Lower Jasaan',
 	LUZBANSON = 'Luzbanson',
 	NATUBO = 'Natubo',
+	SOLANA = 'Solana',
 	SAN_ANTONIO = 'San Antonio',
+	SAN_ISIDRO = 'San Isidro',
 	SAN_NICOLAS = 'San Nicolas',
 	UPPER_JASAAN = 'Upper Jasaan',
 }

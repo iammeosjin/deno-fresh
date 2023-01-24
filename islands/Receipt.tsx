@@ -12,6 +12,7 @@ export default function Receipt(
 	const { reservation } = props;
 
 	if (!reservation) return <></>;
+	if (!reservation.spot) return <></>;
 	return (
 		<>
 			<div

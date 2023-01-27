@@ -30,3 +30,19 @@ const swiper = new Swiper("#image-preview", {
     el: ".swiper-pagination",
   },
 });
+
+new Swiper("#resorts", {
+  autoHeight: true,
+  allowTouchMove:true, 
+  pagination: {
+    el: ".swiper-pagination",
+  },
+});
+
+new Swiper("#touristSpots", {
+  autoHeight: true,
+  allowTouchMove:true, 
+  pagination: {
+    el: ".swiper-pagination",
+  },
+});

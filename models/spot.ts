@@ -26,6 +26,7 @@ export type Spot = {
 	owner: string;
 	roomEnabled: boolean;
 	cottageEnabled: boolean;
+	type: 'RESORT' | 'TOURIST_SPOT';
 };
 
 function generateSearch(params: Omit<Spot, 'search'>) {
@@ -46,6 +47,7 @@ export default class SpotModel {
 					images TEXT[],
 					name TEXT NOT NULL,
 					slug TEXT NOT NULL,
+					type TEXT NOT NULL,
 					categories TEXT[],
 					openForReservations BOOL DEFAULT FALSE,
 					barangay VARCHAR,
@@ -59,6 +61,7 @@ export default class SpotModel {
 					search TEXT,
 					"roomEnabled" BOOL DEFAULT FALSE,
 					"cottageEnabled" BOOL DEFAULT FALSE,
+					"dateTimeCreated" TIMESTAMPTZ,
 					UNIQUE (barangay, name),
 					UNIQUE (slug)
 				);
@@ -114,9 +117,11 @@ export default class SpotModel {
 					"owner",
 					"search",
 					"roomEnabled",
-					"cottageEnabled"
+					"cottageEnabled",
+					"type",
+					"dateTimeCreated"
 				)
-				VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+				VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17::TIMESTAMPTZ)
 			`,
 				input.images,
 				input.name.toLowerCase(),
@@ -134,6 +139,7 @@ export default class SpotModel {
 				generateSearch(input),
 				input.roomEnabled,
 				input.cottageEnabled,
+				new Date().toISOString(),
 			);
 		} finally {
 			// Release the connection back into the pool
@@ -203,11 +209,17 @@ export default class SpotModel {
 	static async find(params: {
 		filter?: Partial<
 			{
-				barangay: string | null;
+				barangay?: string | null;
 				search?: string;
-				openForReservations: boolean;
+				openForReservations?: boolean;
+				type?: 'RESORT' | 'TOURIST_SPOT';
 			}
 		>;
+		limit?: number;
+		sort?: {
+			key: string;
+			order: 'ASC' | 'DESC';
+		};
 	}) {
 		const connection = await pool.connect();
 
@@ -217,7 +229,6 @@ export default class SpotModel {
 
 		if (!isEmpty(input)) {
 			toPairs(input).map(([key, value]: [string, any]) => {
-				console.log(key, value);
 				if (key === 'search') {
 					filters.push(`${key} LIKE '%${value}%'`);
 				} else if (typeof value === 'string') {
@@ -226,6 +237,16 @@ export default class SpotModel {
 					filters.push(`${key}=${value}`);
 				}
 			});
+		}
+
+		let limit = '';
+		if (params.limit) {
+			limit = `LIMIT ${params.limit}`;
+		}
+
+		let order = 'ORDER BY "dateTimeCreated" DESC';
+		if (params?.sort) {
+			order = `ORDER BY ${params.sort.key} ${params.sort.order}`;
 		}
 
 		try {
@@ -243,11 +264,14 @@ export default class SpotModel {
 					mincottagepricerange as "minCottagePriceRange", 
 					maxcottagepricerange as "maxCottagePriceRange",
 					minroompricerange as "minRoomPriceRange",
-					maxroompricerange as "maxRoomPriceRange"
+					maxroompricerange as "maxRoomPriceRange",
+					type
 				FROM spots ${
 					isEmpty(filters) ? '' : `WHERE ${filters.join(' AND ')}`
 				}
-	`,
+				${limit}
+				${order}
+			`,
 			);
 			return rows.map((row) => ({
 				...row,

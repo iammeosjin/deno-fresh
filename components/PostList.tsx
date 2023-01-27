@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import IconCalendarTime from 'tablerIcons/calendar-time.tsx';
 import IconMapPin from 'tablerIcons/map-pin.tsx';
 
@@ -10,7 +11,7 @@ export type PostListProps = Omit<Spot, 'categories'> & {
 };
 
 export default function PostList(
-	props: {
+	props: Record<string, any> & {
 		spot: PostListProps;
 		hideReservations?: boolean;
 		redirectionLink?: string;
@@ -21,7 +22,7 @@ export default function PostList(
 		<>
 			<div
 				{...props}
-				class='cursor-pointer md:w-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 p-6 flex flex-col'
+				class='w-full cursor-pointer md:w-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 p-6 flex flex-col'
 			>
 				<div class='relative inline-block overflow-hidden transition-all bg-gray-100 rounded-md max-w-300 max-h-300 w-300 h-300 hover:scale-105'>
 					<a

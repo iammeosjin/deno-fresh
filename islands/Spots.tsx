@@ -1,16 +1,16 @@
 import { FloatingButton } from '../components/Floating-Button.tsx';
 import PostList, { PostListProps } from '../components/PostList.tsx';
 
-export default function Spots(props: { spots: PostListProps[] }) {
+export default function Spots() {
 	return (
-		<section id='places' class='bg-white pt-10 pb-20'>
+		<section id='places' class='bg-white pt-10 pb-10'>
 			<div class='container w-full mx-auto'>
 				<div class='row justify-center'>
 					<div class='w-full lg:w-1/2'>
 						<div class='section_title text-center pb-6'>
 							<h5 class='sub_title'>Places</h5>
 							<h4 class='main_title'>
-								Checkout Jasaan Best Spots
+								Search for Jasaan Places
 							</h4>
 						</div>
 					</div>
@@ -18,7 +18,7 @@ export default function Spots(props: { spots: PostListProps[] }) {
 			</div>
 			<FloatingButton />
 
-			<div class='max-w-md w-full mx-auto mt-5'>
+			<div class='max-w-md w-full mx-auto'>
 				<div class='relative'>
 					<form action='' method='GET'>
 						<input
@@ -47,11 +47,6 @@ export default function Spots(props: { spots: PostListProps[] }) {
 						</div>
 					</form>
 				</div>
-			</div>
-			<div class='container mx-auto flex items-center flex-wrap pt-4 pb-12'>
-				{props.spots.map((spot) => {
-					return <PostList spot={spot} />;
-				})}
 			</div>
 		</section>
 	);

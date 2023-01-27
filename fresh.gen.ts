@@ -4,28 +4,28 @@
 
 import config from './deno.json' assert { type: 'json' };
 import * as $0 from './routes/[name].tsx';
-import * as $1 from './routes/about.tsx';
-import * as $2 from './routes/api/email.ts';
-import * as $3 from './routes/api/joke.ts';
-import * as $4 from './routes/api/posts.ts';
-import * as $5 from './routes/api/reservation.ts';
-import * as $6 from './routes/api/spots.ts';
-import * as $7 from './routes/contact.tsx';
-import * as $8 from './routes/dashboard.tsx';
-import * as $9 from './routes/dashboard/Header.tsx';
-import * as $10 from './routes/dashboard/[slug].tsx';
-import * as $11 from './routes/dashboard/home.tsx';
-import * as $12 from './routes/dashboard/test.tsx';
-import * as $13 from './routes/index.tsx';
-import * as $14 from './routes/login.tsx';
-import * as $15 from './routes/messages.tsx';
-import * as $16 from './routes/places.tsx';
-import * as $17 from './routes/places/[slug].tsx';
-import * as $18 from './routes/reservation.tsx';
-import * as $19 from './routes/reservation/[slug].tsx';
-import * as $20 from './routes/reset.tsx';
-import * as $21 from './routes/services.tsx';
-import * as $22 from './routes/test.tsx';
+import * as $1 from './routes/[path].tsx';
+import * as $2 from './routes/about.tsx';
+import * as $3 from './routes/api/email.ts';
+import * as $4 from './routes/api/joke.ts';
+import * as $5 from './routes/api/posts.ts';
+import * as $6 from './routes/api/reservation.ts';
+import * as $7 from './routes/api/spots.ts';
+import * as $8 from './routes/contact.tsx';
+import * as $9 from './routes/dashboard.tsx';
+import * as $10 from './routes/dashboard/Header.tsx';
+import * as $11 from './routes/dashboard/[slug].tsx';
+import * as $12 from './routes/dashboard/home.tsx';
+import * as $13 from './routes/dashboard/test.tsx';
+import * as $14 from './routes/index.tsx';
+import * as $15 from './routes/login.tsx';
+import * as $16 from './routes/messages.tsx';
+import * as $17 from './routes/places.tsx';
+import * as $18 from './routes/places/[slug].tsx';
+import * as $19 from './routes/reservation.tsx';
+import * as $20 from './routes/reservation/[slug].tsx';
+import * as $21 from './routes/reset.tsx';
+import * as $22 from './routes/services.tsx';
 import * as $23 from './routes/upload.tsx';
 import * as $$0 from './islands/About-Services.tsx';
 import * as $$1 from './islands/About-Us.tsx';
@@ -49,28 +49,28 @@ import * as $$17 from './islands/Team-Members.tsx';
 const manifest = {
 	routes: {
 		'./routes/[name].tsx': $0,
-		'./routes/about.tsx': $1,
-		'./routes/api/email.ts': $2,
-		'./routes/api/joke.ts': $3,
-		'./routes/api/posts.ts': $4,
-		'./routes/api/reservation.ts': $5,
-		'./routes/api/spots.ts': $6,
-		'./routes/contact.tsx': $7,
-		'./routes/dashboard.tsx': $8,
-		'./routes/dashboard/Header.tsx': $9,
-		'./routes/dashboard/[slug].tsx': $10,
-		'./routes/dashboard/home.tsx': $11,
-		'./routes/dashboard/test.tsx': $12,
-		'./routes/index.tsx': $13,
-		'./routes/login.tsx': $14,
-		'./routes/messages.tsx': $15,
-		'./routes/places.tsx': $16,
-		'./routes/places/[slug].tsx': $17,
-		'./routes/reservation.tsx': $18,
-		'./routes/reservation/[slug].tsx': $19,
-		'./routes/reset.tsx': $20,
-		'./routes/services.tsx': $21,
-		'./routes/test.tsx': $22,
+		'./routes/[path].tsx': $1,
+		'./routes/about.tsx': $2,
+		'./routes/api/email.ts': $3,
+		'./routes/api/joke.ts': $4,
+		'./routes/api/posts.ts': $5,
+		'./routes/api/reservation.ts': $6,
+		'./routes/api/spots.ts': $7,
+		'./routes/contact.tsx': $8,
+		'./routes/dashboard.tsx': $9,
+		'./routes/dashboard/Header.tsx': $10,
+		'./routes/dashboard/[slug].tsx': $11,
+		'./routes/dashboard/home.tsx': $12,
+		'./routes/dashboard/test.tsx': $13,
+		'./routes/index.tsx': $14,
+		'./routes/login.tsx': $15,
+		'./routes/messages.tsx': $16,
+		'./routes/places.tsx': $17,
+		'./routes/places/[slug].tsx': $18,
+		'./routes/reservation.tsx': $19,
+		'./routes/reservation/[slug].tsx': $20,
+		'./routes/reset.tsx': $21,
+		'./routes/services.tsx': $22,
 		'./routes/upload.tsx': $23,
 	},
 	islands: {

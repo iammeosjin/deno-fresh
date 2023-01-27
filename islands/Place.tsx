@@ -15,9 +15,9 @@ export default function Place(
 	const { spot } = props;
 	const categories = generateCategoryColors(spot.categories);
 
-	const entranceFee = spot.entranceFee
-		? new Number(spot?.entranceFee).toFixed(2)
-		: undefined;
+	let entranceFee = `₱ ${
+		spot.entranceFee ? new Number(spot?.entranceFee).toFixed(2) : 'N/A'
+	}`;
 
 	const minRoomPriceRange = spot.minRoomPriceRange
 		? new Number(spot?.minRoomPriceRange).toFixed(2)
@@ -35,30 +35,34 @@ export default function Place(
 		? new Number(spot?.maxCottagePriceRange).toFixed(2)
 		: undefined;
 
-	let roomPriceRange = undefined;
+	let roomPriceRange = 'N/A';
 
 	if (minRoomPriceRange || maxRoomPriceRange) {
 		roomPriceRange = `${minRoomPriceRange} - ${maxRoomPriceRange}`;
 		if (!minRoomPriceRange) {
-			roomPriceRange = maxRoomPriceRange;
+			roomPriceRange = maxRoomPriceRange as string;
 		}
 
 		if (!maxRoomPriceRange) {
-			roomPriceRange = minRoomPriceRange;
+			roomPriceRange = minRoomPriceRange as string;
 		}
+
+		roomPriceRange = `₱ ${roomPriceRange}`;
 	}
 
-	let cottagePriceRange = undefined;
+	let cottagePriceRange = 'N/A';
 
 	if (minCottagePriceRange || maxCottagePriceRange) {
 		cottagePriceRange = `${minCottagePriceRange} - ${maxCottagePriceRange}`;
 		if (!minCottagePriceRange) {
-			cottagePriceRange = maxCottagePriceRange;
+			cottagePriceRange = maxCottagePriceRange as string;
 		}
 
 		if (!maxCottagePriceRange) {
-			cottagePriceRange = minCottagePriceRange;
+			cottagePriceRange = minCottagePriceRange as string;
 		}
+
+		cottagePriceRange = `₱ ${cottagePriceRange}`;
 	}
 
 	return (
@@ -156,72 +160,35 @@ export default function Place(
 										</div>
 										<div class='w-full px-3 sm:w-1/2'>
 											<div class='mb-3'>
-												{spot.entranceFee
-													? (
-														<fieldset class='flex p-2 pr-5 pl-5 border-0 border-t border-gray-300'>
-															<legend class='pl-2 pr-2 text-[#6B7280]'>
-																Entrance fee
-															</legend>
-															<div className='flex items-center gap-1 tracking-wide font-bold'>
-																<div className='relative flex-shrink-0 text-lg'>
-																	<IconDoorEnter class='w-6 h-6' />
-																</div>
-																<span class='font-semibold'>
-																	₱
-																</span>
-																{entranceFee}
-															</div>
-														</fieldset>
-													)
-													: ''}
+												<fieldset class='flex p-2 pr-5 pl-5 border-0 border-t border-gray-300'>
+													<legend class='pl-2 pr-2 text-[#6B7280]'>
+														Entrance fee
+													</legend>
+													<div className='flex items-center gap-1 tracking-wide font-bold'>
+														<div className='relative flex-shrink-0 text-lg'>
+															<IconDoorEnter class='w-6 h-6' />
+														</div>
+														{entranceFee}
+													</div>
+												</fieldset>
 											</div>
 										</div>
-										{spot.entranceFee
-											? (
-												<div class='w-full px-3 sm:w-1/2'>
-													<div class='mb-3'>
-														<fieldset class='flex p-2 pr-5 pl-5 border-0 border-t border-gray-300'>
-															<legend class='pl-2 pr-2 text-[#6B7280]'>
-																Room Price Range
-															</legend>
-															<div className='flex items-center gap-1 tracking-wide font-bold'>
-																<div className='relative flex-shrink-0 text-lg'>
-																	<IconBed class='w-6 h-6' />
-																</div>
-																<span class='font-semibold'>
-																	₱
-																</span>
-																{roomPriceRange}
-															</div>
-														</fieldset>
-													</div>
-												</div>
-											)
-											: ''}
 
-										{spot.entranceFee
-											? (
-												<div class='w-full px-3 sm:w-1/2'>
-													<div class='mb-3'>
-														<fieldset class='flex p-2 pr-5 pl-5 border-0 border-t border-gray-300'>
-															<legend class='pl-2 pr-2 text-[#6B7280]'>
-																Cottage Price
-																Range
-															</legend>
-															<div className='flex items-center gap-1 tracking-wide font-bold'>
-																<div className='relative flex-shrink-0 text-lg'>
-																	<IconBuildingCottage class='w-6 h-6' />
-																</div>
-																<span class='font-semibold'>
-																	₱
-																</span>
-																{cottagePriceRange}
-															</div>
-														</fieldset>
+										<div class='w-full px-3 sm:w-1/2'>
+											<div class='mb-3'>
+												<fieldset class='flex p-2 pr-5 pl-5 border-0 border-t border-gray-300'>
+													<legend class='pl-2 pr-2 text-[#6B7280]'>
+														Cottage Price Range
+													</legend>
+													<div className='flex items-center gap-1 tracking-wide font-bold'>
+														<div className='relative flex-shrink-0 text-lg'>
+															<IconBuildingCottage class='w-6 h-6' />
+														</div>
+														{cottagePriceRange}
 													</div>
-												</div>
-											)
-											: ''}
+												</fieldset>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

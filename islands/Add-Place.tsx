@@ -74,8 +74,6 @@ export default function AddPlace() {
 					entranceFee: target.entranceFee.value,
 					minCottagePriceRange: target.minCottagePriceRange.value,
 					maxCottagePriceRange: target.maxCottagePriceRange.value,
-					minRoomPriceRange: target.minRoomPriceRange.value,
-					maxRoomPriceRange: target.maxRoomPriceRange.value,
 					roomEnabled: target.roomEnabled.checked,
 					cottageEnabled: target.cottageEnabled.checked,
 				});
@@ -428,63 +426,6 @@ export default function AddPlace() {
 														autoComplete='off'
 														class='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
 													/>
-												</div>
-											</div>
-											<div class='w-full px-3 sm:w-1/2'>
-												<div class='mb-5'>
-													<label
-														for='toggle-room-checked'
-														class='flex items-center cursor-pointer relative'
-													>
-														<input
-															type='checkbox'
-															id='toggle-room-checked'
-															class='sr-only'
-															checked={false}
-															name='roomEnabled'
-															onChange={(e) => {
-																document
-																	.getElementById(
-																		'roomPrices',
-																	)?.classList
-																	.toggle(
-																		'hidden',
-																	);
-															}}
-														/>
-														<div class='toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full'>
-														</div>
-														<span class='ml-3 text-base font-medium text-[#6B7280]'>
-															Rooms Available
-														</span>
-													</label>
-												</div>
-											</div>
-											<div
-												id='roomPrices'
-												class='hidden w-full px-3 sm:w-1/2'
-											>
-												<div class='mb-5'>
-													<fieldset class='flex p-5 border rounded-lg border-gray-300 '>
-														<legend class='pl-2 pr-2 text-[#6B7280]'>
-															Price range of rooms
-														</legend>
-														<input
-															type='number'
-															name='minCottagePriceRange'
-															autoComplete='off'
-															class='w-full rounded-none rounded-l-lg border text-[#6B7280] font-medium focus:border-blue-500 bg-white py-3 px-6 outline-none focus:border-[#6A64F1] focus:shadow-md'
-														/>
-														<span class='inline-flex items-center px-3 text-base text-[#6B7280] bg-gray-200 border border-r-0 border-l-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600'>
-															to
-														</span>
-														<input
-															type='number'
-															name='maxCottagePriceRange'
-															autoComplete='off'
-															class='w-full rounded-none rounded-r-lg border text-[#6B7280] font-medium focus:border-blue-500 bg-white py-3 px-6 outline-none focus:border-[#6A64F1] focus:shadow-md'
-														/>
-													</fieldset>
 												</div>
 											</div>
 											<div class='w-full px-3 sm:w-1/2'>

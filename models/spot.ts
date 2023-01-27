@@ -24,6 +24,7 @@ export type Spot = {
 	maxRoomPriceRange?: number;
 	search: string;
 	owner: string;
+	description: string;
 	roomEnabled: boolean;
 	cottageEnabled: boolean;
 	type: 'RESORT' | 'TOURIST_SPOT';
@@ -48,6 +49,7 @@ export default class SpotModel {
 					name TEXT NOT NULL,
 					slug TEXT NOT NULL,
 					type TEXT NOT NULL,
+					description TEXT,
 					categories TEXT[],
 					openForReservations BOOL DEFAULT FALSE,
 					barangay VARCHAR,
@@ -119,9 +121,10 @@ export default class SpotModel {
 					"roomEnabled",
 					"cottageEnabled",
 					"type",
+					"description",
 					"dateTimeCreated"
 				)
-				VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17::TIMESTAMPTZ)
+				VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19::TIMESTAMPTZ)
 			`,
 				input.images,
 				input.name.toLowerCase(),
@@ -139,6 +142,8 @@ export default class SpotModel {
 				generateSearch(input),
 				input.roomEnabled,
 				input.cottageEnabled,
+				input.type,
+				input.description,
 				new Date().toISOString(),
 			);
 		} finally {
@@ -165,7 +170,9 @@ export default class SpotModel {
 					mincottagepricerange as "minCottagePriceRange", 
 					maxcottagepricerange as "maxCottagePriceRange",
 					minroompricerange as "minRoomPriceRange",
-					maxroompricerange as "maxRoomPriceRange"
+					maxroompricerange as "maxRoomPriceRange",
+					description,
+					type
 				FROM spots WHERE slug = '${slug}'
 			`,
 			);
@@ -195,7 +202,9 @@ export default class SpotModel {
 					mincottagepricerange as "minCottagePriceRange", 
 					maxcottagepricerange as "maxCottagePriceRange",
 					minroompricerange as "minRoomPriceRange",
-					maxroompricerange as "maxRoomPriceRange"
+					maxroompricerange as "maxRoomPriceRange",
+					description,
+					type
 				FROM spots WHERE owner = '${owner}'
 			`,
 			);
@@ -265,7 +274,8 @@ export default class SpotModel {
 					maxcottagepricerange as "maxCottagePriceRange",
 					minroompricerange as "minRoomPriceRange",
 					maxroompricerange as "maxRoomPriceRange",
-					type
+					type,
+					description
 				FROM spots ${
 					isEmpty(filters) ? '' : `WHERE ${filters.join(' AND ')}`
 				}

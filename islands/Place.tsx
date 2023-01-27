@@ -4,7 +4,8 @@ import CategoryLabel from '../components/CategoryLabel.tsx';
 import IconMapPin from 'tablerIcons/map-pin.tsx';
 import IconDoorEnter from 'tablerIcons/door-enter.tsx';
 import IconBuildingCottage from 'tablerIcons/building-cottage.tsx';
-import IconBed from 'tablerIcons/bed.tsx';
+import IconFileDescription from 'tablerIcons/file-description.tsx';
+import IconNotes from 'tablerIcons/notes.tsx';
 import generateCategoryColors from '../lib/generate-category-colors.ts';
 
 export default function Place(
@@ -15,9 +16,9 @@ export default function Place(
 	const { spot } = props;
 	const categories = generateCategoryColors(spot.categories);
 
-	let entranceFee = `₱ ${
-		spot.entranceFee ? new Number(spot?.entranceFee).toFixed(2) : 'N/A'
-	}`;
+	const entranceFee = spot.entranceFee
+		? `₱ ${new Number(spot?.entranceFee).toFixed(2)}`
+		: 'N/A';
 
 	const minRoomPriceRange = spot.minRoomPriceRange
 		? new Number(spot?.minRoomPriceRange).toFixed(2)
@@ -154,6 +155,22 @@ export default function Place(
 																spot.barangay,
 															)} | {spot.address}
 														</span>
+													</div>
+												</fieldset>
+											</div>
+										</div>
+										<div class='w-full px-3 sm:w-1/2'>
+											<div class='mb-3'>
+												<fieldset class='flex p-2 pr-5 pl-5 border-0 border-t border-gray-300'>
+													<legend class='pl-2 pr-2 text-[#6B7280]'>
+														Description
+													</legend>
+													<div className='flex items-center gap-1 tracking-wide font-bold'>
+														<div className='relative flex-shrink-0 text-lg'>
+															<IconNotes class='w-6 h-6' />
+														</div>
+														{spot.description ||
+															'N/A'}
 													</div>
 												</fieldset>
 											</div>

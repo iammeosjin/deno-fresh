@@ -12,6 +12,52 @@ import { Barangay, Category } from '../type.ts';
 import generateCategoryColors from '../lib/generate-category-colors.ts';
 import { Button } from '../components/Button.tsx';
 
+function toggleSpotType(option1: string, option2: string, checked: boolean) {
+	const doc = document
+		.getElementById(
+			option1,
+		);
+	const doc1 = document
+		.getElementById(
+			option2,
+		);
+	if (checked) {
+		doc?.classList
+			.add(
+				'text-white',
+			);
+		doc?.classList
+			.remove(
+				'text-gray-500',
+			);
+		doc1?.classList
+			.remove(
+				'text-white',
+			);
+		doc1?.classList
+			.add(
+				'text-gray-500',
+			);
+	} else {
+		doc?.classList
+			.remove(
+				'text-white',
+			);
+		doc?.classList
+			.add(
+				'text-gray-500',
+			);
+		doc1?.classList
+			.add(
+				'text-white',
+			);
+		doc1?.classList
+			.remove(
+				'text-gray-500',
+			);
+	}
+}
+
 export default function AddPlace() {
 	const barangayList = values(Barangay);
 	const categories: Category[] = values(
@@ -40,6 +86,7 @@ export default function AddPlace() {
 			action='/places'
 			onSubmit={async (e) => {
 				e.preventDefault();
+
 				const form = new FormData();
 				for (const file of state.files) {
 					form.append(
@@ -71,11 +118,12 @@ export default function AddPlace() {
 					owner: target.mobileNumber.value,
 					categories: state.tags,
 					openForReservations: target.openForReservation.checked,
-					entranceFee: target.entranceFee.value,
-					minCottagePriceRange: target.minCottagePriceRange.value,
-					maxCottagePriceRange: target.maxCottagePriceRange.value,
-					roomEnabled: target.roomEnabled.checked,
+					entranceFee: target.entranceFee?.value,
+					minCottagePriceRange: target.minCottagePriceRange?.value,
+					maxCottagePriceRange: target.maxCottagePriceRange?.value,
 					cottageEnabled: target.cottageEnabled.checked,
+					type: target.spotType.value || 'RESORT',
+					description: target.description?.value,
 				});
 
 				const headers = new Headers();
@@ -213,12 +261,70 @@ export default function AddPlace() {
 									<div class='mx-auto w-full max-w-[550px]'>
 										<div class='-mx-3 flex flex-wrap'>
 											<div class='w-full px-3 sm:w-1/2'>
+												<div class='mx-auto flex flex-col items-center'>
+													<div class='flex w-full relative mb-5'>
+														<input
+															type='radio'
+															id='option0'
+															name='spotType'
+															class='hidden'
+															value='RESORT'
+															onChange={(
+																e,
+															) => {
+																toggleSpotType(
+																	'option0Label',
+																	'option1Label',
+																	e.currentTarget
+																		.checked,
+																);
+															}}
+														/>
+														<label
+															for='option0'
+															id='option0Label'
+															class='cursor-pointer w-1/2 flex items-center justify-center truncate uppercase select-none font-semibold text-base rounded-full py-2 text-white'
+														>
+															Resort
+														</label>
+
+														<input
+															type='radio'
+															id='option1'
+															name='spotType'
+															class='hidden'
+															value='TOURIST_SPOT'
+															onChange={(
+																e,
+															) => {
+																toggleSpotType(
+																	'option1Label',
+																	'option0Label',
+																	e.currentTarget
+																		.checked,
+																);
+															}}
+														/>
+														<label
+															for='option1'
+															id='option1Label'
+															class='cursor-pointer w-1/2 flex items-center justify-center truncate uppercase select-none font-semibold text-base rounded-full py-2 text-gray-500'
+														>
+															Tourist Spot
+														</label>
+
+														<div class='w-1/2 flex items-center justify-center truncate uppercase select-none font-semibold text-lg rounded-full p-0 h-full bg-red-500 absolute transform transition-transform tab-anim'>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class='w-full px-3 sm:w-1/2'>
 												<div class='mb-5'>
 													<input
 														type='text'
 														name='placeName'
 														placeholder='Name of the place'
-														required={false}
+														required={true}
 														autoComplete='off'
 														class='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
 													/>
@@ -229,7 +335,7 @@ export default function AddPlace() {
 												<div class='mb-5'>
 													<select
 														name='barangay'
-														required={false}
+														required={true}
 														class='form-select w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
 													>
 														{barangayList
@@ -254,12 +360,13 @@ export default function AddPlace() {
 														type='text'
 														name='address'
 														placeholder='Exact address'
-														required={false}
+														required={true}
 														autoComplete='off'
 														class='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
 													/>
 												</div>
 											</div>
+
 											<div class='w-full px-3 sm:w-1/2'>
 												<div class='mb-5'>
 													<div class='flex'>
@@ -270,12 +377,25 @@ export default function AddPlace() {
 															type='text'
 															name='mobileNumber'
 															pattern='^[0-9]{10}$'
-															required={false}
+															required={true}
 															autoComplete='off'
 															class='w-full rounded-none rounded-r-lg border text-[#6B7280] font-medium focus:border-blue-500 bg-white py-3 px-6 outline-none focus:border-[#6A64F1] focus:shadow-md'
 															placeholder='Owner Mobile Number'
 														/>
 													</div>
+												</div>
+											</div>
+											<div class='w-full px-3 sm:w-1/2'>
+												<div class='mb-5'>
+													<textarea
+														type='text'
+														name='description'
+														placeholder='Description'
+														required={false}
+														autoComplete='off'
+														maxLength={256}
+														class='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
+													/>
 												</div>
 											</div>
 										</div>

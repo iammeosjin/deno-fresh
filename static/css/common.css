@@ -1,5 +1,18 @@
 @import url('./fonts/nunito.css');
 
+.tab-anim {
+  z-index: -9;
+}
+
+#option0:checked ~ div {
+  --tw-translate-x: 0%;
+}
+
+#option1:checked ~ div {
+  --tw-translate-x: 100%;
+}
+
+
 .tab {
   overflow: hidden;
   font-family: 'Nunito';

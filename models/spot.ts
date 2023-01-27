@@ -6,8 +6,8 @@ import filter from 'ramda/source/filter.js';
 import isEmpty from 'ramda/source/isEmpty.js';
 import identity from 'ramda/source/identity.js';
 import { Account, Barangay, Category } from '../type.ts';
-import pool from '../lib/pool.ts';
 import generateCategoryColors from '../lib/generate-category-colors.ts';
+import pool from '../lib/pool.ts';
 
 export type Spot = {
 	slug: string;

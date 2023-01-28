@@ -97,7 +97,7 @@ export default function Place(
 										style='width:100%'
 									>
 										<img
-											class='object-cover'
+											class='object-fill'
 											src={image}
 										/>
 									</div>

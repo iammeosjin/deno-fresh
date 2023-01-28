@@ -22,7 +22,7 @@ export default function Stories(props: { posts: Post[] }) {
 									<div class='h-full min-h-full story-item relative hover:opacity-90 cursor-pointer transition duration-200 ease-in-out'>
 										<img
 											src={image}
-											class='block absolute rounded-xl h-full min-h-full object-cover'
+											class='block absolute rounded-xl h-full min-h-full object-fill'
 										/>
 										{
 											/* <div class='absolute flex flex-col justify-between h-full w-full top-0 left-0 py-0 z-10'>

@@ -43,7 +43,7 @@ export default function Home({ data }: PageProps<Context & { posts: Post[] }>) {
 					style='height:32rem;'
 				>
 					<video
-						className='absolute inset-0 flex flex-col w-full object-cover mix-blend-multiply filter brightness-50'
+						className='absolute inset-0 flex flex-col w-full object-fill mix-blend-multiply filter brightness-50'
 						style='height:32rem;'
 						playsInline={true}
 						autoPlay={true}

@@ -40,7 +40,7 @@ export default function ReservationForm(
 				<div class='image-preview flex items-center justify-end'>
 					<div class='image-holder bg-gray-50 rounded-md overflow-hidden hover:scale-105 grid items-center justify-center'>
 						<img
-							class='object-cover'
+							class='object-fill'
 							src={spot?.images[0]
 								? spot.images[0]
 								: '/images/logo.png'}

@@ -160,7 +160,7 @@ export default function Login({ data }: PageProps<
 				<link rel='stylesheet' href='css/common.css' />
 				<div className='bg-gradient-to-tr from-red-400 to-yellow-50 relative h-screen w-screen'>
 					<img
-						className='absolute inset-0 w-full h-full object-cover mix-blend-multiply filter brightness-50'
+						className='absolute inset-0 w-full h-full object-fill mix-blend-multiply filter brightness-50'
 						src='res/bg.png'
 					/>
 					<div className='absolute inset-0 flex flex-col justify-center items-center w-full max-w-full mx-auto text-center'>

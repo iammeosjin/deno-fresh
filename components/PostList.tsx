@@ -31,7 +31,7 @@ export default function PostList(
 							: `/places/${spot.slug}`}
 					>
 						<img
-							class='z-0 hover:shadow-lg w-full h-full object-cover'
+							class='z-0 hover:shadow-lg w-full h-full object-fill'
 							src={spot.images[0]}
 						/>
 					</a>

@@ -75,7 +75,7 @@ export default function Posts(
 						}}
 					>
 						<div class='bg-white shadow-md border border-gray-200 rounded-lg mb-5'>
-							<div class='post-image-preview rounded-t-lg w-full object-cover sm:h-72'>
+							<div class='post-image-preview rounded-t-lg w-full object-fill sm:h-72'>
 								<div
 									class={`image-holder rounded-md overflow-hidden cursor-pointer ${
 										images.length === 0 ? 'hidden' : ''
@@ -94,7 +94,7 @@ export default function Posts(
 														style='width:100%'
 													>
 														<img
-															class='object-cover'
+															class='object-fill'
 															src={URL
 																.createObjectURL(
 																	image,
@@ -213,7 +213,7 @@ export default function Posts(
 							<div class='bg-white shadow-md border border-gray-200 rounded-lg mb-5'>
 								<a href='#'>
 									<img
-										class='rounded-t-lg w-full object-cover sm:h-72'
+										class='rounded-t-lg w-full object-fill sm:h-72'
 										style='height: 28rem'
 										src={post.images[0]}
 										alt=''

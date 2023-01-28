@@ -180,7 +180,7 @@ export default function AddPlace() {
 												style='width:100%'
 											>
 												<img
-													class='object-cover'
+													class='object-fill'
 													src={image.url}
 												/>
 												<div class='group z-50 absolute top-1 right-2 flex'>

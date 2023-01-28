@@ -3,8 +3,8 @@ import NavBar from '../components/NavBar.tsx';
 import { Account, Context, Post } from '../type.ts';
 import AccountModel from '../models/account.ts';
 import { getCookies } from 'std/http/cookie.ts';
-import Posts from '../islands/Posts.tsx';
 import PostModel from '../models/post.ts';
+import Posts from '../islands/Posts.tsx';
 
 export const handler: Handlers<Context & { posts: Post[] }> = {
 	async GET(req, ctx) {

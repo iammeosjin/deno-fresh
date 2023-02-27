@@ -33,7 +33,7 @@ const swiper = new Swiper("#image-preview", {
 
 new Swiper("#resorts", {
   autoHeight: true,
-  allowTouchMove:true, 
+  allowTouchMove:true,
   pagination: {
     el: ".swiper-pagination",
   },
@@ -41,7 +41,15 @@ new Swiper("#resorts", {
 
 new Swiper("#touristSpots", {
   autoHeight: true,
-  allowTouchMove:true, 
+  allowTouchMove:true,
+  pagination: {
+    el: ".swiper-pagination",
+  },
+});
+
+new Swiper(".image-preview-swiper", {
+  slidesPerView: 1,
+  spaceBetween: 10,
   pagination: {
     el: ".swiper-pagination",
   },

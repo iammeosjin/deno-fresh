@@ -5,6 +5,7 @@ import AccountModel from '../models/account.ts';
 import { getCookies } from 'std/http/cookie.ts';
 import PostModel from '../models/post.ts';
 import Posts from '../islands/Posts.tsx';
+import AddPosts from '../islands/Add-Post.tsx';
 
 export const handler: Handlers<Context & { posts: Post[] }> = {
 	async GET(req, ctx) {
@@ -63,6 +64,7 @@ export default function Home({ data }: PageProps<Context & { posts: Post[] }>) {
 						</div>
 					</div>
 				</div>
+				<AddPosts user={props.user} />
 				<Posts posts={data.posts} user={props.user} />
 				<script src='js/flowbite.js' />
 				<script src='/js/swiper-bundle.min.js' />

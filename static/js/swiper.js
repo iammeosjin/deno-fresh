@@ -49,7 +49,6 @@ new Swiper("#touristSpots", {
 
 new Swiper(".image-preview-swiper", {
   slidesPerView: 1,
-  spaceBetween: 10,
   pagination: {
     el: ".swiper-pagination",
   },
